@@ -1,0 +1,16 @@
+.error-z3 {
+    color: #ff3e1d;
+    font-size: 85%;
+    margin-top: 0.25rem;
+}
+
+.success {
+    color: #71dd37
+}
+
+.info { color: #03c3ec}
+.danger { color: #ff3e1d}
+
+input:invalid, select:invalid {
+    border: 1px solid red;
+}

@@ -8,6 +8,7 @@ router.get('/', function(req, res, next) {
     view = 'index';
   }
   const msg = req.session.msg ;
+  req.session.msg = '';
   res.render(`${view}`, { message: msg });
 });
 

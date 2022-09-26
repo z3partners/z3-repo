@@ -1,6 +1,6 @@
 <%- include("../common/head.ejs");%>
 
-<link rel="stylesheet" href="assets/vendor/css/pages/page-auth.css" />
+<link rel="stylesheet" href="./static/assets/vendor/css/pages/page-auth.css" />
 <div class="container-xxl">
     <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">
@@ -10,7 +10,7 @@
                     <!-- Logo -->
                     <div class="app-brand justify-content-center">
                         <a href="index.html" class="app-brand-link gap-2">
-                            <img src="assets/img/logo-dark.png" width="200" height="56" alt=""/> </a>
+                            <img src="./static/assets/img/logo-dark.png" width="200" height="56" alt=""/> </a>
                     </div>
                     <!-- /Logo -->
                     <h4 class="mb-2">Welcome to Investors Portal!</h4>
@@ -18,7 +18,7 @@
                     <% if (message) { %>
                         <p class="mb-4 error-z3"><%= message %></p>
                     <% } %>
-                    <form id="formAuthentication" class="mb-3" action="/login-submit" method="POST">
+                    <form id="formAuthentication" class="mb-3" action="./login-submit" method="POST">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email or Username</label>
                             <input
@@ -29,12 +29,14 @@
                                     placeholder="Enter your email or username"
                                     autofocus
                                     required
+                                    oninvalid="this.setCustomValidity('Enter your email or username')"
+                                    oninput="setCustomValidity('')"
                             />
                         </div>
                         <div class="mb-3 form-password-toggle">
                             <div class="d-flex justify-content-between">
                                 <label class="form-label" for="password">Password</label>
-                                <a href="forgot-password">
+                                <a href="./forgot-password">
                                     <small>Forgot Password?</small>
                                 </a>
                             </div>
@@ -46,6 +48,8 @@
                                         name="password"
                                         aria-describedby="password"
                                         required
+                                        oninvalid="this.setCustomValidity('Enter your password')"
+                                        oninput="setCustomValidity('')"
                                 />
                                 <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                             </div>

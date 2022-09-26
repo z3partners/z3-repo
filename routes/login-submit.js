@@ -17,11 +17,11 @@ router.post('/', async function(req, res, next) {
         req.session.users = {"fName": resposne.message.userDetail.first_name, "lName":resposne.message.userDetail.last_name};
         req.session.roleDetails = resposne.message.roleDetails;
         // console.log(req.session);
-        res.redirect('/index');
+        res.redirect('./index');
       } else {
         req.session.loggedin = false;
         req.session.msg = resposne.message;
-        res.redirect('/login');
+        res.redirect('./login');
       }
   } catch (err) {
     console.error(`Error while getting user login `, err.message);

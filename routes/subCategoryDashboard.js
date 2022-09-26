@@ -7,17 +7,20 @@ router.get('/', async function(req, res, next) {
         res.redirect('./login');
     }
     try {
-        const resposne = await categoryService.listCategory();
-        console.log(resposne);
-        req.session.catList = resposne;
+        const subCategory = await categoryService.listSubCategory();
+        req.session.subCatList = subCategory;
+
+        const activeCategory = await categoryService.listCategory(true);
+        req.session.catList = activeCategory;
     } catch (err) {
         console.error(`Error while getting category details`, err.message);
         next(err);
     }
     const msg = req.session.msg ;
     req.session.msg = '';
+    const subCatList = req.session.subCatList ? req.session.subCatList : [];
     const catList = req.session.catList ? req.session.catList : [];
-    res.render(`documents/category-dashboard`, {message: msg, catList: catList, users: req.session.users, roles: req.session.roleDetails});
+    res.render(`documents/sub-category-dashboard`, {message: msg, subCatList: subCatList, catList: catList, users: req.session.users, roles: req.session.roleDetails});
 
 });
 
