@@ -3,9 +3,7 @@ var router = express.Router();
 var categoryService = require('../services/category');
 
 router.get('/', async function(req, res, next) {
-    if(!req.session.loggedin) {
-        res.redirect('./login');
-    }
+    res.redirect('./login');
     try {
         const resposne = await categoryService.listCategory();
         console.log(resposne);
