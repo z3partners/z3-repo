@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session');
-
+const MemoryStore = require('memorystore')(session);
 
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
@@ -26,11 +26,8 @@ const addSubCategoryRouter = require('./routes/addSubCategory');
 
 const app = express();
 
-app.use(session({
-  secret: 'z3partners.in',
-  resave: true,
-  saveUninitialized: true
-}));
+const oneDay = 1000*60*60*24;
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -41,8 +38,30 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
-//app.use(express.static(path.join(__dirname, 'public')));
 app.use('/static', express.static(path.join(__dirname, 'public')));
+
+//
+//app.use(session({
+//  cookie:{
+//    maxAge: oneDay
+//  },
+//  //store: new RedisStore(),
+//  secret: 'z3partners.in',
+//  resave: false,
+//  saveUninitialized: true
+//}));
+
+
+app.use(session({
+  cookie: { maxAge: oneDay },
+  store: new MemoryStore({
+    checkPeriod: 86400000 // prune expired entries every 24h
+  }),
+  resave: false,
+  secret: 'z3partners.com',
+  saveUninitialized: true
+}));
+
 
 app.use('/', indexRouter);
 app.use('/index', indexRouter);
@@ -58,10 +77,10 @@ app.use('/investor', investorDashBoardRouter);
 
 app.use('/category/:id?', documentCategoryRouter);
 app.use('/add-category', addCategoryRouter);
-//app.use('/del-category', deleteCategoryRouter);
-//
-//app.use('/sub-category/:id?', documentSubCategoryRouter);
-//app.use('/add-sub-category', addSubCategoryRouter);
+app.use('/del-category', deleteCategoryRouter);
+
+app.use('/sub-category/:id?', documentSubCategoryRouter);
+app.use('/add-sub-category', addSubCategoryRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
