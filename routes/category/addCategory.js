@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const categoryService = require('../services/category');
+const categoryService = require('../../services/category');
 
 router.post('/', async function (req, res, next) {
 
@@ -14,7 +14,7 @@ router.post('/', async function (req, res, next) {
     try {
 
         if(catId) {
-            const resposne = await categoryService.updateCategory(catId,category, status);
+            const resposne = await categoryService.updateCategory(catId, category, status);
             req.session.msg = resposne.message;
             res.redirect('./category');
         } else {

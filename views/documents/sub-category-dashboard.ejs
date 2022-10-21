@@ -18,7 +18,7 @@
                                     <p class="mb-4">
                                         Add the sub category using form below. Select main category dropdown to link up the sub category with the parent category. If you have already added needed category and sub category, you can click below button to upload documnet.</p>
 
-                                    <a href="upload-documents.html" class="btn btn-lg btn-outline-primary">Upload Document</a>
+                                    <a href="./documents" class="btn btn-lg btn-outline-primary">Upload Document</a>
                                 </div>
                             </div>
                             <div class="col-sm-5 text-center text-sm-left">
@@ -39,9 +39,10 @@
                             <small class="text-muted float-end">Add new sub category and link it with the parent category below</small>
                         </div>
                         <div class="card-body">
-                            <form id="sub-category-form" >
+                            <form id="sub-category-form"  name="add-sub-cat" method="post" action="./add-sub-category">
                                 <div class="mb-3">
                                     <label class="form-label" for="sub-category">Sub Category Name</label>
+                                    <input type="hidden" name="subCatId" value="" id="subCatId" />
                                     <p class="form-label">
                                         <% if (message) { %>
                                         <span class="danger"><%= message %></span>
@@ -50,10 +51,9 @@
                                     <input
                                             type="text"
                                             class="form-control"
-                                            id="sub-category"
-                                            name="sub-category"
+                                            id="subCategory"
+                                            name="subCategory"
                                             placeholder="Financial"
-                                            autofocus
                                             required
                                             oninvalid="this.setCustomValidity('Please Enter Valid Sub Category Name')"
                                             oninput="setCustomValidity('')"
@@ -62,12 +62,8 @@
 
                                 </div>
                                 <div class="mt-2 mb-3">
-                                    <label for="category-list" class="form-label">Choose Parent Category</label>
-                                    <select
-                                            id="category-list" class="form-select form-select-lg" required
-                                            oninvalid="this.setCustomValidity('Please choose valid category from list')"
-                                            oninput="setCustomValidity('')"
-                                            >
+                                    <label for="categoryId" class="form-label">Choose Parent Category</label>
+                                    <select id="categoryId" name="categoryId" class="form-control" required>
                                         <option value="">Select</option>
                                         <% if (Array.isArray(catList.message) && catList.message.length) { %>
                                         <% catList.message.forEach(function(cat){ %>
@@ -76,12 +72,12 @@
                                         <%}%>
                                     </select>
                                 </div>
-
                                 <div class="form-check form-switch mb-2">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="status">
                                     <label class="form-check-label" for="flexSwitchCheckChecked">Active</label>
                                 </div>
-                                <button type="submit" class="btn btn-primary " id="subCatBtn">Add</button>  <a href="./sub-category" id="addLink" style="display: none">Add New</a>
+                                <button type="submit" class="btn btn-primary" id="subCatBtn">Add</button>
+                                <a href="./sub-category" id="addLink" style="display: none">Add New</a>
                             </form>
                         </div>
                     </div>

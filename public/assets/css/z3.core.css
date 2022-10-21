@@ -8,9 +8,25 @@
     color: #71dd37
 }
 
-.info { color: #03c3ec}
-.danger { color: #ff3e1d}
+.info {
+    color: #03c3ec
+}
 
-input:invalid, select:invalid {
-    border: 1px solid red;
+.danger {
+    color: #ff3e1d
+}
+
+.gs-pagination .btn-group .btn-primary.active {
+    border-radius: 0.25rem;
+    border-color: #1c2547;
+    background-color: #1c2547;
+    min-width: calc(
+            2.1875rem + 0px
+    );
+    text-align: center;
+    line-height: 1 ;
+    padding-top: 0.625rem;
+    padding-right: 0.5125rem;
+    padding-bottom: 0.625rem;
+    padding-left: 0.5125rem;
 }

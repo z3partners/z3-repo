@@ -14,14 +14,28 @@ const logoutRouter = require('./routes/logout');
 
 const usersRouter = require('./routes/users');
 
-const investorDashBoardRouter = require('./routes/investorDashBoard');
+const investorHomeRouter = require('./routes/investor/investorHome');
+const investorDashBoardRouter = require('./routes/investor/investorDashBoard');
+const addInvestorRouter = require('./routes/investor/addInvestor');
+const editInvestorRouter = require('./routes/investor/editInvestor');
+const delInvestorRouter = require('./routes/investor/delInvestor');
+const investorPassRouter = require('./routes/investor/investorPass');
+const submitInvestorPassRouter = require('./routes/investor/submitInvestorPass');
 
-const documentCategoryRouter = require('./routes/categoryDashboard');
-const addCategoryRouter = require('./routes/addCategory');
-const deleteCategoryRouter = require('./routes/delCategory');
+const documentCategoryRouter = require('./routes/category/categoryDashboard');
+const addCategoryRouter = require('./routes/category/addCategory');
+const deleteCategoryRouter = require('./routes/category/delCategory');
+const documentSubCategoryRouter = require('./routes/category/subCategoryDashboard');
+const addSubCategoryRouter = require('./routes/category/addSubCategory');
 
-const documentSubCategoryRouter = require('./routes/subCategoryDashboard');
-const addSubCategoryRouter = require('./routes/addSubCategory');
+const uploadDocumentRouter = require('./routes/document/upload');
+const editDocumentRouter = require('./routes/document/edit-document');
+const deleteDocumentRouter = require('./routes/document/delDocument');
+const documentDashboardRouter = require('./routes/document/documentDashboard');
+const fileUploadRouter = require('./routes/document/fileUpload');
+const sendDocumentRouter = require('./routes/document/sendDocument');
+
+
 
 
 const app = express();
@@ -40,17 +54,6 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use('/static', express.static(path.join(__dirname, 'public')));
 
-//
-//app.use(session({
-//  cookie:{
-//    maxAge: oneDay
-//  },
-//  //store: new RedisStore(),
-//  secret: 'z3partners.in',
-//  resave: false,
-//  saveUninitialized: true
-//}));
-
 
 app.use(session({
   cookie: { maxAge: oneDay },
@@ -63,8 +66,9 @@ app.use(session({
 }));
 
 
-app.use('/', indexRouter);
-app.use('/index', indexRouter);
+app.use('/', investorDashBoardRouter);
+app.use('/index', investorDashBoardRouter);
+app.use('/inv-home', investorHomeRouter);
 
 app.use('/login', loginRouter);
 app.use('/forgot-password', forgotPassRouter);
@@ -74,13 +78,27 @@ app.use('/logout', logoutRouter);
 app.use('/users', usersRouter);
 
 app.use('/investor', investorDashBoardRouter);
+app.use('/add-investor', addInvestorRouter);
+app.use('/edit-investor', editInvestorRouter);
+app.use('/del-investor', delInvestorRouter);
+app.use('/create-investor-pass', investorPassRouter);
+app.use('/submit-investor-pass', submitInvestorPassRouter);
 
-app.use('/category/:id?', documentCategoryRouter);
+
+app.use('/category', documentCategoryRouter);
 app.use('/add-category', addCategoryRouter);
 app.use('/del-category', deleteCategoryRouter);
 
 app.use('/sub-category/:id?', documentSubCategoryRouter);
 app.use('/add-sub-category', addSubCategoryRouter);
+app.use('/upload-document', uploadDocumentRouter);
+app.use('/documents', documentDashboardRouter);
+app.use('/file-upload', fileUploadRouter);
+app.use('/send-document', sendDocumentRouter);
+app.use('/edit-document', editDocumentRouter);
+app.use('/del-document', deleteDocumentRouter);
+
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

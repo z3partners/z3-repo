@@ -20,16 +20,16 @@
                     <% } %>
                     <form id="formAuthentication" class="mb-3" action="./login-submit" method="POST">
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email or Username</label>
+                            <label for="email" class="form-label">Email Id</label>
                             <input
                                     type="email"
                                     class="form-control"
                                     id="email"
                                     name="emailUsername"
-                                    placeholder="Enter your email or username"
+                                    placeholder="Enter your email id"
                                     autofocus
                                     required
-                                    oninvalid="this.setCustomValidity('Enter your email or username')"
+                                    oninvalid="this.setCustomValidity('Enter your email id')"
                                     oninput="setCustomValidity('')"
                             />
                         </div>

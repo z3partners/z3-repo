@@ -14,10 +14,15 @@ router.post('/', async function(req, res, next) {
       if(resposne.status===200) {
         req.session.loggedin = true;
         req.session.username = emailUsername;
-        req.session.users = {"fName": resposne.message.userDetail.first_name, "lName":resposne.message.userDetail.last_name};
+        req.session.users = {"fName": resposne.message.userDetail.first_name, "lName":resposne.message.userDetail.last_name, 'cname': resposne.message.userDetail.company_legal_name};
         req.session.roleDetails = resposne.message.roleDetails;
-        // console.log(req.session);
-        res.redirect('./index');
+         //console.log(resposne);
+        if(resposne.message.roleDetails.role_id === 1) {
+          res.redirect('./index');
+        } else {
+          res.redirect('./inv-home');
+        }
+
       } else {
         req.session.loggedin = false;
         req.session.msg = resposne.message;
