@@ -41,18 +41,18 @@ app.use(cookieParser());
 app.use('/static', express.static(path.join(__dirname, 'public')));
 
 //
-//app.use(session({
-//  cookie:{
-//    maxAge: oneDay
-//  },
-//  //store: new RedisStore(),
-//  secret: 'z3partners.in',
-//  resave: false,
-//  saveUninitialized: true
-//}));
-
-
 app.use(session({
+  cookie:{
+    maxAge: oneDay
+  },
+  //store: new RedisStore(),
+  secret: 'z3partners.in',
+  resave: false,
+  saveUninitialized: true
+}));
+
+
+/*app.use(session({
   cookie: { maxAge: oneDay },
   store: new MemoryStore({
     checkPeriod: 86400000 // prune expired entries every 24h
@@ -60,7 +60,7 @@ app.use(session({
   resave: false,
   secret: 'z3partners.com',
   saveUninitialized: true
-}));
+}));*/
 
 
 app.use('/', indexRouter);
