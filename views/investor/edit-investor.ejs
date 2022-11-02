@@ -1,0 +1,181 @@
+<%- include("../common/head.ejs"); %>
+<%- include("../common/aside.ejs");%>
+<div class="layout-page">
+    <%- include("../common/top-nav.ejs"); %>
+    <script>
+        const investorData = <%- inventor%>
+    </script>
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="row">
+                <div class="col-lg-12 mb-4 order-0">
+                    <div class="card">
+                        <div class="d-flex align-items-end row">
+                            <div class="col-sm-7">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary">Investor Management</h5>
+                                    <p class="mb-4">
+                                        View the list of the investors with the button below
+                                    </p>
+
+                                    <a href="./investor" class="btn btn-lg btn-outline-primary">Investor List</a>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 text-center text-sm-left">
+                                <div class="card-body pb-0 px-0 px-md-4">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Edit an Investor</h5>
+
+                        </div>
+                        <div class="card-body">
+                            <form name="investor" action="./edit-investor" method="post">
+                                <input type="hidden" name="investor_id" value="" id="investor_id" />
+                                <div class="mb-3">
+                                    <label class="form-label" for="company_legal_name">Company LEGAL NAME</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="basic-icon-default-company2" class="input-group-text"><i class="bx bx-buildings"></i></span>
+                                        <input type="text" name="company_legal_name" id="company_legal_name" required class="form-control" placeholder="ACME Inc." aria-label="ACME Inc." aria-describedby="basic-icon-default-company2">
+                                    </div>
+                                </div>
+                                <div class="mt-2 mb-3">
+                                    <label for="financial_year" class="form-label">Financial Year Followed</label>
+                                    <select id="financial_year" name="financial_year" class="form-select form-select-lg" required>
+                                        <option value="">Select</option>
+                                        <option value="April - March">April - March</option>
+                                        <option value="January - December">January - December</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="row gy-3">
+                                        <div class="col-md">
+                                            <small class="form-label d-block">Investor Type</small>
+                                            <div class="form-check form-check-inline mt-3">
+                                                <input class="form-check-input" type="radio" name="investor_type" id="investor_type1" value="Domestic">
+                                                <label class="form-check-label" for="investor_type1">Domestic</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="investor_type" id="investor_type2" value="International">
+                                                <label class="form-check-label" for="investorTyp2">International</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md">
+                                            <small class="form-label d-block">Funds Associated </small>
+                                            <div class="form-check form-check-inline mt-3">
+                                                <input class="form-check-input" type="checkbox" id="Z3Partners_Tech_Fund" name="fund_association[]" value="Z3Partners Tech Fund">
+                                                <label class="form-check-label" for="Z3Partners_Tech_Fund">Z3Partners Tech Fund</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="Z3P_Tech_Fund" name="fund_association[]" value="Z3P Tech Fund">
+                                                <label class="form-check-label" for="Z3P_Tech_Fund">Z3P Tech Fund</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="contact_name">CONTACT PERSON Name</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+                                        <input type="text" class="form-control" name="contact_name" id="contact_name" required placeholder="John Doe" aria-label="John Doe" aria-describedby="basic-icon-default-fullname2">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="email_id">Email</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                                        <input disabled type="email" id="email_id" name="email_id" required class="form-control" placeholder="john.doe" aria-label="john.doe" aria-describedby="basic-icon-default-email2">
+                                        <span id="basic-icon-default-email2" class="input-group-text">@example.com</span>
+                                    </div>
+                                    <div class="form-text">You can use letters, numbers &amp; periods</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="contact_number">Phone No</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i class="bx bx-phone"></i></span>
+                                        <input type="text" id="contact_number" name="contact_number" required class="form-control phone-mask" placeholder="+91 658 799 8941" aria-label="+91 658 799 8941" aria-describedby="basic-icon-default-phone2">
+                                    </div>
+                                </div>
+
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input" type="checkbox" id="status" name="status">
+                                    <label class="form-check-label" for="status">Active</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="investorEditBtn">Edit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+            <!-- Footer -->
+        <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                    ©
+                    <script>
+                        document.write(new Date().getFullYear());
+                    </script>
+                    Z3 Partners
+
+                </div>
+
+            </div>
+        </footer>
+        <!-- / Footer -->
+
+        <div class="content-backdrop fade"></div>
+    </div>
+    <!-- Content wrapper -->
+</div>
+<!-- / Layout page -->
+</div>
+
+<!-- Overlay -->
+<div class="layout-overlay layout-menu-toggle"></div>
+</div>
+<!-- / Layout wrapper -->
+</div>
+<%- include("../common/footer-imports.ejs"); %>
+<script>
+
+    function populateInvestorData(investorData) {
+        const funds = investorData.fund_association.split(", ");
+
+        document.getElementById("company_legal_name").value = investorData.company_legal_name;
+        document.getElementById("contact_name").value = investorData.first_name;
+        document.getElementById("contact_number").value = investorData.phone_number;
+        document.getElementById("email_id").value = investorData.username;
+        document.getElementById("financial_year").value = investorData.financial_year;
+        document.getElementById("investor_id").value = investorData.user_id;
+        if(investorData.investor_type === 'Domestic') {
+            document.getElementById("investor_type1").checked = 'checked';
+        } else {
+            document.getElementById("investor_type2").checked = 'checked';
+        }
+        funds.forEach(f => {
+            const fundNumber = f.replaceAll(" ", "_");
+            document.getElementById(fundNumber).checked = 'checked';
+        });
+
+        document.getElementById("status").checked = investorData.status ? "checked" : '';
+        document.getElementById("investorEditBtn").innerHTML = "Edit";
+    }
+    populateInvestorData(investorData);
+</script>

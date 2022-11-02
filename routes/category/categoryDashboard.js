@@ -1,16 +1,14 @@
 var express = require('express');
 var router = express.Router();
-var categoryService = require('../services/category');
+var categoryService = require('../../services/category');
 
 router.get('/', async function(req, res, next) {
 
     if(!req.session.loggedin) {
         res.redirect('./login');
     }
-
     try {
         const resposne = await categoryService.listCategory();
-        console.log(resposne);
         req.session.catList = resposne;
     } catch (err) {
         console.error(`Error while getting category details`, err.message);

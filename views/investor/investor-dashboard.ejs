@@ -2,6 +2,11 @@
 <%- include("../common/aside.ejs");%>
 <div class="layout-page">
     <%- include("../common/top-nav.ejs"); %>
+<script>
+    const data = <%- allCategory %>
+    const invSearchFields = <%- invSearchFields %>
+</script>
+
     <!-- Content wrapper -->
     <div class="content-wrapper">
         <!-- Content -->
@@ -17,8 +22,13 @@
                                     <p class="mb-4">
                                         You can add a new investor by clicking the button below
                                     </p>
-                                    <a href="add-investor.html" class="btn btn-lg btn-outline-primary">Add an
+                                    <a href="./add-investor" class="btn btn-lg btn-outline-primary">Add an
                                         Investor</a>
+                                    <p class="form-label" style="margin: 10px;">
+                                        <% if (message) { %>
+                                        <span class="danger"><%= message %></span>
+                                        <% } %>
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-sm-5 text-center text-sm-left">
@@ -32,219 +42,98 @@
 
 
             </div>
+            <form action="" method="post" name="invSearch">
             <div class="row">
                 <div class="col-lg-12 mb-4 order-0">
                     <div class="card mb-4">
                         <h5 class="card-header">Search and Filter the Investors</h5>
                         <div class="card-body">
                             <div class="row gx-3 gy-2 align-items-center">
-                                <!-- Search -->
-                                <div class=" align-items-center">
-                                    <div class=" d-flex align-items-center">
-
-                                        <input
-                                                type="text"
-                                                class="form-control border-1 shadow-none"
-                                                placeholder="Search..."
-                                                aria-label="Search..."
-
-                                        />
-                                    </div>
-                                </div>
-                                <!-- /Search -->
                                 <div class="col-md-3">
-                                    <label class="form-label" for="selectTypeOpt">Investor Type</label>
-                                    <select id="selectTypeOpt" class="form-select color-dropdown">
-                                        <option value="bg-primary" selected>Domestic</option>
-                                        <option value="bg-primary" selected>International</option>
+                                    <label class="form-label" for="investor_type">Investor Type</label>
+                                    <select id="investor_type" name="investor_type" class="form-select color-dropdown">
+                                        <option value="">Select</option>
+                                        <option value="Domestic">Domestic</option>
+                                        <option value="International">International</option>
 
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-label" for="selectPlacement">Financial Year Followed</label>
-                                    <select class="form-select placement-dropdown" id="select">
+                                    <label class="form-label" for="financial_year">Financial Year Followed</label>
+                                    <select class="form-select placement-dropdown" id="financial_year" name="financial_year">
+                                        <option value="">Select</option>
                                         <option value="April - March">April - March</option>
                                         <option value="January - December">January - December</option>
-
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-label" for="selectPlacement">Catergory</label>
-                                    <select class="form-select placement-dropdown" id="select">
-                                        <option value="Q1">Catergory 1</option>
-                                        <option value="Q2">Catergory 2</option>
-
+                                    <label class="form-label" for="fund_association">FUNDS ASSOCIATED</label>
+                                    <select class="form-select placement-dropdown" id="fund_association" name="fund_association">
+                                        <option value="">Select</option>
+                                        <option value="Z3Partners Tech Fund">Z3Partners Tech Fund</option>
+                                        <option value="Z3P Tech Fund">Z3P Tech Fund</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <label class="form-label" for="selectPlacement">Sub Catergory</label>
-                                    <select class="form-select placement-dropdown" id="select">
-                                        <option value="Q1">Sub Catergory 1</option>
-                                        <option value="Q2">Sub Catergory 2</option>
-
-                                    </select>
                                 </div>
 
                                 <div class="col-md-3">
                                     <label class="form-label" for="showToastPlacement">&nbsp;</label>
                                     <button id="showToastPlacement" class="btn btn-primary d-block">Search</button>
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
+            </form>
 
             <div class="row">
                 <div class="col-lg-12 mb-4 order-0">
                     <h4 class="fw-bold py-3 mb-4"> Investors</h4>
-
+                    <!-- Search -->
+                    <div class=" align-items-center">
+                        <div class=" d-flex align-items-center">
+                            <input
+                                    type="text"
+                                    class="form-control border-1 shadow-none"
+                                    placeholder="Type here to search"
+                                    aria-label="Type here to search"
+                                    id="searchField"
+                                    />
+                        </div>
+                        <br />
+                    </div>
+                    <!-- /Search -->
                     <!-- Basic Bootstrap Table -->
                     <div class="card">
                         <div class="table-responsive text-nowrap">
-                            <table class="table">
-                                <thead>
+                                <% if (Array.isArray(investorList) && investorList.length) { %>
+                            <div class="table-sortable" id="table-sortable">
+                                Table will be rendered here
+                            </div>
+                                <% }  else { %>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Contact</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Contact</th>
-                                    <th>Email</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
+                                    <td colspan="3"><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong class="success">Investor list is empty</strong></td>
                                 </tr>
-                                </thead>
-                                <tbody class="table-border-bottom-0">
-                                <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>XYZ Ltd.</strong>
-                                    </td>
-                                    <td>Kanan Singh</td>
-                                    <td>
-                                        info@xyz.com
-                                    </td>
-                                    <td><span class="badge bg-label-success me-1">Active</span></td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                    data-bs-toggle="dropdown">
-                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="edit-investor.html"><i
-                                                            class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                            class="bx bx-lock-alt me-1"></i> Create Password</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                            class="bx bx-trash me-1"></i> Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>XYZ Ltd.</strong>
-                                    </td>
-                                    <td>Kanan Singh</td>
-                                    <td>
-                                        info@xyz.com
-                                    </td>
-                                    <td><span class="badge bg-label-success me-1">Active</span></td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                    data-bs-toggle="dropdown">
-                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                            class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                            class="bx bx-lock-alt me-1"></i> Create Password</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                            class="bx bx-trash me-1"></i> Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>XYZ Ltd.</strong>
-                                    </td>
-                                    <td>Kanan Singh</td>
-                                    <td>
-                                        info@xyz.com
-                                    </td>
-                                    <td><span class="badge bg-label-success me-1">Active</span></td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                    data-bs-toggle="dropdown">
-                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                            class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                            class="bx bx-lock-alt me-1"></i> Create Password</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                            class="bx bx-trash me-1"></i> Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>XYZ Ltd.</strong>
-                                    </td>
-                                    <td>Kanan Singh</td>
-                                    <td>
-                                        info@xyz.com
-                                    </td>
-                                    <td><span class="badge bg-label-warning me-1">Pending</span></td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                    data-bs-toggle="dropdown">
-                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                            class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                            class="bx bx-trash me-1"></i> Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>XYZ Ltd.</strong>
-                                    </td>
-                                    <td>Kanan Singh</td>
-                                    <td>
-                                        info@xyz.com
-                                    </td>
-                                    <td><span class="badge bg-label-success me-1">Active</span></td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                    data-bs-toggle="dropdown">
-                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                            class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                            class="bx bx-lock-alt me-1"></i> Create Password</a>
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                            class="bx bx-trash me-1"></i> Delete</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
+                                </table>
+                                <% } %>
                         </div>
                     </div>
                     <!--/ Basic Bootstrap Table -->
                 </div>
-
-
             </div>
             <div class="row">
                 <div class="col">
@@ -252,39 +141,7 @@
                     <div class="demo-inline-spacing">
                         <!-- Basic Pagination -->
                         <nav aria-label="Page navigation">
-                            <ul class="pagination">
-                                <li class="page-item first">
-                                    <a class="page-link" href="javascript:void(0);"><i
-                                                class="tf-icon bx bx-chevrons-left"></i></a>
-                                </li>
-                                <li class="page-item prev">
-                                    <a class="page-link" href="javascript:void(0);"><i
-                                                class="tf-icon bx bx-chevron-left"></i></a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="javascript:void(0);">1</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="javascript:void(0);">2</a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="javascript:void(0);">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="javascript:void(0);">4</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="javascript:void(0);">5</a>
-                                </li>
-                                <li class="page-item next">
-                                    <a class="page-link" href="javascript:void(0);"><i
-                                                class="tf-icon bx bx-chevron-right"></i></a>
-                                </li>
-                                <li class="page-item last">
-                                    <a class="page-link" href="javascript:void(0);"><i
-                                                class="tf-icon bx bx-chevrons-right"></i></a>
-                                </li>
-                            </ul>
+                            <ul class="pagination" id="investorPagination"></ul>
                         </nav>
                         <!--/ Basic Pagination -->
                     </div>
@@ -326,3 +183,68 @@
 <!-- / Layout wrapper -->
 </div>
 <%- include("../common/footer-imports.ejs"); %>
+
+<script>
+
+    var columns = {
+        'company_legal_name': 'Company Name',
+        'investor_type': 'Investor Type',
+        'fund_association': 'Funds',
+        'first_name': 'Contact Name',
+        'username': 'Email',
+        'phone_number': 'Contact Number',
+        'status': 'Status',
+        'action': 'Action'
+    };
+
+    const investorList = <%- JSON.stringify(investorList) %>
+    if (Array.isArray(investorList) && investorList.length) {
+    investorList.forEach(inv => {
+        const actionHTML  = `<div class='dropdown'>
+            <button type='button' class='btn p-0 dropdown-toggle hide-arrow'
+    data-bs-toggle='dropdown'>
+            <i class='bx bx-dots-vertical-rounded'></i>
+            </button>
+            <div class='dropdown-menu'>
+            <a class='dropdown-item' href='./edit-investor?id=${inv.user_id}' data-investor='${JSON.stringify(inv)}'><i class='bx bx-edit-alt me-1'></i> Edit</a>
+    <a class='dropdown-item create-investor-pass' href='./create-investor-pass?id=${inv.user_id}' data-investor='${JSON.stringify(inv)}'><i class='bx bx-lock-alt me-1'></i> Create Password</a>
+    <a class='dropdown-item del-investor-btn' href='javascript:void(0);' data-investor='${JSON.stringify(inv)}'><i class='bx bx-trash me-1'></i> Delete</a>
+    </div>
+    </div>`;
+        inv.action = actionHTML;
+    });
+
+    var table = $('#table-sortable').tableSortable({
+        data: investorList,
+        columns: columns,
+        rowsPerPage: 50,
+        sorting:false,
+        pagination: true,
+        paginationContainer: '#investorPagination',
+        searchField: '#searchField',
+        nextText: '<i class="tf-icon bx bx-chevron-right"></i>',
+        prevText: '<i class="tf-icon bx bx-chevron-left"></i>',
+        formatCell: function(row, key) {
+            if (key === 'company_legal_name') {
+                return $('<strong></strong>').text(row[key]);
+            }
+            else if (key === 'status') {
+                if(row[key]) {
+                    return $('<span class="badge bg-label-success me-1"></span>').text("ACTIVE");
+                } else {
+                    return $('<span class="badge bg-label-warning me-1"></span>').text("PENDING");
+                }
+
+            }
+            return row[key];
+        }
+    });
+    }
+
+    function populateSearchFields() {
+        document.getElementById("financial_year").value = (invSearchFields.financial_year) ? invSearchFields.financial_year : '';
+        document.getElementById("investor_type").value = (invSearchFields.investor_type) ? invSearchFields.investor_type : '';
+        document.getElementById("fund_association").value = (invSearchFields.funds) ? invSearchFields.funds : '';
+    }
+    populateSearchFields();
+</script>
