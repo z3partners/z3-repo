@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
+const app = express();
 
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
@@ -34,11 +35,8 @@ const deleteDocumentRouter = require('./routes/document/delDocument');
 const documentDashboardRouter = require('./routes/document/documentDashboard');
 const fileUploadRouter = require('./routes/document/fileUpload');
 const sendDocumentRouter = require('./routes/document/sendDocument');
-
-
-
-
-const app = express();
+const fileUpload = require('express-fileupload');
+app.use(fileUpload());
 
 const oneDay = 1000*60*60*24;
 
@@ -55,11 +53,12 @@ app.use(cookieParser());
 app.use('/static', express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-  cookie:{
-    maxAge: oneDay
-  },
-  secret: 'irportal.z3partners.com',
+  cookie: { maxAge: oneDay },
+  store: new MemoryStore({
+    checkPeriod: 86400000 // prune expired entries every 24h
+  }),
   resave: false,
+  secret: 'irportal.z3partners.com',
   saveUninitialized: true
 }));
 
@@ -107,7 +106,7 @@ app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-  console.log(err);
+  console.error(err);
   // render the error page
   res.status(err.status || 500);
   res.render('error');
