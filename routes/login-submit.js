@@ -14,7 +14,7 @@ router.post('/', async function(req, res, next) {
       if(resposne.status===200) {
         req.session.loggedin = true;
         req.session.username = emailUsername;
-        req.session.users = {"fName": resposne.message.userDetail.first_name, "lName":resposne.message.userDetail.last_name, 'cname': resposne.message.userDetail.company_legal_name};
+        req.session.users = {"user_id": resposne.message.userDetail.user_id, "fName": resposne.message.userDetail.first_name, "lName":resposne.message.userDetail.last_name, 'cname': resposne.message.userDetail.company_legal_name};
         req.session.roleDetails = resposne.message.roleDetails;
          //console.log(resposne);
         if(resposne.message.roleDetails.role_id === 1) {
@@ -56,6 +56,7 @@ router.post('/', async function(req, res, next) {
     res.render('investor/investor-dashboard');
   }*/
 });
+
 router.get('/', async function(req, res, next) {
   res.render('login/login', { message: '' });
 });

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var documentService = require('../../services/document');
-const nodemailer = require('nodemailer');
+var emailService = require('../../services/email');
 
 router.post('/', async function (req, res, next) {
 
@@ -10,38 +10,23 @@ router.post('/', async function (req, res, next) {
     }
     let resposne = {message: "Unable to send document", status: 500};
     try {
-        console.log(req.body);
-        const transporter = nodemailer.createTransport({
-            port: 465,               // true for 465, false for other ports
-            host: "mail.mail.z3partners.com",
-            auth: {
-                user: 'auth@mail.z3partners.com',
-                pass: 'Hte@36$'
-                //user: 'support@z3partners.com',
-                //pass: 'H@#^sH^6d86z0i28',
-            },
-            secure: true,
-            tls: {
-            // do not fail on invalid certs
-            rejectUnauthorized: false
-        },
-        });
+        //console.log(req.body);
+        const fileData = JSON.parse(req.body.file_path);
+        const transporter = emailService.getTransporter();
 
         const mailData = {
             from: 'auth@mail.z3partners.com',  // sender address
             to: 'production2@4thdimension.in',   // list of receivers
-            subject: 'This is Z3 Partners',
-            text: 'his email is for your email verification.',
-            html: ''
+            subject: 'Z3 Partners: Please find attachment',
+            text: 'This email is for your email verification.',
+            attachments: [
+                {
+                    filename: fileData.originalname,
+                    path: `./z3-documents/${fileData.filename}`
+                }
+            ]
         };
 
-        // An array of attachments
-/*        attachments: [
-            {
-                filename: 'text notes.txt',
-                path: 'notes.txt
-            },
-        ];*/
     transporter.sendMail(mailData, function (err, info) {
         if(err)
             console.log(err);

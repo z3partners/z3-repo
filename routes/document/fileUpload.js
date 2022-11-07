@@ -1,11 +1,10 @@
 var express = require('express');
 var router = express.Router();
-// const multer  = require('multer');
 var categoryService = require('../../services/category');
 var investorService = require('../../services/investor');
 var documentService = require('../../services/document');
-const filePath = '/home/irportal.z3partners.com/z3-documents/';
-//const filePath = './z3-documents/';
+//const filePath = '/home/irportal.z3partners.com/z3-documents/';
+const filePath = './z3-documents/';
 const fs = require('fs');
 const fileUpload = require('express-fileupload');
 const app = express();
@@ -16,7 +15,7 @@ router.post('/',  async function(req, res) {
         res.redirect('./login');
     }
     try {
-        console.log(req.files);
+        //console.log(req.files);
         const document_name = req.body.document_name;
         const investor_id = req.body.investor_list.replaceAll("'", "");
         const financial_year = req.body.financial_year;
@@ -68,6 +67,7 @@ router.post('/',  async function(req, res) {
                 res.redirect('./documents');
             }
         }
+
     } catch (error) {
         console.log(error);
         res.sendStatus(500);

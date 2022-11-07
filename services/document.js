@@ -82,6 +82,9 @@ async function listAll(status, searchFields) {
     if(searchFields.sub_category_id) {
         condition.push(`sub_category_id = '${searchFields.sub_category_id}'`);
     }
+    if(searchFields.investor_id) {
+        condition.push(`investor_id = '${searchFields.investor_id}'`);
+    }
 
     if(condition.length) {
         conStr  =  " where " + condition.join(" and ");

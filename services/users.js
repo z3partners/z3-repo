@@ -8,6 +8,27 @@ const validPassword = function(userPassword, storedPassword, salt) {
     return storedPassword === hash;
 };
 
+async function getResetToken(emailId) {
+    const rows = await db.query(`select * from z3_user where username = ? `, [emailId]);
+    const data = helper.emptyOrRows(rows);
+    if (data.length) {
+        const userDetails = data[0];
+        if (!userDetails.password || !userDetails.salt || userDetails.status === 0) {
+            return {message: `User is not active or password not created!!`, status: 400};
+        } else {
+            const resetPasswordExpires = Date.now() + 3600000; //expires in an hour
+            const resetPasswordToken = crypto.randomBytes(16).toString('hex');
+            const userId = await db.query(`UPDATE z3_user set reset_token = ?, reset_token_expiry = ? where user_id = ?`, [resetPasswordToken, resetPasswordExpires, userDetails.user_id]);
+            return {
+                message: `Reset link sent successfully. Please check your email.`,
+                token: resetPasswordToken,
+                status: 200
+            };
+        }
+    } else {
+        return {message: `The email address "${emailId}" is not associated with any account`, status: 400};
+    }
+}
 async function createUser(userDetails) {
     const salt = crypto.randomBytes(16).toString('hex');
     const hash = crypto.pbkdf2Sync(userDetails.password, salt,
@@ -19,7 +40,6 @@ async function createUser(userDetails) {
         return  {message: "Username exist!!", status: 400};
     } else {
         const userId = await db.query(`INSERT into z3_user (username, password, salt, first_name, last_name) values ('${userDetails.username}', '${hash}', '${salt}', 'Fname', 'Lname', 1)`);
-        console.log(userId);
         return  {message: `Username created!!, ${userId}`, status: 200};
     }
 }
@@ -49,5 +69,6 @@ async function getUserRoleBasedPermission(user_id) {
 
 module.exports = {
     loginUser,
-    createUser
+    createUser,
+    getResetToken
 }

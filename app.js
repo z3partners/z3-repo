@@ -30,6 +30,7 @@ const documentSubCategoryRouter = require('./routes/category/subCategoryDashboar
 const addSubCategoryRouter = require('./routes/category/addSubCategory');
 
 const uploadDocumentRouter = require('./routes/document/upload');
+const sendAllDocumentRouter = require('./routes/document/sendAllDocument');
 const editDocumentRouter = require('./routes/document/edit-document');
 const deleteDocumentRouter = require('./routes/document/delDocument');
 const documentDashboardRouter = require('./routes/document/documentDashboard');
@@ -38,8 +39,9 @@ const sendDocumentRouter = require('./routes/document/sendDocument');
 const fileUpload = require('express-fileupload');
 app.use(fileUpload());
 
-const oneDay = 1000*60*60*24;
+const app = express();
 
+const oneDay = 1000*60*60*24;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -61,7 +63,6 @@ app.use(session({
   secret: 'irportal.z3partners.com',
   saveUninitialized: true
 }));
-
 
 app.use('/', investorDashBoardRouter);
 app.use('/index', investorDashBoardRouter);
@@ -92,8 +93,16 @@ app.use('/upload-document', uploadDocumentRouter);
 app.use('/documents', documentDashboardRouter);
 app.use('/file-upload', fileUploadRouter);
 app.use('/send-document', sendDocumentRouter);
+app.use('/send-all', sendAllDocumentRouter);
 app.use('/edit-document', editDocumentRouter);
 app.use('/del-document', deleteDocumentRouter);
+app.use('/download-document',function(req, res){
+  const fileName = req.query.doc ? req.query.doc : '';
+  if(fileName) {
+    const file = `${__dirname}/z3-documents/${fileName}`;
+    res.download(file);
+  }
+});
 
 
 // catch 404 and forward to error handler

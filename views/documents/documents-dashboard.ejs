@@ -44,6 +44,7 @@
                                             </p>
 
                                             <a href="./upload-document" class="btn btn-lg btn-outline-primary">Upload Document</a>
+                                            <a href="./send-all" class="btn btn-lg btn-outline-primary">Send Document</a>
                                             <p class="form-label" style="margin: 10px;">
                                                 <% if (message) { %>
                                                 <span class="danger"><%= message %></span>
@@ -256,10 +257,9 @@ var columns = {
         doc.action = actionHTML;
         doc.investor_id = investorName[`'${doc.investor_id}'`];
         doc.category_id = allCat[`'${doc.category_id}'`]['category_name'];
+        doc.document_name = `<strong><a href="./download-document?doc=${JSON.parse(doc.file_path).filename}">${doc.document_name}</a></strong>`;
+        });
 
-
-    });
-    
     var table = $('#table-sortable').tableSortable({
         data: documentList,
         columns: columns,
@@ -271,11 +271,10 @@ var columns = {
         nextText: '<i class="tf-icon bx bx-chevron-right"></i>',
         prevText: '<i class="tf-icon bx bx-chevron-left"></i>',
         formatCell: function(row, key) {
-//            console.log(investorName, `'${row[key]}'`);
-            if (key === 'document_name') {
+           /* if (key === 'document_name') {
                 return $('<strong></strong>').text(row[key]);
             }
-            else if (key === 'status') {
+            else */if (key === 'status') {
                 if(row[key]) {
                     return $('<span class="badge bg-label-success me-1"></span>').text("ACTIVE");
                 } else {
