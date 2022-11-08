@@ -5,6 +5,8 @@
 <script>
     const data = <%- allCategory %>
     const invSearchFields = <%- invSearchFields %>
+    const documentList = <%- JSON.stringify(documentList) %>
+    console.log(documentList);
 </script>
 
     <!-- Content wrapper -->
@@ -19,12 +21,10 @@
                             <div class="col-sm-7">
                                 <div class="card-body">
                                     <h5 class="card-title text-primary">Welcome to Inverstor Portal</h5>
-
-                                    <div class="alert alert-info alert-dismissible" role="alert">
-                                        You have 2 documents to view.
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    </div>
-
+                                    <!--<div class="alert alert-info alert-dismissible" role="alert">-->
+                                        <!--You have 2 documents to view.-->
+                                        <!--<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
+                                    <!--</div>-->
                                 </div>
                             </div>
                             <div class="col-sm-5 text-center text-sm-left">
@@ -54,38 +54,23 @@
                                 </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
+                                <% if (Array.isArray(documentList) && documentList.length) { %>
+                                <% documentList.forEach(function(doc){ %>
+
                                 <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Document Name</strong></td>
-                                    <td>21/6/2022 </td>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%=doc.document_name%></strong></td>
+                                    <td><%=new Date(doc.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })%></td>
                                     <td>
-                                        <a href="#"><u>Download</u></a>
+                                        <a href="./download-document?doc=<%=JSON.parse(doc.file_path).filename%>"><u>Download</u></a>
                                     </td>
 
                                 </tr>
+                                <% }) %>
+                                <% }  else { %>
                                 <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Document Name</strong></td>
-                                    <td>21/6/2022 </td>
-                                    <td>
-                                        <a href="#"><u>Download</u></a>
-                                    </td>
-
+                                    <td colspan="3"><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong class="success">Document list is empty</strong></td>
                                 </tr>
-                                <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Document Name</strong></td>
-                                    <td>21/6/2022 </td>
-                                    <td>
-                                        <a href="#"><u>Download</u></a>
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Document Name</strong></td>
-                                    <td>21/6/2022 </td>
-                                    <td>
-                                        <a href="#"><u>Download</u></a>
-                                    </td>
-
-                                </tr>
+                                <% } %>
                                 </tbody></table>
                         </div>
                     </div>
