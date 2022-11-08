@@ -39,7 +39,6 @@ const sendDocumentRouter = require('./routes/document/sendDocument');
 const fileUpload = require('express-fileupload');
 app.use(fileUpload());
 
-const app = express();
 
 const oneDay = 1000*60*60*24;
 
