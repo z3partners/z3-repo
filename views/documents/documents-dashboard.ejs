@@ -249,7 +249,7 @@ var columns = {
                 <i class="bx bx-dots-vertical-rounded"></i>
                 </button>
                 <div class="dropdown-menu">
-                <a class="dropdown-item" href='./edit-document?id=${doc.document_id}' data-document='${JSON.stringify(doc)}'><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                <a class="dropdown-item edit-link" data-category='document' href='javascript:void(0)' data-document='${JSON.stringify(doc)}'><i class="bx bx-edit-alt me-1"></i> Edit</a>
         <a class="dropdown-item send-document" href="javascript:void(0);" data-document='${JSON.stringify(doc)}'><i class="bx bx-mail-send me-1"></i> Send</a>
         <a class="dropdown-item del-document-btn" href="javascript:void(0);" data-document='${JSON.stringify(doc)}'><i class="bx bx-trash me-1"></i> Delete</a>
                 </div>

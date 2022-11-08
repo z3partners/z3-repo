@@ -2,18 +2,18 @@ $(document).ready(function () {
 
     $('#selectCat').change(function (e) {
         const selectedVal = e.target.value;
-        const subCat = (allSubCat[`'${selectedVal.toString()}'`]) ? allSubCat[`'${selectedVal.toString()}'`]: [];
+        const subCat = (allSubCat[`'${selectedVal.toString()}'`]) ? allSubCat[`'${selectedVal.toString()}'`] : [];
         populateCategory('#selectSubCat', subCat);
     });
 
     $('#investor_list').change(function (e) {
         const selectedVal = e.target.value;
-        if(selectedVal) {
-            const fundsData = (funds[`${selectedVal.toString()}`]) ? funds[`${selectedVal.toString()}`]: [];
+        if (selectedVal) {
+            const fundsData = (funds[`${selectedVal.toString()}`]) ? funds[`${selectedVal.toString()}`] : [];
             populateInvestorFund('#fund_association', fundsData.split(", "));
             const financialSelect = document.getElementById("financial_year");
-            if(financialSelect) {
-                if(investorFinYear[selectedVal] === 'April - March') {
+            if (financialSelect) {
+                if (investorFinYear[selectedVal] === 'April - March') {
                     populateFinancialYear('#financial_year', generateFinancialYear('apr'));
                 } else {
                     populateFinancialYear('#financial_year', generateFinancialYear('jan'));
@@ -117,16 +117,42 @@ $(document).ready(function () {
                 });
         }
     });
+
+    $("a.edit-link").click(function (e) {
+        const category = e.target.dataset.category;
+        const dataSet = JSON.parse(e.target.dataset[category]);
+        const editIdMap = Object.freeze({
+            investor: 'user_id',
+            document: 'document_id'
+        });
+        const id = dataSet[editIdMap[category]];
+        formSubmit(category, id);
+    });
+
 });
+//./edit-document?id=${doc.document_id}
+function formSubmit(action, id) {
+
+    const formActionMap = Object.freeze({
+        investor: 'edit-investor',
+        document: 'edit-document'
+    });
+
+    let formElem = document.getElementById("edit-form");
+    let hiddenInputElem = document.getElementById("edit-id");
+    formElem.action = formActionMap[action];
+    hiddenInputElem.value = id;
+    formElem.submit();
+}
 
 function generateFinancialYear(startMonth) {
     const today = new Date();
     const startYear = 2019;
     const endYear = today.getFullYear();
     let financialYearList = [];
-    for(var i = startYear; i <= endYear; i++) {
-        if(startMonth === 'apr') {
-            financialYearList.push(`${i}-${i+1}`);
+    for (var i = startYear; i <= endYear; i++) {
+        if (startMonth === 'apr') {
+            financialYearList.push(`${i}-${i + 1}`);
         } else {
             financialYearList.push(`${i}`);
         }
@@ -140,5 +166,6 @@ function populateFinancialYear(selector, data) {
     finYearSelect.append(`<option value="">Select</option>`)
     data.forEach(y => {
         finYearSelect.append(`<option value="${y}">${y}</option>`);
-});
+    });
 }
+
