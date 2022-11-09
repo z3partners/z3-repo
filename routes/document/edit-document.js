@@ -8,8 +8,17 @@ router.get('/', async function(req, res, next) {
     if(!req.session.loggedin) {
         res.redirect('./login');
     }
+            req.session.msg = "Document data not found!!";
+            res.redirect('./documents');
+});
+
+router.post('/', async function(req, res, next) {
+    if(!req.session.loggedin) {
+        res.redirect('./login');
+    }
     try {
-        const id = req.query.id;
+        //const id = req.query.id;
+        const id = req.body['edit-id'];
         const rows = await documentService.getDocument(+id);
         if(rows.status === 200) {
 
