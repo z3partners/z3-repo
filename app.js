@@ -15,6 +15,7 @@ const logoutRouter = require('./routes/logout');
 
 const usersRouter = require('./routes/users');
 
+const homeRouter = require('./routes/investor/home');
 const investorHomeRouter = require('./routes/investor/investorHome');
 const investorDashBoardRouter = require('./routes/investor/investorDashBoard');
 const addInvestorRouter = require('./routes/investor/addInvestor');
@@ -63,8 +64,8 @@ app.use(session({
   saveUninitialized: true
 }));
 
-app.use('/', investorDashBoardRouter);
-app.use('/index', investorDashBoardRouter);
+app.use('/', homeRouter);
+app.use('/index', homeRouter);
 app.use('/inv-home', investorHomeRouter);
 
 app.use('/login', loginRouter);
