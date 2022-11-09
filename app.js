@@ -98,7 +98,7 @@ app.use('/del-document', deleteDocumentRouter);
 app.use('/download-document',function(req, res){
   const fileName = req.query.doc ? req.query.doc : '';
   if(fileName) {
-    const file = `${__dirname}/z3-documents/${fileName}`;
+    const file = `/home/irportal.z3partners.com/z3-documents/${fileName}`;
     res.download(file);
   }
 });
