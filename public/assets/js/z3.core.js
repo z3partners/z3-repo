@@ -118,30 +118,38 @@ $(document).ready(function () {
         }
     });
 
-    $("a.edit-link").click(function (e) {
-        const category = e.target.dataset.category;
-        const dataSet = JSON.parse(e.target.dataset[category]);
+    $(".edit-link").click(function (e) {
+        const closestElem = e.target.closest(".edit-link");
+        const category = closestElem.dataset.category;
+        const roleId = (closestElem.dataset.role) ?  closestElem.dataset.role : null;
+        const dataSet = JSON.parse(closestElem.dataset[category]);
         const editIdMap = Object.freeze({
             investor: 'user_id',
-            document: 'document_id'
+            document: 'document_id',
+            profile: 'user_id'
         });
         const id = dataSet[editIdMap[category]];
-        formSubmit(category, id);
+        //console.log(category, id, roleId);
+        formSubmit(category, id, roleId);
     });
 
 });
 //./edit-document?id=${doc.document_id}
-function formSubmit(action, id) {
+function formSubmit(action, id, roleId) {
 
     const formActionMap = Object.freeze({
         investor: 'edit-investor',
-        document: 'edit-document'
+        document: 'edit-document',
+        profile: 'profile'
     });
 
     let formElem = document.getElementById("edit-form");
-    let hiddenInputElem = document.getElementById("edit-id");
+    let hiddenInputId = document.getElementById("edit-id");
+    let hiddenInputRole = document.getElementById("role_id");
     formElem.action = formActionMap[action];
-    hiddenInputElem.value = id;
+    hiddenInputId.value = id;
+    hiddenInputRole.value = roleId;
+    //console.log(formElem);
     formElem.submit();
 }
 

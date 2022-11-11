@@ -16,7 +16,8 @@ async function addInvestor(data) {
     }
 }
 
-async function getInvestor(id) {
+async function getInvestor(id, role_id) {
+    const roleId = (role_id) ? role_id : 3;
     const rows = await db.query(`select user_id,
         company_legal_name,
         first_name,
@@ -27,7 +28,7 @@ async function getInvestor(id) {
         fund_association,
         created_at,
         updated_at,
-        status from z3_user left join z3_user_role_mapping using(user_id)  where user_id = ? and  z3_user_role_mapping.role_id = 3`, [id]);
+        status from z3_user left join z3_user_role_mapping using(user_id)  where user_id = ? and  z3_user_role_mapping.role_id = ?`, [id, roleId]);
     const res = helper.emptyOrRows(rows);
     if (!res.length) {
         return {message: `Investor not found`, status: 404};
@@ -36,7 +37,18 @@ async function getInvestor(id) {
     }
 }
 
-
+async function updateProfile(data) {
+    try {
+        const response = await db.query(`UPDATE z3_user
+        set first_name = ?, phone_number = ?, updated_at = current_timestamp()
+        where user_id = ?`,
+            [data.first_name, data.phone_number, data.user_id]);
+        return {message: `Profile updated!!`, status: 200};
+    } catch (err) {
+        console.error(`Error while updating profile details`, err.message);
+        return {message: `Error while updating profile details`, status: 500};
+    }
+}
 
 async function updateInvestor(data) {
     try {
@@ -112,5 +124,5 @@ async function deleteInvestor(user_id) {
 }
 
 module.exports = {
-    addInvestor, updateInvestor, listAll, getInvestor, deleteInvestor, createInvestorPass
+    addInvestor, updateInvestor, updateProfile, listAll, getInvestor, deleteInvestor, createInvestorPass
 }

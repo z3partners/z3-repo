@@ -13,7 +13,7 @@ router.get('/', async function(req, res, next) {
 
     try {
         let searchParams = {};
-        console.log(req.session.users);
+        //console.log(req.session.users);
         searchParams.investor_id = req.session.users.user_id;
         const resposne = await categoryService.listCategory();
         const resAll = await categoryService.listAll();

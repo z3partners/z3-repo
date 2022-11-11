@@ -21,8 +21,8 @@
                 <div data-i18n="Analytics">Account Settings</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
+                <li class="menu-item edit-link" data-category="profile" data-profile="<%= JSON.stringify(users) %>" data-role="<%=roles.role_id%>">
+                    <a href="javascript:void(0)" class="menu-link">
                         <div data-i18n="Without menu">Profile </div>
                     </a>
                 </li>

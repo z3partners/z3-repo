@@ -1,0 +1,129 @@
+<%- include("common/head.ejs"); %>
+<%- include("common/inv-aside.ejs"); %>
+<script>
+    const profile = <%- profile%>;
+</script>
+<div class="layout-page">
+    <%- include("common/top-nav.ejs"); %>
+
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+            <div class="row">
+                <div class="col-xl">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Edit Profile</h5>
+                        </div>
+                        <div class="card-body">
+                            <% if (message) { %>
+                            <span class="danger"><%= message %></span>
+                            <br>
+                            <br>
+                            <% } %>
+                            <form name="investor" action="./profile" method="post">
+                                <input type="hidden" name="profile_id" value="" id="profile_id" />
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-icon-default-company">Investor Name</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="basic-icon-default-company2" class="input-group-text"><i class="bx bx-buildings"></i></span>
+                                        <input type="text" name="company_legal_name" id="company_legal_name" required class="form-control" placeholder="ACME Inc." aria-label="ACME Inc." aria-describedby="basic-icon-default-company2" disabled>
+                                    </div>
+                                </div>
+                                <div class="mt-2 mb-3">
+                                    <label for="financial_year" class="form-label">Financial Year </label>
+                                    <select id="financial_year" name="financial_year" class="form-select form-select-lg" required disabled>
+                                        <option value="">Select</option>
+                                        <option value="April - March">April - March</option>
+                                        <option value="January - December">January - December</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="row gy-3">
+
+                                        <div class="col-md">
+                                            <small class="form-label d-block" >Funds Associated </small>
+                                            <div class="form-check form-check-inline mt-3">
+                                                <input class="form-check-input" disabled type="checkbox" id="Z3Partners_Tech_Fund" name="fund_association[]" value="Z3Partners Tech Fund">
+                                                <label class="form-check-label" for="Z3Partners_Tech_Fund">Z3Partners Tech Fund</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" disabled type="checkbox" id="Z3P_Tech_Fund" name="fund_association[]" value="Z3P Tech Fund">
+                                                <label class="form-check-label" for="Z3P_Tech_Fund">Z3P Tech Fund</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-icon-default-fullname">CONTACT PERSON Name</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+                                        <input type="text" class="form-control" name="contact_name" id="contact_name" required placeholder="John Doe" aria-label="John Doe" aria-describedby="basic-icon-default-fullname2">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-icon-default-email">Email</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                                        <input disabled type="email" id="email_id" name="email_id" required class="form-control" disabled placeholder="john.doe" aria-label="john.doe" aria-describedby="basic-icon-default-email2">
+                                        <span id="basic-icon-default-email2" class="input-group-text">@example.com</span>
+                                    </div>
+                                    <div class="form-text">You can use letters, numbers &amp; periods</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-icon-default-phone">Phone Number</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="basic-icon-default-phone2" class="input-group-text"><i class="bx bx-phone"></i></span>
+                                        <input type="text" id="contact_number" name="contact_number" required class="form-control phone-mask"  placeholder="(Country Code) 999 999 9999" aria-label="(Country Code) 658 799 8941" aria-describedby="basic-icon-default-phone2">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <%- include("common/footer-content.ejs");%>
+
+    <div class="content-backdrop fade"></div>
+</div>
+<!-- Content wrapper -->
+</div>
+<!-- / Layout page -->
+</div>
+
+<!-- Overlay -->
+<div class="layout-overlay layout-menu-toggle"></div>
+</div>
+<!-- / Layout wrapper -->
+</div>
+<%- include("common/footer-imports.ejs"); %>
+<script>
+
+    function populateInvestorData(profile) {
+        const funds = profile.fund_association.split(", ");
+
+        document.getElementById("company_legal_name").value = profile.company_legal_name;
+        document.getElementById("contact_name").value = profile.first_name;
+        document.getElementById("contact_number").value = profile.phone_number;
+        document.getElementById("email_id").value = profile.username;
+        document.getElementById("profile_id").value = profile.user_id;
+        document.getElementById("financial_year").value = profile.financial_year;
+        funds.forEach(f => {
+            const fundNumber = f.replaceAll(" ", "_");
+            document.getElementById(fundNumber).checked = 'checked';
+        });
+    }
+    populateInvestorData(profile);
+</script>

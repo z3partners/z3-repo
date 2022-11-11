@@ -20,9 +20,13 @@
                         <img src="/static/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                 </a>
+                <% if(roles.role_id === 3 ) { %>
+                <ul class="dropdown-menu dropdown-menu-end edit-link" data-category="profile"  data-profile="<%= JSON.stringify(users) %>" data-role="<%=roles.role_id%>">
+                <% } else { %>
                 <ul class="dropdown-menu dropdown-menu-end">
+                <% } %>
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="javascript:void(0);">
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
