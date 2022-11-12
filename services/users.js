@@ -56,6 +56,24 @@ async function loginUser(username, password) {
     }
 }
 
+async function changePassword(id, password, newPassword) {
+    try {
+        const rows = await db.query(`select * from z3_user where user_id = ?`, [id]);
+        let data = helper.emptyOrRows(rows);
+        if (data.length && validPassword(password, data[0].password, data[0].salt)) {
+            const salt = crypto.randomBytes(16).toString('hex');
+            const hash = crypto.pbkdf2Sync(newPassword, salt, 1000, 64, `sha512`).toString(`hex`);
+            await db.query(`UPDATE z3_user set password = ?, salt = ? where user_id = ?`, [hash, salt, id]);
+            return {message: "Password changed", status: 200};
+        } else {
+            return {message: "Current password is incorrect", status: 400};
+        }
+    } catch (err) {
+        console.error(`Error while changing password`, err.message);
+        return {message: "Error while changing password", status: 500};
+    }
+}
+
 async function getUserRoleBasedPermission(user_id) {
     const rows = await db.query(`
     select 
@@ -70,5 +88,6 @@ async function getUserRoleBasedPermission(user_id) {
 module.exports = {
     loginUser,
     createUser,
-    getResetToken
+    getResetToken,
+    changePassword
 }
