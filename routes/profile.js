@@ -23,7 +23,9 @@ router.post('/', async function(req, res, next) {
     if(profileId) {
         const first_name = req.body.contact_name;
         const phone_number = req.body.contact_number;
-        const rows = await investorService.updateProfile({user_id: profileId, first_name: first_name, phone_number: phone_number});
+        const alt_email_1 = req.body.alt_email_1;
+        const alt_email_2 = req.body.alt_email_2;
+        const rows = await investorService.updateProfile({user_id: profileId, first_name: first_name, phone_number: phone_number, alt_email_1: alt_email_1, alt_email_2: alt_email_2});
         //console.log(rows);
         const profileData = await investorService.getInvestor(+profileId);
         res.locals.profile = JSON.stringify(profileData.message[0]);

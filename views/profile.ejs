@@ -71,6 +71,24 @@
                                     <div class="input-group input-group-merge">
                                         <span class="input-group-text"><i class="bx bx-envelope"></i></span>
                                         <input disabled type="email" id="email_id" name="email_id" required class="form-control" disabled placeholder="john.doe" aria-label="john.doe" aria-describedby="basic-icon-default-email2">
+                                        <span id="basic-icon-default-email1" class="input-group-text">@example.com</span>
+                                    </div>
+                                    <div class="form-text">You can use letters, numbers &amp; periods</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="alt_email_1">Alternate email 1</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                                        <input type="email" id="alt_email_1" name="alt_email_1" class="form-control" placeholder="alt1.doe" aria-label="john.doe" aria-describedby="basic-icon-default-email2">
+                                        <span id="basic-icon-default-email2" class="input-group-text">@example.com</span>
+                                    </div>
+                                    <div class="form-text">You can use letters, numbers &amp; periods</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="alt_email_2">Alternate email 2</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                                        <input type="email" id="alt_email_2" name="alt_email_2" class="form-control" placeholder="alt2.doe" aria-label="john.doe" aria-describedby="basic-icon-default-email2">
                                         <span id="basic-icon-default-email2" class="input-group-text">@example.com</span>
                                     </div>
                                     <div class="form-text">You can use letters, numbers &amp; periods</div>
@@ -88,10 +106,7 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
-
     </div>
 
     <%- include("common/footer-content.ejs");%>
@@ -118,6 +133,8 @@
         document.getElementById("contact_name").value = profile.first_name;
         document.getElementById("contact_number").value = profile.phone_number;
         document.getElementById("email_id").value = profile.username;
+        document.getElementById("alt_email_1").value = profile.alt_email_1;
+        document.getElementById("alt_email_2").value = profile.alt_email_2;
         document.getElementById("profile_id").value = profile.user_id;
         document.getElementById("financial_year").value = profile.financial_year;
         funds.forEach(f => {
