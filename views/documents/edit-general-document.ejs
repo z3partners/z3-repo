@@ -1,0 +1,133 @@
+<%- include("../common/head.ejs"); %>
+<%- include("../common/aside.ejs"); %>
+<div class="layout-page">
+    <%- include("../common/top-nav.ejs"); %>
+    <script>
+        const investorDocs = <%- invDocs %>
+
+        const allCat = {};
+        const allSubCat = {};
+        const data = <%- allCategory %>
+        data.forEach(d => {
+             if(d.parent_id.toString() === "0") {
+                allCat[`'${d.category_id}'`] = d;
+            } else {
+                allSubCat[`'${d.parent_id.toString()}'`] = [];
+                allSubCat[`'${d.parent_id.toString()}'`].push(d);
+           }
+        });
+
+    </script>
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <div class="row">
+                        <div class="col-lg-12 mb-4 order-0">
+                            <div class="card">
+                                <div class="d-flex align-items-end row">
+                                    <div class="col-sm-7">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-primary">Document Management</h5>
+                                            <p class="mb-4">
+                                                You can view document archive by clicking the button below
+                                            </p>
+
+                                            <a href="./documents" class="btn btn-lg btn-outline-primary">Document Archive</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 text-center text-sm-left">
+                                        <div class="card-body pb-0 px-0 px-md-4">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl">
+                        <div class="card mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Upload Document for All</h5>
+                            </div>
+                            <div class="card-body">
+                                <form name="document-upload-form" method="post" action="./file-upload" enctype="multipart/form-data">
+                                    <input type="hidden" name="document_id" value="" id="document_id" />
+                                    <input type="hidden" name="oldfilepath" value="" id="oldfilepath" />
+                                    <input type="hidden" name="document_type" value="general" id="document_type" />
+                                    <div class="mb-3">
+                                        <label class="form-label" for="document_name">Document Title</label>
+                                        <input required type="text" class="form-control" id="document_name" name="document_name" placeholder="Name of the Document">
+                                    </div>
+                                    <div class="mt-2 mb-3">
+                                        <div class="row gy-3">
+                                            <div class="col-md">
+                                                <label class="form-label" for="selectCat">Category</label>
+                                                <select required class="form-select placement-dropdown" id="selectCat" name="selectCat">
+                                                    <option value="">Select</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md">
+                                                <label class="form-label" for="selectSubCat">Sub Category</label>
+                                                <select class="form-select placement-dropdown" id="selectSubCat" name="selectSubCat">
+                                                    <option value="">Select</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="uploadFile" class="form-label">Browse Document</label>
+                                        <input class="form-control" type="file" id="uploadFile" name="uploadFile">
+                                        <p>Uploaded File is  : <strong><%= JSON.parse(JSON.parse(invDocs).file_path).originalname %></strong></p>
+                                    </div>
+
+                                    <div class="form-check form-switch mb-2">
+                                        <input class="form-check-input" type="checkbox" id="status" name="status">
+                                        <label class="form-check-label" for="status">Active</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Update Document</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <!-- / Content -->
+
+
+    <%- include("../common/footer-content.ejs");%>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+</div>
+<!-- / Layout wrapper -->
+</div>
+<%- include("../common/footer-imports.ejs"); %>
+<script>
+    function populateCategory(selector, data) {
+        let catSelect = $(selector);
+        catSelect.empty();
+        catSelect.append(`<option value="">Select</option>`)
+        data.forEach(cat => {
+            catSelect.append(`<option value="${cat.category_id}">${cat.category_name}</option>`)
+    });
+    }
+
+    populateCategory('#selectCat', Object.values(allCat));
+
+    function populateInvestorDocs(investorData) {
+        document.getElementById("document_name").value = investorDocs.document_name;
+        document.getElementById("selectCat").value = investorDocs.category_id;
+        const subCat = (allSubCat[`'${investorDocs.category_id}'`]) ? allSubCat[`'${investorDocs.category_id}'`]: [];
+        populateCategory('#selectSubCat', subCat);
+        document.getElementById("selectSubCat").value = investorDocs.sub_category_id;
+        document.getElementById("document_id").value = investorDocs.document_id;
+        document.getElementById("oldfilepath").value = JSON.parse(investorDocs.file_path).filename;
+        document.getElementById("status").checked = investorDocs.status ? "checked" : '';
+    }
+    populateInvestorDocs(investorDocs);
+</script>

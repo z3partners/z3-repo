@@ -16,8 +16,8 @@ router.post('/',  async function(req, res) {
     }
     try {
         //console.log(req.files);
+        const document_type = req.body.document_type;
         const document_name = req.body.document_name;
-        const investor_id = req.body.investor_list.replaceAll("'", "");
         const financial_year = req.body.financial_year;
         const quarter = req.body.quarter;
         const category_id = req.body.selectCat;
@@ -25,17 +25,32 @@ router.post('/',  async function(req, res) {
         const fund_association = req.body.fund_association ? req.body.fund_association : '';
         const status = req.body.status ? 1 : 0;
         const document_id = req.body.document_id;
+        let dataForDB = {};
+        if(document_type === 'general') {
+             dataForDB = {
+                 document_name: document_name,
+                 investor_id: -999,
+                 financial_year: null,
+                 quarter: null,
+                 category_id: +category_id,
+                 sub_category_id: +sub_category_id,
+                 fund_association: null,
+                 status: status
+            };
+        } else {
+            const investor_id = req.body.investor_list.replaceAll("'", "");
+             dataForDB = {
+                document_name: document_name,
+                investor_id: +investor_id,
+                financial_year: financial_year,
+                quarter: quarter,
+                category_id: +category_id,
+                sub_category_id: +sub_category_id,
+                fund_association: fund_association,
+                status: status
+            };
+        }
 
-        let dataForDB = {
-            document_name: document_name,
-            investor_id: +investor_id,
-            financial_year: financial_year,
-            quarter: quarter,
-            category_id: +category_id,
-            sub_category_id: +sub_category_id,
-            fund_association: fund_association,
-            status: status
-        };
         let fileUploadStatus = true;
         if(req.files && Object.keys(req.files).length > 0) {
             const sampleFile = req.files.uploadFile;
