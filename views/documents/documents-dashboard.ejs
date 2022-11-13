@@ -229,6 +229,8 @@ var columns = {
     const documentList = <%- JSON.stringify(documentList) %>
     if (Array.isArray(documentList) && documentList.length) {
         documentList.forEach(doc => {
+            const investor = investorName[`'${doc.investor_id}'`];
+            doc.document_type = (investor) ? '' : 'general';
             const actionHTML  = `<div class="dropdown">
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                 <i class="bx bx-dots-vertical-rounded"></i>
@@ -240,11 +242,11 @@ var columns = {
                 </div>
                 </div>`;
         doc.action = actionHTML;
-        doc.investor_id = investorName[`'${doc.investor_id}'`];
+        doc.investor_id = (investor) ? investor : null;
         doc.category_id = allCat[`'${doc.category_id}'`]['category_name'];
         doc.document_name = `<strong><a href="./download-document?doc=${JSON.parse(doc.file_path).filename}">${doc.document_name}</a></strong>`;
         });
-
+//console.log(documentList);
     var table = $('#table-sortable').tableSortable({
         data: documentList,
         columns: columns,
@@ -256,10 +258,12 @@ var columns = {
         nextText: '<i class="tf-icon bx bx-chevron-right"></i>',
         prevText: '<i class="tf-icon bx bx-chevron-left"></i>',
         formatCell: function(row, key) {
-           /* if (key === 'document_name') {
-                return $('<strong></strong>').text(row[key]);
+//            console.log(row[key]);
+            if (row[key] === null) {
+//                console.log(row[key], key);
+                return $('<span></span>').text("-");
             }
-            else */if (key === 'status') {
+            else if (key === 'status') {
                 if(row[key]) {
                     return $('<span class="badge bg-label-success me-1"></span>').text("ACTIVE");
                 } else {

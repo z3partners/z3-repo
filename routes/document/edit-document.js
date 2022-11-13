@@ -34,7 +34,12 @@ router.post('/', async function(req, res, next) {
             req.session.msg = '';
             req.session.catList = resposne;
             res.locals.invDocs = JSON.stringify(rows.message[0]);
-            res.render(`./documents/edit-document`, {message: '', catList: '', users:  req.session.users, roles: req.session.roleDetails});
+            console.log(rows.message[0].investor_id);
+            if(rows.message[0].investor_id === -999) {
+                res.render(`./documents/edit-general-document`, {message: '', catList: '', users:  req.session.users, roles: req.session.roleDetails});
+            } else {
+                res.render(`./documents/edit-document`, {message: '', catList: '', users:  req.session.users, roles: req.session.roleDetails});
+            }
         } else {
             req.session.msg = "Document data not found!!";
             res.redirect('./documents');

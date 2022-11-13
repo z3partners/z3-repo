@@ -28,7 +28,7 @@ router.get('/', async function(req, res, next) {
     const msg = req.session.msg ;
     req.session.msg = '';
     const catList = req.session.catList ? req.session.catList : [];
-    res.render(`documents/send-document`, {message: msg, catList: catList, users: req.session.users, roles: req.session.roleDetails});
+    res.render(`documents/general-document`, {message: msg, catList: catList, users: req.session.users, roles: req.session.roleDetails});
 
 });
 
