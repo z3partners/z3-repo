@@ -47,10 +47,14 @@ async function createUser(userDetails) {
 async function loginUser(username, password) {
     const rows = await db.query(`select * from z3_user where username = ? `, [username]);
     let data = helper.emptyOrRows(rows);
-    if(data.length && validPassword(password, data[0].password, data[0].salt)) {
-        const roleDetails = await getUserRoleBasedPermission(data[0].user_id);
-        const roles = (roleDetails.length) ? roleDetails[0] : {};
-        return {message: {userDetail: data[0], roleDetails: roles}, status: 200};
+    if (data.length && validPassword(password, data[0].password, data[0].salt)) {
+        if (data[0].status === 1) {
+            const roleDetails = await getUserRoleBasedPermission(data[0].user_id);
+            const roles = (roleDetails.length) ? roleDetails[0] : {};
+            return {message: {userDetail: data[0], roleDetails: roles}, status: 200};
+        } else {
+            return {message: "User is not active, please contact Z3partners.", status: 400};
+        }
     } else {
         return {message: "Incorrect username/password", status: 400};
     }
