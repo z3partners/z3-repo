@@ -84,10 +84,11 @@
 
                                     </div>
                                 </div>
-								<div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">Contact Details</h5>
+                                <div class="card-header d-flex justify-content-between align-items-center" style="
+    padding-left: 0;">
+                                    <h5 class="mb-0">Contact Details</h5>
 
-                        </div>
+                                </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="contact_name">CONTACT PERSON Name</label>
                                     <div class="input-group input-group-merge">
@@ -96,10 +97,28 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label" for="email_id">Email</label>
+                                    <label class="form-label" for="email_id">Primary Email</label>
                                     <div class="input-group input-group-merge">
                                         <span class="input-group-text"><i class="bx bx-envelope"></i></span>
                                         <input type="email" id="email_id" name="email_id" required class="form-control" placeholder="john.doe" aria-label="john.doe" aria-describedby="basic-icon-default-email2">
+                                        <span id="basic-icon-default-email2" class="input-group-text">@example.com</span>
+                                    </div>
+                                    <div class="form-text">You can use letters, numbers &amp; periods</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="email_id">Secondary Email 1</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                                        <input type="email" id="email_id1" name="email_id1" class="form-control" placeholder="john.doe" aria-label="john.doe" aria-describedby="basic-icon-default-email2">
+                                        <span id="basic-icon-default-email2" class="input-group-text">@example.com</span>
+                                    </div>
+                                    <div class="form-text">You can use letters, numbers &amp; periods</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="email_id">Secondary Email 2</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                                        <input type="email" id="email_id2" name="email_id2" class="form-control" placeholder="john.doe" aria-label="john.doe" aria-describedby="basic-icon-default-email2">
                                         <span id="basic-icon-default-email2" class="input-group-text">@example.com</span>
                                     </div>
                                     <div class="form-text">You can use letters, numbers &amp; periods</div>
@@ -127,9 +146,9 @@
     </div>
     <%- include("../common/footer-content.ejs");%>
 
-        <div class="content-backdrop fade"></div>
-    </div>
-    <!-- Content wrapper -->
+    <div class="content-backdrop fade"></div>
+</div>
+<!-- Content wrapper -->
 </div>
 <!-- / Layout page -->
 </div>
