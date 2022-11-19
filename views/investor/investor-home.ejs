@@ -2,11 +2,11 @@
 <%- include("../common/inv-aside.ejs");%>
 <div class="layout-page">
     <%- include("../common/top-nav.ejs"); %>
-<script>
-    const data = <%- allCategory %>
-    const invSearchFields = <%- invSearchFields %>
-    const documentList = <%- JSON.stringify(documentList) %>
-</script>
+    <script>
+        const data = <%- allCategory %>
+        const invSearchFields = <%- invSearchFields %>
+        const documentList = <%- JSON.stringify(documentList) %>
+    </script>
 
     <!-- Content wrapper -->
     <div class="content-wrapper">
@@ -19,10 +19,10 @@
                         <div class="d-flex align-items-end row">
                             <div class="col-sm-7">
                                 <div class="card-body">
-                                    <h5 class="card-title text-primary">Welcome to Inverstor Portal</h5>
+                                    <h5 class="card-title text-primary">Welcome to Investor Portal</h5>
                                     <!--<div class="alert alert-info alert-dismissible" role="alert">-->
-                                        <!--You have 2 documents to view.-->
-                                        <!--<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
+                                    <!--You have 2 documents to view.-->
+                                    <!--<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
                                     <!--</div>-->
                                 </div>
                             </div>
@@ -48,7 +48,7 @@
                                 <thead>
                                 <tr>
                                     <th>Document Name</th>
-                                    <th>Date</th>
+                                    <th>Date(DD/MM/YYYY)</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
