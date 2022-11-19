@@ -15,6 +15,7 @@ const logoutRouter = require('./routes/logout');
 
 const usersRouter = require('./routes/users');
 const profilesRouter = require('./routes/profile');
+const passwordRouter = require('./routes/password');
 
 const homeRouter = require('./routes/investor/home');
 const investorHomeRouter = require('./routes/investor/investorHome');
@@ -76,6 +77,7 @@ app.use('/logout', logoutRouter);
 
 app.use('/users', usersRouter);
 app.use('/profile', profilesRouter);
+app.use('/password', passwordRouter);
 
 app.use('/investor', investorDashBoardRouter);
 app.use('/add-investor', addInvestorRouter);
@@ -102,6 +104,7 @@ app.use('/download-document',function(req, res){
   const fileName = req.query.doc ? req.query.doc : '';
   if(fileName) {
     const file = `/home/irportal.z3partners.com/z3-documents/${fileName}`;
+    //const file = `./z3-documents/${fileName}`; // for local
     res.download(file);
   }
 });

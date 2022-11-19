@@ -26,8 +26,8 @@
                         <div data-i18n="Without menu">Profile </div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
+                <li class="menu-item edit-link" data-category="password" data-password="<%= JSON.stringify(users) %>">
+                    <a href="javascript:void(0)" class="menu-link">
                         <div data-i18n="Without navbar">Change Password</div>
                     </a>
                 </li>
@@ -43,9 +43,14 @@
 
             <ul class="menu-sub">
                 <% if (catList && Array.isArray(catList.message) && catList.message.length) { %>
+                <li class="menu-item">
+                    <a href="/inv-home" class="menu-link">
+                        <div data-i18n="Without menu">All Category</div>
+                    </a>
+                </li>
                 <% catList.message.forEach(function(cat){ %>
                 <% if (cat.status) { %>
-                <li class="menu-item">
+                <li class="menu-item side-nav-cat" data-category='<%- JSON.stringify(cat) %>'>
                     <a href="javascript:void(0);" class="menu-link">
                         <div data-i18n="Without menu"><%= cat.category_name %></div>
                     </a>

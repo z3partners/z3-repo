@@ -9,8 +9,8 @@ async function addInvestor(data) {
         return {message: `Investor email id should be unique`, status: 400};
     } else {
         const response = await db.query(`INSERT into z3_user
-        (company_legal_name, financial_year, investor_type, fund_association, first_name, username, phone_number, status)
-        values (?, ?, ?, ?, ?, ?, ?, ?)`, [data.company_legal_name, data.financial_year, data.investor_type, data.fund_association, data.first_name, data.email_id, data.phone_number, data.status]);
+        (alt_email_1, alt_email_2, company_legal_name, financial_year, investor_type, fund_association, first_name, username, phone_number, status)
+        values (?,?,?, ?, ?, ?, ?, ?, ?, ?)`, [data.alt_email_1, data.alt_email_2, data.company_legal_name, data.financial_year, data.investor_type, data.fund_association, data.first_name, data.email_id, data.phone_number, data.status]);
         const roles = await db.query(`INSERT into z3_user_role_mapping (user_id, role_id) values (?, ?)`, [response.insertId, 3]);
         return {message: `Investor created!!`, status: 200};
     }
@@ -22,6 +22,8 @@ async function getInvestor(id, role_id) {
         company_legal_name,
         first_name,
         username,
+        alt_email_1,
+        alt_email_2,
         phone_number,
         financial_year,
         investor_type,
@@ -40,9 +42,9 @@ async function getInvestor(id, role_id) {
 async function updateProfile(data) {
     try {
         const response = await db.query(`UPDATE z3_user
-        set first_name = ?, phone_number = ?, updated_at = current_timestamp()
+        set first_name = ?, phone_number = ?, alt_email_1 = ?, alt_email_2 = ?, updated_at = current_timestamp()
         where user_id = ?`,
-            [data.first_name, data.phone_number, data.user_id]);
+            [data.first_name, data.phone_number, data.alt_email_1, data.alt_email_2, data.user_id]);
         return {message: `Profile updated!!`, status: 200};
     } catch (err) {
         console.error(`Error while updating profile details`, err.message);
@@ -53,9 +55,9 @@ async function updateProfile(data) {
 async function updateInvestor(data) {
     try {
         const response = await db.query(`UPDATE z3_user
-        set company_legal_name = ?, financial_year = ?, investor_type = ?, fund_association = ?, first_name = ?, phone_number = ?, status = ?, updated_at = current_timestamp()
+        set alt_email_1 = ?, alt_email_2 = ?, company_legal_name = ?, financial_year = ?, investor_type = ?, fund_association = ?, first_name = ?, phone_number = ?, status = ?, updated_at = current_timestamp()
         where user_id = ?`,
-        [data.company_legal_name, data.financial_year, data.investor_type, data.fund_association, data.first_name, data.phone_number, data.status, data.user_id]);
+        [data.alt_email_1, data.alt_email_2, data.company_legal_name, data.financial_year, data.investor_type, data.fund_association, data.first_name, data.phone_number, data.status, data.user_id]);
         return {message: `Investor updated!!`, status: 200};
     } catch (err) {
         console.error(`Error while updating investor details`, err.message);
@@ -101,6 +103,8 @@ async function listAll(status, searchFields) {
         company_legal_name,
         first_name,
         username,
+        alt_email_1,
+        alt_email_2,
         phone_number,
         financial_year,
         investor_type,

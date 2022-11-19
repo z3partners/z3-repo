@@ -55,19 +55,17 @@
                                 <tbody class="table-border-bottom-0">
                                 <% if (Array.isArray(documentList) && documentList.length) { %>
                                 <% documentList.forEach(function(doc){ %>
-
                                 <tr>
                                     <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%=doc.document_name%></strong></td>
                                     <td><%=new Date(doc.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })%></td>
                                     <td>
                                         <a href="./download-document?doc=<%=JSON.parse(doc.file_path).filename%>"><u>Download</u></a>
                                     </td>
-
                                 </tr>
-                                <% }) %>
+                                <% }); %>
                                 <% }  else { %>
                                 <tr>
-                                    <td colspan="3"><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong class="success">Document list is empty</strong></td>
+                                    <td colspan="3"><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong class="success">Document list is empty for this category</strong></td>
                                 </tr>
                                 <% } %>
                                 </tbody></table>

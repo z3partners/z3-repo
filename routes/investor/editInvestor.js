@@ -25,6 +25,8 @@ router.post('/', async function(req, res, next) {
         const funds = req.body['fund_association[]'];
         const first_name = req.body.contact_name;
         const username = req.body.username;
+        const alt_email_1 = req.body.alt_email_1;
+        const alt_email_2 = req.body.alt_email_2;
         const phone_number = req.body.contact_number;
         const status = req.body.status ? 1 : 0;
 
@@ -35,16 +37,16 @@ router.post('/', async function(req, res, next) {
 
         try {
             if(investorId) {
-                const resposne = await investorService.updateInvestor({user_id: investorId, company_legal_name: company_legal_name, financial_year: financial_year, investor_type: investor_type, fund_association: fund_association, first_name: first_name, username: username, phone_number: phone_number, status: status});
+                const resposne = await investorService.updateInvestor({alt_email_1: alt_email_1, alt_email_2: alt_email_2, user_id: investorId, company_legal_name: company_legal_name, financial_year: financial_year, investor_type: investor_type, fund_association: fund_association, first_name: first_name, username: username, phone_number: phone_number, status: status});
                 req.session.msg = resposne.message;
                 res.redirect('./investor');
             } else {
-                const resposne = await investorService.addInvestor({company_legal_name: company_legal_name, financial_year: financial_year, investor_type: investor_type, fund_association: fund_association, first_name: first_name, username: username, phone_number: phone_number, status: status});
+                const resposne = await investorService.addInvestor({alt_email_1: alt_email_1, alt_email_2: alt_email_2, company_legal_name: company_legal_name, financial_year: financial_year, investor_type: investor_type, fund_association: fund_association, first_name: first_name, username: username, phone_number: phone_number, status: status});
                 req.session.msg = resposne.message;
                 res.redirect('./investor');
             }
         } catch (err) {
-            console.error(`Error while getting sub subCategory details`, err.message);
+            console.error(`Error while getting investor details`, err.message);
             next(err);
         }
     } else {

@@ -8,7 +8,14 @@ router.get('/', async function(req, res, next) {
     if(!req.session.loggedin) {
         res.redirect('./login');
     }
-    const id = req.query.id;
+});
+
+router.post('/', async function(req, res, next) {
+    if(!req.session.loggedin) {
+        res.redirect('./login');
+    }
+
+    const id = req.body['edit-id'];
     if(!id) {
         res.redirect('./investor');
     }
@@ -26,4 +33,5 @@ router.get('/', async function(req, res, next) {
     res.render(`./investor/create-pass`, {message: msg, catList: catList, users:  req.session.users, roles: req.session.roleDetails});
 });
 
+//./create-investor-pass?id=${inv.user_id}
 module.exports = router;

@@ -70,6 +70,7 @@ async function listAll(status, searchFields) {
     if(status) {
         condition.push('status = 1');
     }
+
     if(searchFields.date_range) {
         condition.push(`created_at  ${searchFields.date_range} `);
     }
@@ -83,13 +84,13 @@ async function listAll(status, searchFields) {
         condition.push(`sub_category_id = '${searchFields.sub_category_id}'`);
     }
     if(searchFields.investor_id) {
-        condition.push(`investor_id = '${searchFields.investor_id}'`);
+        condition.push(`investor_id in ('${searchFields.investor_id}', -999)`);
     }
 
     if(condition.length) {
         conStr  =  " where " + condition.join(" and ");
     }
-    //console.log(conStr, searchFields);
+    console.log(`select * from z3_documents ${conStr}`);
     const rows = await db.query(`select * from z3_documents ${conStr}`);
     const data = helper.emptyOrRows(rows);
     if (data.length) {

@@ -28,6 +28,8 @@ router.post('/', async function(req, res, next) {
     const funds = req.body['fund_association[]'];
     const first_name = req.body.contact_name;
     const email_id = req.body.email_id;
+    const alt_email_1 = req.body.alt_email_1;
+    const alt_email_2 = req.body.alt_email_2;
     const phone_number = req.body.contact_number;
     const status = req.body.status ? 1 : 0;
     const user_id = req.body.user_id;
@@ -49,13 +51,15 @@ router.post('/', async function(req, res, next) {
                 fund_association: fund_association,
                 first_name: first_name,
                 email_id: email_id,
+                alt_email_1: alt_email_1,
+                alt_email_2: alt_email_2,
                 phone_number: phone_number,
                 status: status});
             req.session.msg = resposne.message;
             res.redirect('./investor');
         }
     } catch (err) {
-        console.error(`Error while getting sub subCategory details`, err.message);
+        console.error(`Error while getting investor details`, err.message);
         next(err);
     }
 });

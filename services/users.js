@@ -47,12 +47,34 @@ async function createUser(userDetails) {
 async function loginUser(username, password) {
     const rows = await db.query(`select * from z3_user where username = ? `, [username]);
     let data = helper.emptyOrRows(rows);
-    if(data.length && validPassword(password, data[0].password, data[0].salt)) {
-        const roleDetails = await getUserRoleBasedPermission(data[0].user_id);
-        const roles = (roleDetails.length) ? roleDetails[0] : {};
-        return {message: {userDetail: data[0], roleDetails: roles}, status: 200};
+    if (data.length && validPassword(password, data[0].password, data[0].salt)) {
+        if (data[0].status === 1) {
+            const roleDetails = await getUserRoleBasedPermission(data[0].user_id);
+            const roles = (roleDetails.length) ? roleDetails[0] : {};
+            return {message: {userDetail: data[0], roleDetails: roles}, status: 200};
+        } else {
+            return {message: "User is not active, please contact Z3partners.", status: 400};
+        }
     } else {
         return {message: "Incorrect username/password", status: 400};
+    }
+}
+
+async function changePassword(id, password, newPassword) {
+    try {
+        const rows = await db.query(`select * from z3_user where user_id = ?`, [id]);
+        let data = helper.emptyOrRows(rows);
+        if (data.length && validPassword(password, data[0].password, data[0].salt)) {
+            const salt = crypto.randomBytes(16).toString('hex');
+            const hash = crypto.pbkdf2Sync(newPassword, salt, 1000, 64, `sha512`).toString(`hex`);
+            await db.query(`UPDATE z3_user set password = ?, salt = ? where user_id = ?`, [hash, salt, id]);
+            return {message: "Password changed", status: 200};
+        } else {
+            return {message: "Current password is incorrect", status: 400};
+        }
+    } catch (err) {
+        console.error(`Error while changing password`, err.message);
+        return {message: "Error while changing password", status: 500};
     }
 }
 
@@ -70,5 +92,6 @@ async function getUserRoleBasedPermission(user_id) {
 module.exports = {
     loginUser,
     createUser,
-    getResetToken
+    getResetToken,
+    changePassword
 }
