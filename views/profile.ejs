@@ -47,11 +47,11 @@
 
                                         <div class="col-md">
                                             <small class="form-label d-block" >Funds Associated </small>
-                                            <div class="form-check form-check-inline mt-3">
+                                            <div class="form-check form-check-inline mt-3 Z3Partners_Tech_Fund hideElem">
                                                 <input class="form-check-input" disabled type="checkbox" id="Z3Partners_Tech_Fund" name="fund_association[]" value="Z3Partners Tech Fund">
                                                 <label class="form-check-label" for="Z3Partners_Tech_Fund">Z3Partners Tech Fund</label>
                                             </div>
-                                            <div class="form-check form-check-inline">
+                                            <div class="form-check form-check-inline Z3P_Tech_Fund hideElem">
                                                 <input class="form-check-input" disabled type="checkbox" id="Z3P_Tech_Fund" name="fund_association[]" value="Z3P Tech Fund">
                                                 <label class="form-check-label" for="Z3P_Tech_Fund">Z3P Tech Fund</label>
                                             </div>
@@ -139,6 +139,7 @@
         document.getElementById("financial_year").value = profile.financial_year;
         funds.forEach(f => {
             const fundNumber = f.replaceAll(" ", "_");
+            document.querySelector(`div.${fundNumber}`).classList.remove("hideElem");
             document.getElementById(fundNumber).checked = 'checked';
         });
     }

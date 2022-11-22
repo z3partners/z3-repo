@@ -30,3 +30,11 @@
     padding-bottom: 0.625rem;
     padding-left: 0.5125rem;
 }
+
+.showElem {
+    display: block;
+}
+
+.hideElem {
+    display: none;
+}
