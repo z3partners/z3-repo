@@ -188,7 +188,7 @@ function formSubmit(action, id, roleId) {
 function generateFinancialYear(startMonth) {
     const today = new Date();
     const startYear = 2019;
-    const endYear = today.getFullYear();
+    const endYear = 2031;
     let financialYearList = [];
     for (var i = startYear; i <= endYear; i++) {
         if (startMonth === 'apr') {
