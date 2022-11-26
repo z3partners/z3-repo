@@ -92,11 +92,10 @@ async function listAll(status, searchFields, investorType = '') {
     if(condition.length) {
         conStr  =  " where " + condition.join(" and ");
     }
-    const sqlQuery = `select * from (select z3_documents.* from z3partners.z3_documents join z3_user
+    const sqlQuery = `select * from (select z3_documents.* from z3_documents join z3_user
 on z3_user.user_id = z3_documents.investor_id ${investorType}
 union
-select z3_documents.* from z3partners.z3_documents where investor_id = -999) as docs ${conStr}`;
-
+select z3_documents.* from z3_documents where investor_id = -999) as docs ${conStr}`;
     const rows = await db.query(sqlQuery);
     const data = helper.emptyOrRows(rows);
     if (data.length) {
