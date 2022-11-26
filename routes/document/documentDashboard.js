@@ -3,7 +3,7 @@ var router = express.Router();
 var categoryService = require('../../services/category');
 var investorService = require('../../services/investor');
 var documentService = require('../../services/document');
-
+let searchParams = {};
 /* GET home page. */
 router.get('/', async function(req, res, next) {
 
@@ -12,11 +12,17 @@ router.get('/', async function(req, res, next) {
     }
 
     try {
+        searchParams = {investor_type: ''};
+        if(req.session.roleDetails.role_id === 4) {
+            searchParams.investor_type = 'Domestic';
+        } else if(req.session.roleDetails.role_id === 5) {
+            searchParams.investor_type = 'International';
+        }
 
         const resposne = await categoryService.listCategory();
         const resAll = await categoryService.listAll();
         const investorList = await investorService.listAll(false, {});
-        const documentList = await documentService.listAll(false, {});
+        const documentList = await documentService.listAll(false, searchParams);
         req.session.catList = resposne;
         res.locals.allCategory = JSON.stringify(resAll.message);
         res.locals.investorList = JSON.stringify(investorList.message);
@@ -46,13 +52,18 @@ router.post('/', async function(req, res, next) {
     }
 
     try {
+        searchParams = {investor_type: ''};
+        if(req.session.roleDetails.role_id === 4) {
+            searchParams.investor_type = 'Domestic';
+        } else if(req.session.roleDetails.role_id === 5) {
+            searchParams.investor_type = 'International';
+        }
 
         const start_date= req.body.start_date;
         const end_date= req.body.end_date;
         const quarter = req.body.quarter;
         const category_id = req.body.selectCat;
         const sub_category_id = req.body.selectSubCat;
-        let searchParams = {};
         if((start_date === '' && end_date !=='') || !isValidateDate(start_date, end_date)) {
             req.session.msg = 'Please choose validate date range!!';
         } else {

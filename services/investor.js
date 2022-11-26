@@ -82,7 +82,7 @@ async function createInvestorPass(data) {
 
 async function listAll(status, searchFields) {
     let condition = [];
-    let conStr = ''
+    let conStr = '';
     if(status) {
         condition.push('status = 1');
     }

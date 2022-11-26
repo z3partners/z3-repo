@@ -40,6 +40,18 @@
                             </div>
                         </a>
                     </li>
+                    <% if([1,4,5].includes(roles.role_id)) { %>
+                    <li>
+                        <div class="dropdown-divider"></div>
+                    </li>
+                    <li class="edit-link" data-category="password" data-password="<%= JSON.stringify(users) %>">
+                        <a class="dropdown-item" href="javascript:void(0)">
+                            <i class="bx bxs-key me-2"></i>
+                            <span class="align-middle">Change Password</span>
+                        </a>
+                    </li>
+                    <% } %>
+
                     <li>
                         <div class="dropdown-divider"></div>
                     </li>

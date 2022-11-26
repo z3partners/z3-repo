@@ -64,13 +64,15 @@ async function updateDocument(documentDetails) {
     }
 }
 
-async function listAll(status, searchFields) {
+async function listAll(status, searchFields, investorType = '') {
     let condition = [];
     let conStr = '';
     if(status) {
         condition.push('status = 1');
     }
-
+    if(searchFields.investor_type) {
+        investorType = `and z3_user.investor_type = '${searchFields.investor_type}'`;
+    }
     if(searchFields.date_range) {
         condition.push(`created_at  ${searchFields.date_range} `);
     }
@@ -90,8 +92,12 @@ async function listAll(status, searchFields) {
     if(condition.length) {
         conStr  =  " where " + condition.join(" and ");
     }
-    console.log(`select * from z3_documents ${conStr}`);
-    const rows = await db.query(`select * from z3_documents ${conStr}`);
+    const sqlQuery = `select * from (select z3_documents.* from z3partners.z3_documents join z3_user
+on z3_user.user_id = z3_documents.investor_id ${investorType}
+union
+select z3_documents.* from z3partners.z3_documents where investor_id = -999) as docs ${conStr}`;
+
+    const rows = await db.query(sqlQuery);
     const data = helper.emptyOrRows(rows);
     if (data.length) {
         return {message: data, status: 200};

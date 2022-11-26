@@ -38,3 +38,11 @@
 .hideElem {
     display: none;
 }
+
+.hideVisibility {
+    visibility: hidden;
+}
+.showVisibility {
+    visibility: visible;
+}
+

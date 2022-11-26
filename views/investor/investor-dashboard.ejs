@@ -50,15 +50,6 @@
                         <div class="card-body">
                             <div class="row gx-3 gy-2 align-items-center">
                                 <div class="col-md-3">
-                                    <label class="form-label" for="investor_type">Investor Type</label>
-                                    <select id="investor_type" name="investor_type" class="form-select color-dropdown">
-                                        <option value="">Select</option>
-                                        <option value="Domestic">Domestic</option>
-                                        <option value="International">International</option>
-
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
                                     <label class="form-label" for="financial_year">Financial Year Followed</label>
                                     <select class="form-select placement-dropdown" id="financial_year" name="financial_year">
                                         <option value="">Select</option>
@@ -72,6 +63,15 @@
                                         <option value="">Select</option>
                                         <option value="Z3Partners Tech Fund">Z3Partners Tech Fund</option>
                                         <option value="Z3P Tech Fund">Z3P Tech Fund</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 inv-type-div">
+                                    <label class="form-label" for="investor_type">Investor Type</label>
+                                    <select id="investor_type" name="investor_type" class="form-select color-dropdown">
+                                        <option value="">Select</option>
+                                        <option value="Domestic">Domestic</option>
+                                        <option value="International">International</option>
+
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -171,7 +171,6 @@
 <%- include("../common/footer-imports.ejs"); %>
 
 <script>
-
     var columns = {
         'company_legal_name': 'Investor Name',
         'investor_type': 'Investor Type',
@@ -233,4 +232,8 @@
         document.getElementById("fund_association").value = (invSearchFields.funds) ? invSearchFields.funds : '';
     }
     populateSearchFields();
+
+    <% if(roles.role_id === 5 || roles.role_id === 4) { %>
+    document.querySelector("div.inv-type-div").classList.add("hideVisibility");
+    <% } %>
 </script>

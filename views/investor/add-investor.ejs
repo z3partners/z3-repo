@@ -60,12 +60,12 @@
                                     <div class="row gy-3">
                                         <div class="col-md">
                                             <small class="form-label d-block">Investor Type</small>
-                                            <div class="form-check form-check-inline mt-3">
-                                                <input class="form-check-input" type="radio" name="investor_type" id="investor_type1" value="Domestic" checked>
+                                            <div class="form-check form-check-inline mt-3 inv4">
+                                                <input class="form-check-input" type="radio" name="investor_type" id="investor_type1" value="Domestic" required>
                                                 <label class="form-check-label" for="investor_type1">Domestic</label>
                                             </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="investor_type" id="investor_type2" value="International">
+                                            <div class="form-check form-check-inline inv5">
+                                                <input class="form-check-input" type="radio" name="investor_type" id="investor_type2" value="International" required>
                                                 <label class="form-check-label" for="investorTyp2">International</label>
                                             </div>
 
@@ -159,3 +159,11 @@
 <!-- / Layout wrapper -->
 </div>
 <%- include("../common/footer-imports.ejs"); %>
+<script>
+<% if(roles.role_id === 4) { %>
+document.querySelector('div.inv5').classList.add("hideElem");
+<% } else if(roles.role_id === 5 ) { %>
+document.querySelector('div.inv4').classList.add("hideElem");
+document.querySelector('div.inv5').classList.add("mt-3");
+<% } %>
+</script>

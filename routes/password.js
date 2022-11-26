@@ -11,10 +11,10 @@ router.post('/', async function (req, res, next) {
     }
 
     const id = req.body['edit-id'];
-    const userId = req.body.investor_id;
+    const userId = req.session.users.user_id;
     const catList = req.session.catList ? req.session.catList : [];
     if (id) {
-        const investor = await investorService.getInvestor(id);
+        const investor = await investorService.getInvestor(id, req.session.roleDetails.role_id);
         res.locals.investor = JSON.stringify(investor.message);
         if (!Array.isArray(investor.message)) {
             req.session.msg = 'Something went wrong. Please try again!!';

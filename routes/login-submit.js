@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const users = require('../services/users');
+const admin_roles = [1, 4, 5];
 
 /* post login page. */
 router.post('/', async function(req, res, next) {
@@ -17,7 +18,7 @@ router.post('/', async function(req, res, next) {
         req.session.users = {"user_id": resposne.message.userDetail.user_id, "fName": resposne.message.userDetail.first_name, "lName":resposne.message.userDetail.last_name, 'cname': resposne.message.userDetail.company_legal_name};
         req.session.roleDetails = resposne.message.roleDetails;
          //console.log(resposne);
-        if(resposne.message.roleDetails.role_id === 1) {
+        if(admin_roles.includes(resposne.message.roleDetails.role_id)) {
           res.redirect('./index');
         } else {
           res.redirect('./inv-home');

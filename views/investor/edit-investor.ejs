@@ -61,14 +61,14 @@
 
                                 <div class="mb-3">
                                     <div class="row gy-3">
-                                        <div class="col-md">
+                                        <div class="col-md inv-type-div">
                                             <small class="form-label d-block">Investor Type</small>
                                             <div class="form-check form-check-inline mt-3">
-                                                <input class="form-check-input" type="radio" name="investor_type" id="investor_type1" value="Domestic">
+                                                <input class="form-check-input" type="radio" name="investor_type" id="investor_type1" value="Domestic" required>
                                                 <label class="form-check-label" for="investor_type1">Domestic</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="investor_type" id="investor_type2" value="International">
+                                                <input class="form-check-input" type="radio" name="investor_type" id="investor_type2" value="International" required>
                                                 <label class="form-check-label" for="investorTyp2">International</label>
                                             </div>
 
@@ -189,4 +189,7 @@
         document.getElementById("investorEditBtn").innerHTML = "Edit";
     }
     populateInvestorData(investorData);
+    <% if(roles.role_id === 5 || roles.role_id === 4) { %>
+    document.querySelector("div.inv-type-div").classList.add("hideElem");
+    <% } %>
 </script>
