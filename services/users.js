@@ -16,7 +16,7 @@ async function getResetToken(emailId) {
         if (!userDetails.password || !userDetails.salt || userDetails.status === 0) {
             return {message: `User is not active or password not created!!`, status: 400};
         } else {
-            const resetPasswordExpires = Date.now() + 3600000; //expires in an hour
+            const resetPasswordExpires = Date.now() + 900000; //expires in 15 mins
             const resetPasswordToken = crypto.randomBytes(16).toString('hex');
             const userId = await db.query(`UPDATE z3_user set reset_token = ?, reset_token_expiry = ? where user_id = ?`, [resetPasswordToken, resetPasswordExpires, userDetails.user_id]);
             return {
@@ -29,6 +29,40 @@ async function getResetToken(emailId) {
         return {message: `The email address "${emailId}" is not associated with any account`, status: 400};
     }
 }
+
+async function getUserDetailByToken(token) {
+    const rows = await db.query(`select  user_id,
+        company_legal_name,
+        first_name,
+        username,
+        alt_email_1,
+        alt_email_2,
+        phone_number,
+        financial_year,
+        investor_type,
+        fund_association,
+        created_at,
+        updated_at,
+        reset_token_expiry,
+        status from z3_user where reset_token = ? `, [token]);
+    //console.log(`select * from z3_user where reset_token = ${token}`);
+    const data = helper.emptyOrRows(rows);
+    if (data.length) {
+        const userDetails = data[0];
+        if (userDetails.status === 0) {
+            return {message: `User is not active please contact Z3Partners`, status: 400};
+        } else {
+            return {
+                message: ``,
+                userDetails: userDetails,
+                status: 200
+            };
+        }
+    } else {
+        return {message: `Invalid data please contact Z3Partners!!`, status: 400};
+    }
+}
+
 async function createUser(userDetails) {
     const salt = crypto.randomBytes(16).toString('hex');
     const hash = crypto.pbkdf2Sync(userDetails.password, salt,
@@ -93,5 +127,6 @@ module.exports = {
     loginUser,
     createUser,
     getResetToken,
+    getUserDetailByToken,
     changePassword
 }

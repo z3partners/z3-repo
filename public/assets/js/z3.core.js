@@ -137,12 +137,27 @@ $(document).ready(function () {
     });
 
     $("#change-pass-btn").click(function (e) {
+        $("span.danger").text('');
         const password = document.getElementById("password").value;
         const newPassword = document.getElementById("new_password").value;
         const confirmPassword = document.getElementById("confirm-password").value;
         if(newPassword.trim()=== '' || confirmPassword.trim() === '' || password.trim() === '') {
             $("span.danger").text('Please enter all fields.');
         } else if(newPassword !== confirmPassword) {
+            $("span.danger").text('New Password and Confirm Password is not matching.');
+        } else {
+            let formElem = document.getElementById("change-pass");
+            formElem.submit();
+        }
+    });
+
+    $("#reset-pass-btn").click(function (e) {
+        $("span.danger").text('');
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirm-password").value;
+        if(confirmPassword.trim() === '' || password.trim() === '') {
+            $("span.danger").text('Please enter all fields.');
+        } else if(password !== confirmPassword) {
             $("span.danger").text('New Password and Confirm Password is not matching.');
         } else {
             let formElem = document.getElementById("change-pass");
