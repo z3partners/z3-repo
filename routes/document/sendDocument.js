@@ -13,12 +13,12 @@ router.post('/', async function (req, res, next) {
         //console.log(req.body);
         const fileData = JSON.parse(req.body.file_path);
         const transporter = emailService.getTransporter();
-
+        const textData = 'This email is for your email verification.';
         const mailData = {
             from: 'auth@mail.z3partners.com',  // sender address
             to: 'production2@4thdimension.in',   // list of receivers
             subject: 'Z3 Partners: Please find attachment',
-            text: 'This email is for your email verification.',
+            text: textData,
             attachments: [
                 {
                     filename: fileData.originalname,
