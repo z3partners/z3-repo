@@ -21,14 +21,12 @@ router.post('/', async function(req, res, next) {
     const roleId = req.body['role_id'];
     const profileId = req.body['profile_id'];
     const catList = req.session.catList ? req.session.catList : [];
-    //console.log("========>",id, roleId, profileId);
     if(profileId) {
         const first_name = req.body.contact_name;
         const phone_number = req.body.contact_number;
         const alt_email_1 = req.body.alt_email_1;
         const alt_email_2 = req.body.alt_email_2;
         const rows = await investorService.updateProfile({user_id: profileId, first_name: first_name, phone_number: phone_number, alt_email_1: alt_email_1, alt_email_2: alt_email_2});
-        //console.log(rows);
         const profileData = await investorService.getInvestor(+profileId);
         res.locals.profile = JSON.stringify(profileData.message[0]);
         req.session.users = {"user_id": profileData.message[0].user_id, "fName": profileData.message[0].first_name, "lName":profileData.message[0].last_name, 'cname': profileData.message[0].company_legal_name};

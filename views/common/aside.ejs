@@ -72,10 +72,11 @@
             </ul>
         </li>
         <!-- Misc -->
+        <% if([1].includes(roles.role_id)) { %>
         <li class="menu-header small text-uppercase"><span class="menu-header-text">User Management</span></li>
         <li class="menu-item">
             <a
-                    href="#"
+                    href="/new-user"
                     class="menu-link"
                     >
                 <i class="menu-icon tf-icons bx bx-file"></i>
@@ -85,13 +86,14 @@
         </li>
         <li class="menu-item">
             <a
-                    href="#"
+                    href="/users"
                     class="menu-link"
                     >
                 <i class="menu-icon tf-icons bx bx-file"></i>
 
-                <div>User Roles</div>
+                <div>Manage User</div>
             </a>
         </li>
+        <% } %>
     </ul>
 </aside>

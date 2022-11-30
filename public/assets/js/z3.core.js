@@ -89,6 +89,20 @@ $(document).ready(function () {
         }
     });
 
+    $(".del-user-btn").click(function (e) {
+        const elm = e.target.closest(".del-user-btn");
+        const userDetails = JSON.parse(elm.dataset.user);
+        const res = confirm(`Are your sure to DELETE ${userDetails.first_name}`);
+        if (res) {
+            $.post("./del-user", {
+                    user_id: userDetails.user_id,
+                },
+                function (data, status) {
+                    location.href = "./users";
+                });
+        }
+    });
+
     $(".del-document-btn").click(function (e) {
         const elm = e.target.closest(".del-document-btn");
         const documentDetails = JSON.parse(elm.dataset.document);
@@ -128,6 +142,8 @@ $(document).ready(function () {
             document: 'document_id',
             profile: 'user_id',
             password: 'user_id',
+            user: 'user_id',
+            userpass: 'user_id',
             invpass: 'user_id'
         });
 
@@ -171,6 +187,8 @@ function formSubmit(action, id, roleId) {
         document: 'edit-document',
         profile: 'profile',
         password: 'password',
+        userpass: 'create-user-pass',
+        user: 'edit-user',
         invpass: 'create-investor-pass'
 
     });

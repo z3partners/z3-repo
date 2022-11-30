@@ -124,6 +124,7 @@ async function listAll(status, searchFields) {
 
 async function deleteInvestor(user_id) {
     const response = await db.query(`DELETE from z3_user where user_id = ?`, [user_id]);
+    const roleRes = await db.query(`DELETE from z3_user_role_mapping where user_id = ?`, [user_id]);
     return {message: `Investor deleted!!`, status: 200};
 }
 

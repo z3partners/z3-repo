@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const users = require('../services/users');
+const users = require('../services/user');
 const categoryService = require('../services/category');
 const investorService = require('../services/investor');
 
