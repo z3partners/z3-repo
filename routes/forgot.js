@@ -18,27 +18,29 @@ router.post('/', async function(req, res, next) {
     } else {
         try {
             const response = await users.getResetToken(user_email);
-            if(response.token) {
-                msg = response.message;
-                const transporter = emailService.getTransporter();
-                const textData = 'Please click the link to reset password: https://irportal.z3partners.com/reset/?token='+ response.token;
-                const mailData = {
-                    from: 'auth@mail.z3partners.com',  // sender address
-                    to: 'production2@4thdimension.in',   // list of receivers
-                    subject: 'Z3 Partners: Password reset link',
-                    text: textData
-                };
+            console.log(response);
+            msg = response.message;
+            if (response.status === 200) {
+                if (response.token) {
+                    const transporter = emailService.getTransporter();
+                    const textData = 'Please click the link to reset password: https://irportal.z3partners.com/reset/?token=' + response.token;
+                    const mailData = {
+                        from: 'auth@mail.z3partners.com',  // sender address
+                        to: 'production2@4thdimension.in',   // list of receivers
+                        subject: 'Z3 Partners: Password reset link',
+                        text: textData
+                    };
 
-                transporter.sendMail(mailData, function (err, info) {
-                    if(err)
-                        console.log(err);
-                    else
-                        console.log(info);
-                });
-            } else {
-                msg = 'Error while sending reset link, please try again!!';
+                    transporter.sendMail(mailData, function (err, info) {
+                        if (err)
+                            console.log(err);
+                        else
+                            console.log(info);
+                    });
+                } else {
+                    msg = 'Error while sending reset link, please try again!!';
+                }
             }
-
         } catch (err) {
             console.error(`Error while sending reset link `, err.message);
             next(err);
