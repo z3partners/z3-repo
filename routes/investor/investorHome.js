@@ -60,7 +60,7 @@ router.post('/', async function(req, res, next) {
             docCat = req.body.nav_cat_id;
         }
         res.locals.showCat = docCat;
-        res.locals.docSearchFields = JSON.stringify(JSON.stringify(req.body));
+        res.locals.docSearchFields = JSON.stringify(req.body);
         const start_date= req.body.start_date;
         const end_date= req.body.end_date;
         const quarter = req.body.quarter;

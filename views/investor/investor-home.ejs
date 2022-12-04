@@ -24,7 +24,7 @@
             investorEmail[`'${inv.user_id}'`] = inv.username;
             funds[`'${inv.user_id}'`] = inv.fund_association;
         });
-        const docSearchFields = <%- JSON.parse(docSearchFields) %>
+        const docSearchFields = <%- docSearchFields; %>
     </script>
 
     <!-- Content wrapper -->
