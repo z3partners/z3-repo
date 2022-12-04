@@ -43,11 +43,6 @@
 
             <ul class="menu-sub">
                 <% if (catList && Array.isArray(catList.message) && catList.message.length) { %>
-                <li class="menu-item">
-                    <a href="/inv-home" class="menu-link">
-                        <div data-i18n="Without menu">All Category</div>
-                    </a>
-                </li>
                 <% catList.message.forEach(function(cat){ %>
                 <% if (cat.status) { %>
                 <li class="menu-item side-nav-cat" data-category='<%- JSON.stringify(cat) %>'>

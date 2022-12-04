@@ -3,9 +3,28 @@
 <div class="layout-page">
     <%- include("../common/top-nav.ejs"); %>
     <script>
+        const allCat = {};
+        const allSubCat = {};
         const data = <%- allCategory %>
-        const invSearchFields = <%- invSearchFields %>
-        const documentList = <%- JSON.stringify(documentList) %>
+                data.forEach(d => {
+                    if(d.parent_id.toString() === "0") {
+                        allCat[`'${d.category_id}'`] = d;
+                    } else {
+                        allSubCat[`'${d.parent_id.toString()}'`] = [];
+                        allSubCat[`'${d.parent_id.toString()}'`].push(d);
+                    }
+                });
+        const investorList = <%- JSON.stringify(investorList) %>
+        const investorName = {};
+        const investorEmail = {};
+        const funds = {};
+
+        investorList.forEach(inv => {
+            investorName[`'${inv.user_id}'`] = inv.company_legal_name;
+            investorEmail[`'${inv.user_id}'`] = inv.username;
+            funds[`'${inv.user_id}'`] = inv.fund_association;
+        });
+        const docSearchFields = <%- JSON.parse(docSearchFields) %>
     </script>
 
     <!-- Content wrapper -->
@@ -34,44 +53,127 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
+            <% if (showFilter) { %>
+            <form action="" method="post" name="docSearch">
+                <div class="row">
+                    <div class="col-lg-12 mb-4 order-0">
+                        <div class="card mb-4">
+                            <h5 class="card-header">Search and Filter the Documents</h5>
+                            <div class="card-body">
+                                <div class="row gx-3 gy-2 align-items-center">
+
+                                    <div class="col-md-6">
+                                        <label for="html5-date-input" class="col-md-2 col-form-label">Start Date</label>
+                                        <div class="col-md-10">
+                                            <input class="form-control" type="date" value="" id="start_date" name="start_date">
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="html5-date-input" class="col-md-2 col-form-label">End Date</label>
+                                        <div class="col-md-10">
+                                            <input class="form-control" type="date" value="" id="end_date" name="end_date">
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+                                <div class="row gx-3 gy-2 align-items-center pt-3">
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="quarter">Quarter</label>
+                                        <select class="form-select placement-dropdown" id="quarter" name="quarter">
+                                            <option value="">Select</option>
+                                            <option value="Q1">Q1</option>
+                                            <option value="Q2">Q2</option>
+                                            <option value="Q3">Q3</option>
+                                            <option value="Q4">Q4</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="selectCat">Category</label>
+                                        <select class="form-select placement-dropdown" id="selectCat" name="selectCat">
+                                            <option value="">Select</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="selectSubCat">Sub Category</label>
+                                        <select class="form-select placement-dropdown" id="selectSubCat" name="selectSubCat">
+                                            <option value="">Select</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label" for="showToastPlacement">&nbsp;</label>
+                                        <button id="showToastPlacement" class="btn btn-primary d-block">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <% } %>
             <div class="row">
                 <div class="col-lg-12 mb-4 order-0">
-                    <h4 class="fw-bold py-3 mb-4"> Latest Documents</h4>
+                    <h4 class="fw-bold py-3 mb-4" id="doc-cat-title">Latest Documents</h4>
 
+                    <!-- Search -->
+                    <div class=" align-items-center">
+                        <div class=" d-flex align-items-center">
+                            <input
+                                    type="text"
+                                    class="form-control border-1 shadow-none"
+                                    placeholder="Type here to search"
+                                    aria-label="Type here to search"
+                                    id="searchField"
+                                    />
+                        </div>
+                        <br />
+                    </div>
+                    <!-- /Search -->
                     <!-- Basic Bootstrap Table -->
                     <div class="card">
                         <div class="table-responsive text-nowrap">
+                            <% if (Array.isArray(documentList) && documentList.length) { %>
+                            <div class="table-sortable" id="table-sortable">
+                                Table will be rendered here
+                            </div>
+                            <% }  else { %>
                             <table class="table">
                                 <thead>
                                 <tr>
                                     <th>Document Name</th>
-                                    <th>Date(DD/MM/YYYY)</th>
-                                    <th>Actions</th>
+                                    <th>Category</th>
+                                    <th>DATE(DD/MM/YYYY)</th>
+                                    <th>Download</th>
                                 </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-0">
-                                <% if (Array.isArray(documentList) && documentList.length) { %>
-                                <% documentList.forEach(function(doc){ %>
                                 <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><%=doc.document_name%></strong></td>
-                                    <td><%=new Date(doc.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })%></td>
-                                    <td>
-                                        <a href="./download-document?doc=<%=JSON.parse(doc.file_path).filename%>"><u>Download</u></a>
-                                    </td>
+                                    <td colspan="3"><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong class="success">Document list is empty</strong></td>
                                 </tr>
-                                <% }); %>
-                                <% }  else { %>
-                                <tr>
-                                    <td colspan="3"><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong class="success">Document list is empty for this category</strong></td>
-                                </tr>
-                                <% } %>
-                                </tbody></table>
+                            </table>
+                            <% } %>
                         </div>
                     </div>
                     <!--/ Basic Bootstrap Table -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+
+                    <div class="demo-inline-spacing">
+                        <!-- Basic Pagination -->
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination" id="documentPagination"></ul>
+                        </nav>
+                        <!--/ Basic Pagination -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -95,3 +197,70 @@
 <!-- / Layout wrapper -->
 </div>
 <%- include("../common/footer-imports.ejs"); %>
+<script>
+    var columns = {
+        'document_name': 'Document Name',
+        'category_id': 'Category',
+        'quarter': 'Quarter',
+        'created_at': 'DATE(DD/MM/YYYY',
+        'download': 'Download'
+    };
+    const showCat = <%- showCat %>;
+    const documentList = <%- JSON.stringify(documentList) %>
+    if (Array.isArray(documentList) && documentList.length) {
+        documentList.forEach(doc => {
+            doc.created_at = new Date(doc.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
+            doc.document_name = `<strong><a href="./download-document?doc=${JSON.parse(doc.file_path).filename}">${doc.document_name}</a></strong>`;
+            doc.download =`<a href="./download-document?doc=${JSON.parse(doc.file_path).filename}"><u>Download</u></a>`;
+            doc.category_id = allCat[`'${doc.category_id}'`]['category_name'];
+        });
+
+        var table = $('#table-sortable').tableSortable({
+            data: documentList,
+            columns: columns,
+            rowsPerPage: 50,
+            sorting:false,
+            pagination: true,
+            paginationContainer: '#documentPagination',
+            searchField: '#searchField',
+            nextText: '<i class="tf-icon bx bx-chevron-right"></i>',
+            prevText: '<i class="tf-icon bx bx-chevron-left"></i>',
+            formatCell: function(row, key) {
+                if (row[key] === null) {
+                    return $('<span></span>').text("-");
+                }
+                return row[key];
+            }
+        });
+    }
+    function populateCategory(selector, data) {
+        let catSelect = $(selector);
+        catSelect.empty();
+        catSelect.append(`<option value="">Select</option>`)
+        data.forEach(cat => {
+            catSelect.append(`<option value="${cat.category_id}">${cat.category_name}</option>`)
+        });
+    }
+    populateCategory('#selectCat', Object.values(allCat));
+
+    function populateSearchFields() {
+        document.getElementById("start_date").value = (docSearchFields.start_date) ? docSearchFields.start_date : '';
+        document.getElementById("end_date").value = (docSearchFields.end_date) ? docSearchFields.end_date : '';
+        document.getElementById("quarter").value = (docSearchFields.quarter) ? docSearchFields.quarter : '';
+        document.getElementById("selectCat").value = (docSearchFields.selectCat) ? +docSearchFields.selectCat : '';
+        if(docSearchFields.selectCat) {
+            const subCat = (allSubCat[`'${docSearchFields.selectCat}'`]) ? allSubCat[`'${docSearchFields.selectCat}'`]: [];
+            populateCategory('#selectSubCat', subCat);
+        }
+        if(showCat) {
+            document.getElementById("doc-cat-title").innerHTML = (showCat===-1 ) ?  "All Documents" : allCat[`'${showCat}'`]['category_name'] + " Documents";
+        }
+    }
+
+    $(document).ready(function () {
+        <% if (showFilter) { %>
+        populateSearchFields();
+        <% } %>
+    });
+
+</script>
