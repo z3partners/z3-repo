@@ -1,0 +1,67 @@
+<%- include("../common/head.ejs");%>
+<link rel="stylesheet" href="../static/assets/vendor/css/pages/page-auth.css" />
+<div class="container-xxl">
+    <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner">
+            <!-- Register -->
+            <div class="card">
+            <div class="card-body">
+                <div class="app-brand justify-content-center">
+                    <a href="/" class="app-brand-link gap-2">
+                        <img src="../static/assets/img/logo-dark.png" width="200" height="56" alt=""/> </a>
+                </div>
+                <!-- /Logo -->
+                <span class="danger"></span>
+                <h4 class="mb-2">Reset Password</h4>
+                <p class="mb-4">Please create new password</p>
+                <% if (message) { %>
+                <p class="mb-4 error-z3"><%= message %></p>
+                <% } %>
+            <form name="investor" action="/reset-pass" method="post" autocomplete="off"  id="change-pass">
+                <input type="hidden" name="investor_id" value="" id="investor_id" />
+                <div class="mb-3">
+                    <label class="form-label" for="contact_name">CONTACT PERSON Name</label>
+                    <div class="input-group input-group-merge">
+                        <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+                        <input  disabled type="text" class="form-control" name="contact_name" id="contact_name" required aria-label="John Doe" aria-describedby="basic-icon-default-fullname2">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="email_id">Email</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                        <input disabled type="email" id="email_id" name="email_id" required class="form-control" aria-label="john.doe" aria-describedby="basic-icon-default-email2">
+                        <span id="basic-icon-default-email2" class="input-group-text">@example.com</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="input-group form-password-toggle">
+                        <input type="password" id="password" name="password" required class="form-control" placeholder="Password" autocomplete="new-password">
+                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="confirm-password">Confirm Password</label>
+                    <div class="input-group form-password-toggle">
+                        <input type="password" id="confirm-password" name="confirm-password" required class="form-control" placeholder="Confirm password" aria-label="Password">
+                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" id="reset-pass-btn">Reset Password</button>
+            </form>
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("../common/footer-imports.ejs");%>
+<script>
+    const investor = <%- JSON.stringify(investor)%>
+    function populateInvestorData(investorData) {
+        document.getElementById("contact_name").value = investorData.first_name;
+        document.getElementById("email_id").value = investorData.username;
+        document.getElementById("investor_id").value = investorData.user_id;
+    }
+    populateInvestorData(investor);
+</script>
