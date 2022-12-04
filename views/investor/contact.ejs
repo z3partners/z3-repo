@@ -1,0 +1,71 @@
+<%- include("../common/head.ejs"); %>
+<%- include("../common/inv-aside.ejs");%>
+<div class="layout-page">
+    <%- include("../common/top-nav.ejs"); %>
+
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+            <div class="row">
+                <div class="col-xl">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0"> Support /  Feedback</h5>
+
+                        </div>
+                        <div class="card-body">
+                            <p class="form-label" style="margin-top: -10px;">
+                                <% if (message) { %>
+                                <span class="danger"><%= message %></span>
+                                <% } %>
+                            </p>
+                            <form name="contact" method="post" action="./contact">
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-icon-default-company">Subject</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="basic-icon-default-company2" class="input-group-text"><i class="bx bx-buildings"></i></span>
+                                        <input required type="text" id="contact-subject" name="contact-subject" class="form-control" placeholder="Type your Subject" aria-label="ACME Inc." aria-describedby="basic-icon-default-company2" >
+                                    </div>
+                                </div>
+
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-icon-default-fullname">Your Query / Feedback</label>
+                                    <div class="input-group input-group-merge">
+                                        <textarea  required class="form-control" id="feedback-query" name="feedback-query" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Send Feedback</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <!-- / Content -->
+
+    <%- include("../common/footer-content.ejs");%>
+
+    <div class="content-backdrop fade"></div>
+</div>
+<!-- Content wrapper -->
+</div>
+<!-- / Layout page -->
+</div>
+
+<!-- Overlay -->
+<div class="layout-overlay layout-menu-toggle"></div>
+</div>
+<!-- / Layout wrapper -->
+</div>
+<%- include("../common/footer-imports.ejs"); %>
+
