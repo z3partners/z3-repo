@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
-const users = require('../services/users');
+const user = require('../services/user');
 var emailService = require('../services/email');
 
 /* get login page. */
 router.get('/', async function(req, res) {
     const token = req.query.token;
-    const response = await users.getUserDetailByToken(token);
+    const response = await user.getUserDetailByToken(token);
     if(response.status === 200) {
         const userDetails = response.userDetails;
         if(Date.now() > userDetails.reset_token_expiry) {

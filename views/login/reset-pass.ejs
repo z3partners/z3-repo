@@ -20,13 +20,6 @@
             <form name="investor" action="/reset-pass" method="post" autocomplete="off"  id="change-pass">
                 <input type="hidden" name="investor_id" value="" id="investor_id" />
                 <div class="mb-3">
-                    <label class="form-label" for="company_legal_name">Company LEGAL NAME</label>
-                    <div class="input-group input-group-merge">
-                        <span id="basic-icon-default-company2" class="input-group-text"><i class="bx bx-buildings"></i></span>
-                        <input disabled type="text" name="company_legal_name" id="company_legal_name" required class="form-control" aria-label="ACME Inc." aria-describedby="basic-icon-default-company2">
-                    </div>
-                </div>
-                <div class="mb-3">
                     <label class="form-label" for="contact_name">CONTACT PERSON Name</label>
                     <div class="input-group input-group-merge">
                         <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>
@@ -66,7 +59,6 @@
 <script>
     const investor = <%- JSON.stringify(investor)%>
     function populateInvestorData(investorData) {
-        document.getElementById("company_legal_name").value = investorData.company_legal_name;
         document.getElementById("contact_name").value = investorData.first_name;
         document.getElementById("email_id").value = investorData.username;
         document.getElementById("investor_id").value = investorData.user_id;

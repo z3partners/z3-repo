@@ -18,7 +18,7 @@ async function getResetToken(emailId) {
         } else {
             const resetPasswordExpires = Date.now() + 900000; //expires in 15 mins
             const resetPasswordToken = crypto.randomBytes(16).toString('hex');
-            const userId = await db.query(`UPDATE z3_user set reset_token = ?, reset_token_expiry = ? where user_id = ?`, [resetPasswordToken, resetPasswordExpires, userDetails.user_id]);
+            const userId = await db.query(`UPDATE z3_user set reset_token = ?, reset_token_expiry = ?, updated_at = current_timestamp() where user_id = ?`, [resetPasswordToken, resetPasswordExpires, userDetails.user_id]);
             return {
                 message: `Reset link sent successfully. Please check your email.`,
                 token: resetPasswordToken,
@@ -104,7 +104,7 @@ async function changePassword(id, password, newPassword) {
         if (data.length && validPassword(password, data[0].password, data[0].salt)) {
             const salt = crypto.randomBytes(16).toString('hex');
             const hash = crypto.pbkdf2Sync(newPassword, salt, 1000, 64, `sha512`).toString(`hex`);
-            await db.query(`UPDATE z3_user set password = ?, salt = ? where user_id = ?`, [hash, salt, id]);
+            await db.query(`UPDATE z3_user set password = ?, salt = ?, updated_at = current_timestamp() where user_id = ?`, [hash, salt, id]);
             return {message: "Password changed", status: 200};
         } else {
             return {message: "Current password is incorrect", status: 400};
