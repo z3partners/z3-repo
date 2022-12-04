@@ -43,11 +43,6 @@
 
             <ul class="menu-sub">
                 <% if (catList && Array.isArray(catList.message) && catList.message.length) { %>
-                <li class="menu-item">
-                    <a href="/inv-home" class="menu-link">
-                        <div data-i18n="Without menu">All Category</div>
-                    </a>
-                </li>
                 <% catList.message.forEach(function(cat){ %>
                 <% if (cat.status) { %>
                 <li class="menu-item side-nav-cat" data-category='<%- JSON.stringify(cat) %>'>
@@ -66,7 +61,7 @@
         <li class="menu-header small text-uppercase"><span class="menu-header-text">About Us</span></li>
         <li class="menu-item">
             <a
-                    href="#"
+                    href="./contact"
                     class="menu-link"
                     >
                 <i class="menu-icon tf-icons bx bx-file"></i>

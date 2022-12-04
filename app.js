@@ -13,11 +13,18 @@ const forgotPassRouter = require('./routes/forgot');
 const loginSubmitRouter = require('./routes/login-submit');
 const logoutRouter = require('./routes/logout');
 
-const usersRouter = require('./routes/users');
+const usersRouter = require('./routes/user/users');
 const profilesRouter = require('./routes/profile');
 const passwordRouter = require('./routes/password');
 const resetRouter = require('./routes/reset');
 const resetPassRouter = require('./routes/resetPass');
+const newUserRouter = require('./routes/user/newUser');
+const editUserRouter = require('./routes/user/editUser');
+const delUserRouter = require('./routes/user/delUser');
+const userPassRouter = require('./routes/user/userPass');
+const submitUserPassRouter = require('./routes/user/submitUserPass');
+
+const contactRouter = require('./routes/investor/contact');
 
 const homeRouter = require('./routes/investor/home');
 const investorHomeRouter = require('./routes/investor/investorHome');
@@ -80,8 +87,17 @@ app.use('/logout', logoutRouter);
 app.use('/users', usersRouter);
 app.use('/profile', profilesRouter);
 app.use('/password', passwordRouter);
+
 app.use('/reset/:token?', resetRouter);
 app.use('/reset-pass', resetPassRouter);
+
+app.use('/new-user', newUserRouter);
+app.use('/edit-user', editUserRouter);
+app.use('/del-user', delUserRouter);
+app.use('/create-user-pass', userPassRouter);
+app.use('/submit-user-pass', submitUserPassRouter);
+
+app.use('/contact', contactRouter);
 
 app.use('/investor', investorDashBoardRouter);
 app.use('/add-investor', addInvestorRouter);

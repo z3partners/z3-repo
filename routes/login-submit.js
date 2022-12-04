@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const users = require('../services/users');
+const users = require('../services/user');
 const admin_roles = [1, 4, 5];
 
 /* post login page. */

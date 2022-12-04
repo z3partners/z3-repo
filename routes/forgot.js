@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const users = require('../services/users');
+const users = require('../services/user');
 var emailService = require('../services/email');
 
 /* get login page. */
