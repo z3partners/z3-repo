@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var categoryService = require('../../services/category');
 var userService = require('../../services/user');
+const emailService = require("../../services/email");
 
 /* GET home page. */
 router.post('/', async function(req, res, next) {
@@ -15,6 +16,20 @@ router.post('/', async function(req, res, next) {
         if(userId) {
             const resposne = await userService.createUserPass({user_id: userId, password: password});
             req.session.msg = resposne.message;
+            const transporter = emailService.getTransporter();
+            const textData = 'Password created successfully!!';
+            const mailData = {
+                from: 'auth@z3partners.com',  // sender address
+                to: 'production2@4thdimension.in',   // list of receivers
+                subject: 'Z3 Partners: Password created successfully',
+                text: textData
+            };
+            transporter.sendMail(mailData, function (err, info) {
+                if(err)
+                    console.log(err);
+                else
+                    console.log(info);
+            });
             res.redirect('./users');
         } else {
             req.session.msg = "Something went wrong. Please try again!!";

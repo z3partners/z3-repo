@@ -7,6 +7,7 @@ const filePath = '/home/irportal.z3partners.com/z3-documents/';
 //const filePath = './z3-documents/'; // For local
 const fs = require('fs');
 const fileUpload = require('express-fileupload');
+const emailService = require("../../services/email");
 const app = express();
 app.use(fileUpload());
 
@@ -75,10 +76,38 @@ router.post('/',  async function(req, res) {
                 dataForDB.document_id = document_id;
                 const resposne = await documentService.updateDocument(dataForDB);
                 req.session.msg = resposne.message;
+                const transporter = emailService.getTransporter();
+                const textData = 'Document updated successfully!!';
+                const mailData = {
+                    from: 'auth@z3partners.com',  // sender address
+                    to: 'production2@4thdimension.in',   // list of receivers
+                    subject: 'Z3 Partners: Document updated successfully',
+                    text: textData
+                };
+                transporter.sendMail(mailData, function (err, info) {
+                    if(err)
+                        console.log(err);
+                    else
+                        console.log(info);
+                });
                 res.redirect('./documents');
             } else {
                 const resposne = await documentService.createDocument(dataForDB);
                 req.session.msg = resposne.message;
+                const transporter = emailService.getTransporter();
+                const textData = 'Document created successfully!!';
+                const mailData = {
+                    from: 'auth@z3partners.com',  // sender address
+                    to: 'production2@4thdimension.in',   // list of receivers
+                    subject: 'Z3 Partners: Document created successfully',
+                    text: textData
+                };
+                transporter.sendMail(mailData, function (err, info) {
+                    if(err)
+                        console.log(err);
+                    else
+                        console.log(info);
+                });
                 res.redirect('./documents');
             }
         }

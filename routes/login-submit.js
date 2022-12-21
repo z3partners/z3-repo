@@ -34,28 +34,6 @@ router.post('/', async function(req, res, next) {
     next(err);
   }
   }
-/*  try {
-    res.json(await users.loginUser(emailUsername, password));
-  } catch (err) {
-    console.error(`Error while getting user login `, err.message);
-    next(err);
-  }*/
-/*
-  try {
-    res.json(await users.createUser({username:emailUsername, password: password}));
-  } catch (err) {
-    console.error(`Error while getting user login `, err.message);
-    next(err);
-  }
-*/
-
-
-  // res.render('login/login', { message: 'Invalid Username/Password. Please try again!!' });
-  /*if (!password || !emailUsername) {
-    res.render('login/login', { message: 'Invalid Username/Password. Please try again!!' });
-  } else {
-    res.render('investor/investor-dashboard');
-  }*/
 });
 
 router.get('/', async function(req, res, next) {

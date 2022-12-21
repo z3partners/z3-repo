@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var categoryService = require('../../services/category');
 var investorService = require('../../services/investor');
+const emailService = require("../../services/email");
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
@@ -56,6 +57,20 @@ router.post('/', async function(req, res, next) {
                 phone_number: phone_number,
                 status: status});
             req.session.msg = resposne.message;
+            const transporter = emailService.getTransporter();
+            const textData = 'Investor created successfully!!';
+            const mailData = {
+                from: 'auth@z3partners.com',  // sender address
+                to: 'production2@4thdimension.in',   // list of receivers
+                subject: 'Z3 Partners: New investor created successfully',
+                text: textData
+            };
+            transporter.sendMail(mailData, function (err, info) {
+                if(err)
+                    console.log(err);
+                else
+                    console.log(info);
+            });
             res.redirect('./investor');
         }
     } catch (err) {

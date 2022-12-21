@@ -3,6 +3,7 @@ var router = express.Router();
 const users = require('../services/user');
 const categoryService = require('../services/category');
 const investorService = require('../services/investor');
+const emailService = require("../services/email");
 
 /* GET home page. */
 router.post('/', async function (req, res, next) {
@@ -41,6 +42,20 @@ router.post('/', async function (req, res, next) {
         if (passRes.status === 200) {
             req.session.destroy(function (err) {
                 console.log("Session destroyed.", err);
+            });
+            const transporter = emailService.getTransporter();
+            const textData = 'Password changed successfully!!';
+            const mailData = {
+                from: 'auth@z3partners.com',  // sender address
+                to: 'production2@4thdimension.in',   // list of receivers
+                subject: 'Z3 Partners: Password changed successfully',
+                text: textData
+            };
+            transporter.sendMail(mailData, function (err, info) {
+                if(err)
+                    console.log(err);
+                else
+                    console.log(info);
             });
             res.render('login/login', { message: 'Password updated, please re-login!!!' });
         } else {

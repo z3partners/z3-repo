@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var userService = require('../../services/user');
+const emailService = require("../../services/email");
 
 router.get('/', async function (req, res, next) {
     if (!req.session.loggedin) {
@@ -28,6 +29,20 @@ router.post('/', async function(req, res, next) {
             if(userId) {
                 const resposne = await userService.updateUser({user_id: userId, first_name: first_name, phone_number: phone_number, role_id: role_id, status: status});
                 req.session.msg = resposne.message;
+                const transporter = emailService.getTransporter();
+                const textData = 'User updated successfully!!';
+                const mailData = {
+                    from: 'auth@z3partners.com',  // sender address
+                    to: 'production2@4thdimension.in',   // list of receivers
+                    subject: 'Z3 Partners: User updated successfully',
+                    text: textData
+                };
+                transporter.sendMail(mailData, function (err, info) {
+                    if(err)
+                        console.log(err);
+                    else
+                        console.log(info);
+                });
                 res.redirect('./users');
             }
         } catch (err) {

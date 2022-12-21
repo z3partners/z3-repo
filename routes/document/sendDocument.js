@@ -22,7 +22,7 @@ router.post('/', async function (req, res, next) {
             attachments: [
                 {
                     filename: fileData.originalname,
-                    //path: `./z3-documents/${fileData.filename}` // local
+                    // path: `./z3-documents/${fileData.filename}` // local
                     path: `/home/irportal.z3partners.com/z3-documents/${fileData.filename}`
                 }
             ]

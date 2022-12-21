@@ -59,7 +59,20 @@ router.post('/', async function(req, res, next) {
                 role: user_role,
                 status: status});
             req.session.msg = resposne.message;
-            // TODO : Email feature to be added
+            const transporter = emailService.getTransporter();
+            const textData = 'User created successfully!!';
+            const mailData = {
+                from: 'auth@z3partners.com',  // sender address
+                to: 'production2@4thdimension.in',   // list of receivers
+                subject: 'Z3 Partners: User created successfully',
+                text: textData
+            };
+            transporter.sendMail(mailData, function (err, info) {
+                if(err)
+                    console.log(err);
+                else
+                    console.log(info);
+            });
             res.redirect('./users');
         }
     } catch (err) {
