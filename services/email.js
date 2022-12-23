@@ -15,7 +15,8 @@ function getTransporter() {
         host: "smtp.gmail.com",
         auth: {
             user: 'auth@z3partners.com',
-            pass: 'B8282=A<Z<2n%E'
+            pass: 'hkjxwlrgywtyuuqc'
+            // pass: 'B8282=A<Z<2n%E'
             //user: 'support@z3partners.com',
             //pass: 'H@#^sH^6d86z0i28',
         },
