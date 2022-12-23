@@ -32,6 +32,7 @@ router.post('/', async function(req, res, next) {
         const textData = 'User profile updated successfully!!';
         const mailData = {
             from: 'auth@z3partners.com',  // sender address
+            replyTo: 'partner@z3partners.com',  // sender address
             to: 'production2@4thdimension.in',   // list of receivers
             subject: 'Z3 Partners: User profile updated successfully',
             text: textData

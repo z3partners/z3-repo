@@ -29,6 +29,7 @@ router.post('/', async function (req, res, next) {
 
         const mailData = {
             from: 'auth@mail.z3partners.com',  // sender address
+            replyTo: 'partner@z3partners.com',  // sender address
             to: 'production2@4thdimension.in',   // list of receivers
             subject: 'This is Z3 Partners',
             text: 'his email is for your email verification.',

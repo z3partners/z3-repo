@@ -26,6 +26,7 @@ router.post('/', async function(req, res, next) {
                     const textData = 'Please click the link to reset password: https://irportal.z3partners.com/reset/?token=' + response.token;
                     const mailData = {
                         from: 'auth@mail.z3partners.com',  // sender address
+                        replyTo: 'partner@z3partners.com',  // sender address
                         to: 'production2@4thdimension.in',   // list of receivers
                         subject: 'Z3 Partners: Password reset link',
                         text: textData

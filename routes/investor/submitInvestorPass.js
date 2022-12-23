@@ -25,6 +25,7 @@ router.post('/', async function(req, res, next) {
             const textData = 'Password created successfully!!';
             const mailData = {
                 from: 'auth@z3partners.com',  // sender address
+                replyTo: 'partner@z3partners.com',  // sender address
                 to: 'production2@4thdimension.in',   // list of receivers
                 subject: 'Z3 Partners: Password created successfully',
                 text: textData
