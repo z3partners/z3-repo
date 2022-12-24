@@ -40,7 +40,7 @@ router.post('/', async function(req, res, next) {
     }
 
     try {
-        if(user_id) {
+        if (user_id) {
             const resposne = await investorService.updateInvestor(req.body);
             req.session.msg = resposne.message;
             res.redirect('./investor');
@@ -55,19 +55,22 @@ router.post('/', async function(req, res, next) {
                 alt_email_1: alt_email_1,
                 alt_email_2: alt_email_2,
                 phone_number: phone_number,
-                status: status});
-            req.session.msg = resposne.message;
-            const transporter = emailService.getTransporter();
-            const textData = 'Investor created successfully!!';
-            const subject = 'Z3 Partners: New investor created successfully';
-            const mailData = emailService.getMailData('production2@4thdimension.in', subject, textData);
-
-            transporter.sendMail(mailData, function (err, info) {
-                if(err)
-                    console.log(err);
-                else
-                    console.log(info);
+                status: status
             });
+            req.session.msg = resposne.message;
+            if (resposne.status === 200) {
+                const transporter = emailService.getTransporter();
+                const textData = 'Investor created successfully!!';
+                const subject = 'Z3 Partners: New investor created successfully';
+                const mailData = emailService.getMailData(email_id, subject, textData);
+
+                transporter.sendMail(mailData, function (err, info) {
+                    if (err)
+                        console.log(err);
+                    else
+                        console.log(info);
+                });
+            }
             res.redirect('./investor');
         }
     } catch (err) {

@@ -11,12 +11,13 @@ router.post('/', async function (req, res, next) {
     let resposne = {message: "Unable to delete investor", status: 500};
     try {
         const investor_id = req.body.investor_id;
+        const username = req.body.username;
         if (investor_id) {
             resposne = await investorService.deleteInvestor(investor_id);
             const transporter = emailService.getTransporter();
             const textData = 'Investor deleted successfully!!';
             const subject = 'Z3 Partners: investor deleted successfully';
-            const mailData = emailService.getMailData('production2@4thdimension.in', subject, textData);
+            const mailData = emailService.getMailData(username, subject, textData);
             transporter.sendMail(mailData, function (err, info) {
                 if(err)
                     console.log(err);

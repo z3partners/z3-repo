@@ -47,6 +47,7 @@
                         <div class="card-body">
                             <form name="investor" action="./submit-investor-pass" method="post">
                                 <input type="hidden" name="investor_id" value="" id="investor_id" />
+                                <input type="hidden" name="username" value="" id="username" />
                                 <div class="mb-3">
                                     <label class="form-label" for="company_legal_name">Company LEGAL NAME</label>
                                     <div class="input-group input-group-merge">
@@ -126,6 +127,7 @@
         document.getElementById("company_legal_name").value = investorData.company_legal_name;
         document.getElementById("contact_name").value = investorData.first_name;
         document.getElementById("email_id").value = investorData.username;
+        document.getElementById("username").value = investorData.username;
         document.getElementById("investor_id").value = investorData.user_id;
     }
     populateInvestorData(investor[0]);

@@ -12,6 +12,7 @@ router.post('/', async function(req, res, next) {
     const password = req.body.password;
     const confirmPassword = req.body['confirm-password'];
     const investorId = req.body.investor_id;
+    const username = req.body.username;
     if(confirmPassword !== password){
         req.session.msg = "Password and Confirm Password is not matching.";
         res.redirect(`./create-investor-pass?id=${investorId}`);
@@ -21,16 +22,18 @@ router.post('/', async function(req, res, next) {
         if(investorId) {
             const resposne = await investorService.createInvestorPass({user_id: investorId, password: password});
             req.session.msg = resposne.message;
-            const transporter = emailService.getTransporter();
-            const textData = 'Password created successfully!!';
-            const subject = 'Z3 Partners: Password created successfully';
-            const mailData = emailService.getMailData('production2@4thdimension.in', subject, textData);
-            transporter.sendMail(mailData, function (err, info) {
-                if(err)
-                    console.log(err);
-                else
-                    console.log(info);
-            });
+            if(resposne.status === 200) {
+                const transporter = emailService.getTransporter();
+                const textData = 'Password created successfully!!';
+                const subject = 'Z3 Partners: Password created successfully';
+                const mailData = emailService.getMailData(username, subject, textData);
+                transporter.sendMail(mailData, function (err, info) {
+                    if(err)
+                        console.log(err);
+                    else
+                        console.log(info);
+                });
+            }
             res.redirect('./investor');
         } else {
             req.session.msg = "Something went wrong. Please try again!!";

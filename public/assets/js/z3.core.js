@@ -82,6 +82,7 @@ $(document).ready(function () {
         if (res) {
             $.post("./del-investor", {
                     investor_id: investorDetails.user_id,
+                    username: investorDetails.username,
                 },
                 function (data, status) {
                     location.href = "./investor";
