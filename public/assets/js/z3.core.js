@@ -108,10 +108,12 @@ $(document).ready(function () {
     $(".del-document-btn").click(function (e) {
         const elm = e.target.closest(".del-document-btn");
         const documentDetails = JSON.parse(elm.dataset.document);
+        const investorEmailID = (documentDetails.investor_id === -999) ? 'All' : investorEmail[`'${documentDetails.investor_id}'`];
         const res = confirm(`Are your sure to DELETE ${documentDetails.document_name} along with file.`);
         if (res) {
             $.post("./del-document", {
                     document_id: documentDetails.document_id,
+                    investorEmailID: investorEmailID,
                 },
                 function (data, status) {
                     location.href = "./documents";
@@ -126,7 +128,7 @@ $(document).ready(function () {
 
         const res = confirm(`Are your sure to send details to ${investorEmailID}`);
         if (res) {
-            $.post("./send-document", documentDetails,
+            $.post("./send-document", {...documentDetails, investorEmailID: investorEmailID},
                 function (data, status) {
                     console.log(data);
                     //location.href = "./documents";
