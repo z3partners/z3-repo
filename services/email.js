@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const fromEmail = 'Z3Partners <auth@z3partners.com>';
+const fromEmail = 'Z3Partners <prayas@z3partners.com>';
 const replyToEmail = 'partner@z3partners.com';
 const ccEmailList = 'production2@4thdimension.in';
 
