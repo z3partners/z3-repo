@@ -43,6 +43,7 @@
                         <div class="card-body">
                             <form name="investor" action="./edit-investor" method="post">
                                 <input type="hidden" name="investor_id" value="" id="investor_id" />
+                                <input type="hidden" name="username" value="" id="username" />
                                 <div class="mb-3">
                                     <label class="form-label" for="company_legal_name">INVESTOR NAME</label>
                                     <div class="input-group input-group-merge">
@@ -171,6 +172,7 @@
         document.getElementById("contact_name").value = investorData.first_name;
         document.getElementById("contact_number").value = investorData.phone_number;
         document.getElementById("email_id").value = investorData.username;
+        document.getElementById("username").value = investorData.username;
         document.getElementById("alt_email_1").value = investorData.alt_email_1;
         document.getElementById("alt_email_2").value = investorData.alt_email_2;
         document.getElementById("financial_year").value = investorData.financial_year;

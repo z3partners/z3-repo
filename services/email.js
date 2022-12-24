@@ -8,8 +8,8 @@ function getTransporter() {
         port: 465,
         host: "smtp.gmail.com",
         auth: {
-            user: 'auth@z3partners.com',
-            pass: 'hkjxwlrgywtyuuqc'
+            user: 'prayas@z3partners.com',
+            pass: 'caztdqdppdhngabr'
         },
         secure: true,
         tls: {
