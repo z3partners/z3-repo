@@ -11,20 +11,17 @@ router.post('/', async function(req, res, next) {
     }
     const password = req.body.password;
     const userId = req.body.user_id;
+    const username = req.body.username;
 
     try {
         if(userId) {
             const resposne = await userService.createUserPass({user_id: userId, password: password});
-            req.session.msg = resposne.message;
             const transporter = emailService.getTransporter();
-            const textData = 'Password created successfully!!';
-            const mailData = {
-                from: 'auth@z3partners.com',  // sender address
-                replyTo: 'partner@z3partners.com',  // sender address
-                to: 'production2@4thdimension.in',   // list of receivers
-                subject: 'Z3 Partners: Password created successfully',
-                text: textData
-            };
+            req.session.msg = resposne.message;
+            const textData = `Password created successfully, your password is [${password}]`;
+            const subject = 'Z3 Partners: Password created successfully';
+            const toEmailList = (username) ? [username] : 'production2@4thdimension.in';
+            const mailData = emailService.getMailData(toEmailList, subject, textData);
             transporter.sendMail(mailData, function (err, info) {
                 if(err)
                     console.log(err);

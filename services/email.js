@@ -1,24 +1,15 @@
 const nodemailer = require('nodemailer');
+const fromEmail = 'Z3Partners <auth@mail.z3partners.com>';
+const replyToEmail = 'partner@z3partners.com';
+const ccEmailList = 'production2@4thdimension.in';
 
 function getTransporter() {
     return nodemailer.createTransport({
-        /*port: 465,               // true for 465, false for other ports
-        host: "mail.mail.z3partners.com",
-        auth: {
-            user: 'auth@mail.z3partners.com',
-            pass: 'Hte@36$',
-            //user: 'support@z3partners.com',
-            //pass: 'H@#^sH^6d86z0i28',
-        },*/
-
         port: 465,
         host: "smtp.gmail.com",
         auth: {
             user: 'auth@z3partners.com',
             pass: 'hkjxwlrgywtyuuqc'
-            // pass: 'B8282=A<Z<2n%E'
-            //user: 'support@z3partners.com',
-            //pass: 'H@#^sH^6d86z0i28',
         },
         secure: true,
         tls: {
@@ -27,8 +18,25 @@ function getTransporter() {
         }
     });
 }
-
+function getMailData(toEmailList, subject, textData, fileData = '') {
+    const filePath = (process.env.NODE_ENV === 'production')
+        ? `/home/irportal.z3partners.com/z3-documents/`
+        : `./z3-documents/` ;
+    const attachmentDetails = (fileData) ? [{
+        filename: fileData.originalname,
+        path: `${filePath}/${fileData.filename}`
+    }] : [] ;
+     return {
+         to: Array.isArray(toEmailList) ?  toEmailList.join(", ") : toEmailList,   // list of receivers
+         from: fromEmail,  // sender address
+         replyTo: replyToEmail,  // reply address
+         cc: ccEmailList,
+         subject: subject,
+         text: textData,
+         attachments: attachmentDetails
+     };
+}
 
 module.exports = {
-    getTransporter
+    getTransporter, getMailData
 }

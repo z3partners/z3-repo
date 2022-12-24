@@ -96,6 +96,7 @@ $(document).ready(function () {
         if (res) {
             $.post("./del-user", {
                     user_id: userDetails.user_id,
+                    username: userDetails.username,
                 },
                 function (data, status) {
                     location.href = "./users";

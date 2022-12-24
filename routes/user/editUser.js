@@ -21,33 +21,35 @@ router.post('/', async function(req, res, next) {
     const userId = req.body.user_id;
     if(userId) {
         const first_name = req.body.first_name;
+        const username = req.body.username;
         const phone_number = req.body.contact_number;
         const role_id = req.body.user_role;
         const status = req.body.status ? 1 : 0;
-
         try {
-            if(userId) {
-                const resposne = await userService.updateUser({user_id: userId, first_name: first_name, phone_number: phone_number, role_id: role_id, status: status});
-                req.session.msg = resposne.message;
+            const resposne = await userService.updateUser({
+                user_id: userId,
+                first_name: first_name,
+                phone_number: phone_number,
+                role_id: role_id,
+                status: status
+            });
+            req.session.msg = resposne.message;
+            if (resposne.status === 200) {
                 const transporter = emailService.getTransporter();
                 const textData = 'User updated successfully!!';
-                const mailData = {
-                    from: 'auth@z3partners.com',  // sender address
-                    replyTo: 'partner@z3partners.com',  // sender address
-                    to: 'production2@4thdimension.in',   // list of receivers
-                    subject: 'Z3 Partners: User updated successfully',
-                    text: textData
-                };
+                const subject = 'Z3 Partners: User updated successfully';
+                const mailData = emailService.getMailData([username], subject, textData);
+
                 transporter.sendMail(mailData, function (err, info) {
-                    if(err)
+                    if (err)
                         console.log(err);
                     else
                         console.log(info);
                 });
-                res.redirect('./users');
             }
+            res.redirect('./users');
         } catch (err) {
-            console.error(`Error while getting investor details`, err.message);
+            console.error(`Error while getting user details`, err.message);
             next(err);
         }
     } else {

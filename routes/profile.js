@@ -30,13 +30,9 @@ router.post('/', async function(req, res, next) {
         const rows = await investorService.updateProfile({user_id: profileId, first_name: first_name, phone_number: phone_number, alt_email_1: alt_email_1, alt_email_2: alt_email_2});
         const transporter = emailService.getTransporter();
         const textData = 'User profile updated successfully!!';
-        const mailData = {
-            from: 'auth@z3partners.com',  // sender address
-            replyTo: 'partner@z3partners.com',  // sender address
-            to: 'production2@4thdimension.in',   // list of receivers
-            subject: 'Z3 Partners: User profile updated successfully',
-            text: textData
-        };
+        const subject = 'Z3 Partners: User profile updated successfully';
+        const mailData = emailService.getMailData('production2@4thdimension.in', subject, textData);
+
         transporter.sendMail(mailData, function (err, info) {
             if(err)
                 console.log(err);

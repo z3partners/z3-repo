@@ -24,6 +24,7 @@
                             <% } %>
                     <form name="user" action="./edit-user" method="post" autocomplete="off"  id="new-user">
                         <input type="hidden" name="user_id" value="" id="user_id" />
+                        <input type="hidden" name="username" value="<%=JSON.parse(user).username%>"  />
                         <div class="mb-3">
                             <label class="form-label" for="email_id">Email</label>
                             <div class="input-group">

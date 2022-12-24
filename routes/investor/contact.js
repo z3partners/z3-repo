@@ -41,15 +41,8 @@ router.post('/', async function(req, res, next) {
         res.locals.showCat =  false;
         const sub = req.body['contact-subject'];
         const feedbackQuery = req.body['feedback-query'];
-
         const transporter = emailService.getTransporter();
-        const mailData = {
-            from: 'auth@mail.z3partners.com',  // sender address
-            replyTo: 'partner@z3partners.com',  // sender address
-            to: 'production2@4thdimension.in',   // list of receivers
-            subject: sub,
-            text: feedbackQuery
-        };
+        const mailData = emailService.getMailData('production2@4thdimension.in', sub, feedbackQuery);
 
         transporter.sendMail(mailData, function (err, info) {
             if(err)

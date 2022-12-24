@@ -11,17 +11,14 @@ router.post('/', async function (req, res, next) {
     let resposne = {message: "Unable to delete user", status: 500};
     try {
         const user_id = req.body.user_id;
+        const username = req.body.username;
         if (user_id) {
             resposne = await userService.deleteUser(user_id);
             const transporter = emailService.getTransporter();
             const textData = 'User deleted successfully!!';
-            const mailData = {
-                from: 'auth@z3partners.com',  // sender address
-                replyTo: 'partner@z3partners.com',  // sender address
-                to: 'production2@4thdimension.in',   // list of receivers
-                subject: 'Z3 Partners: User deleted successfully',
-                text: textData
-            };
+            const subject = 'Z3 Partners: User deleted successfully';
+            const mailData = emailService.getMailData(username, subject, textData);
+
             transporter.sendMail(mailData, function (err, info) {
                 if(err)
                     console.log(err);
