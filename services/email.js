@@ -32,7 +32,7 @@ function getMailData(toEmailList, subject, textData, fileData = '') {
          replyTo: replyToEmail,  // reply address
          cc: ccEmailList,
          subject: subject,
-         text: textData,
+         html: textData,
          attachments: attachmentDetails
      };
 }
