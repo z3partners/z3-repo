@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const fromEmail = 'Z3Partners <prayas@z3partners.com>';
+const fromEmail = 'Z3Partners <partner@z3partners.com>';
 const replyToEmail = 'partner@z3partners.com';
 const ccEmailList = 'production2@4thdimension.in';
 
@@ -19,6 +19,7 @@ function getTransporter() {
     });
 }
 function getMailData(toEmailList, subject, textData, fileData = '') {
+    
     const filePath = (process.env.NODE_ENV === 'production')
         ? `/home/irportal.z3partners.com/z3-documents/`
         : `./z3-documents/` ;

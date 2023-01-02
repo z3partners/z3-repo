@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session');
-const MemoryStore = require('memorystore')(session);
+// const MemoryStore = require('memorystore')(session);
 const app = express();
 
 const indexRouter = require('./routes/index');
@@ -58,7 +58,7 @@ const oneDay = 1000*60*60*24;
 app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'pug');
 app.set('view engine', 'ejs');
-
+var MemoryStore =session.MemoryStore;
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -67,9 +67,7 @@ app.use('/static', express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   cookie: { maxAge: oneDay },
-  store: new MemoryStore({
-    checkPeriod: 86400000 // prune expired entries every 24h
-  }),
+  store: new MemoryStore(),
   resave: true,
   secret: 'irportal.z3partners.com',
   saveUninitialized: false
