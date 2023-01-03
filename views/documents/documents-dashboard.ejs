@@ -17,11 +17,13 @@
         const investorList = <%- JSON.stringify(investorList) %>
         const investorName = {};
         const investorEmail = {};
+        const investorStatus = {};
         const funds = {};
 
         investorList.forEach(inv => {
             investorName[`'${inv.user_id}'`] = inv.company_legal_name;
             investorEmail[`'${inv.user_id}'`] = inv.username;
+            investorStatus[`'${inv.user_id}'`] = inv.status;
         funds[`'${inv.user_id}'`] = inv.fund_association;
         });
         const docSearchFields = <%- docSearchFields %>

@@ -59,7 +59,7 @@ router.post('/', async function(req, res, next) {
                 role: user_role,
                 status: status});
             req.session.msg = resposne.message;
-            if(resposne.status === 200) {
+            if(resposne.status === 200 && status) {
                 const transporter = emailService.getTransporter();
                 const textData = 'User created successfully!!';
                 const subject = 'Z3Partners: User created successfully';

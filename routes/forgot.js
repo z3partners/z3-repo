@@ -1,5 +1,5 @@
 var express = require('express');
-var router = express.Router();
+var     router = express.Router();
 const users = require('../services/user');
 var emailService = require('../services/email');
 

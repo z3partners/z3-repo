@@ -17,7 +17,7 @@ router.post('/', async function (req, res, next) {
             const transporter = emailService.getTransporter();
             const textData = 'Investor deleted successfully!!';
             const subject = 'Z3Partners: investor deleted successfully';
-            const mailData = emailService.getMailData(username, subject, textData);
+            const mailData = emailService.getMailData('partner@z3partners.com', subject, textData);
             transporter.sendMail(mailData, function (err, info) {
                 if(err)
                     console.log(err);

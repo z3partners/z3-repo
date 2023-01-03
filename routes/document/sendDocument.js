@@ -11,7 +11,10 @@ router.post('/', async function (req, res, next) {
         // console.log(req.body.investorEmailID, req.body);
         const fileData = JSON.parse(req.body.file_path);
         const emailId = req.body.investorEmailID;
-        if(emailId !== 'All') {
+        const investorStatus = req.body.investorStatus;
+        let message = `Failed to sent document to [${emailId}]. Please check investor details.`;
+        if(emailId !== 'All' && +investorStatus) {
+            message = `Document sent successfully to [${emailId}].`
             const transporter = emailService.getTransporter();
             const textData = 'Please find attached document sent by Z3Partners';
             const subject = 'Z3Partners: Please find attachment';
@@ -24,7 +27,7 @@ router.post('/', async function (req, res, next) {
             });
         }
 
-        res.send({message: 'Email sent!!'});
+        res.send({message: message});
     } catch (err) {
         console.error(`Error while getting category details`, err.message);
         next(err);

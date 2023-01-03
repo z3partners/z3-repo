@@ -40,18 +40,19 @@ router.post('/', async function(req, res, next) {
             if(investorId) {
                 const response = await investorService.updateInvestor({alt_email_1: alt_email_1, alt_email_2: alt_email_2, user_id: investorId, company_legal_name: company_legal_name, financial_year: financial_year, investor_type: investor_type, fund_association: fund_association, first_name: first_name, username: username, phone_number: phone_number, status: status});
                 req.session.msg = response.message;
-                // console.log(req.body);
                 const transporter = emailService.getTransporter();
                 //const textData = 'Investor data Updated successfully!!';
                  const textData = '<p style="color:red">Investor data Updated successfully!!</p>';
                 const subject = 'Z3Partners: Investor data Updated successfully';
                 const mailData = emailService.getMailData([username], subject , textData);
-                transporter.sendMail(mailData, function (err, info) {
-                    if(err)
-                        console.log(err);
-                    else
-                        console.log(info);
-                });
+                if (status) {
+                    transporter.sendMail(mailData, function (err, info) {
+                        if (err)
+                            console.log(err);
+                        else
+                            console.log(info);
+                    });
+                }
                 res.redirect('./investor');
             } else {
                 const response = await investorService.addInvestor({alt_email_1: alt_email_1, alt_email_2: alt_email_2, company_legal_name: company_legal_name, financial_year: financial_year, investor_type: investor_type, fund_association: fund_association, first_name: first_name, username: username, phone_number: phone_number, status: status});

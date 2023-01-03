@@ -13,6 +13,7 @@ router.post('/', async function(req, res, next) {
     const confirmPassword = req.body['confirm-password'];
     const investorId = req.body.investor_id;
     const username = req.body.username;
+    const status = req.body.status;
     if(confirmPassword !== password){
         req.session.msg = "Password and Confirm Password is not matching.";
         res.redirect(`./create-investor-pass?id=${investorId}`);
@@ -22,7 +23,7 @@ router.post('/', async function(req, res, next) {
         if(investorId) {
             const resposne = await investorService.createInvestorPass({user_id: investorId, password: password});
             req.session.msg = resposne.message;
-            if(resposne.status === 200) {
+            if(resposne.status === 200 && +status) {
                 const transporter = emailService.getTransporter();
                 const textData = 'Password created successfully!!';
                 const subject = 'Z3Partners: Password created successfully';

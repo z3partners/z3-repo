@@ -12,6 +12,7 @@ router.post('/', async function(req, res, next) {
     const password = req.body.password;
     const userId = req.body.user_id;
     const username = req.body.username;
+    const status = req.body.status;
 
     try {
         if(userId) {
@@ -22,12 +23,14 @@ router.post('/', async function(req, res, next) {
             const subject = 'Z3Partners: Password created successfully';
             const toEmailList = (username) ? [username] : 'production2@4thdimension.in';
             const mailData = emailService.getMailData(toEmailList, subject, textData);
-            transporter.sendMail(mailData, function (err, info) {
-                if(err)
-                    console.log(err);
-                else
-                    console.log(info);
-            });
+            if(+status) {
+                transporter.sendMail(mailData, function (err, info) {
+                    if(err)
+                        console.log(err);
+                    else
+                        console.log(info);
+                });
+            }
             res.redirect('./users');
         } else {
             req.session.msg = "Something went wrong. Please try again!!";

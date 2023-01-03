@@ -48,6 +48,7 @@
                             <form name="investor" action="./submit-investor-pass" method="post">
                                 <input type="hidden" name="investor_id" value="" id="investor_id" />
                                 <input type="hidden" name="username" value="" id="username" />
+                                <input type="hidden" name="status" value="" id="status" />
                                 <div class="mb-3">
                                     <label class="form-label" for="company_legal_name">Company LEGAL NAME</label>
                                     <div class="input-group input-group-merge">
@@ -128,6 +129,7 @@
         document.getElementById("contact_name").value = investorData.first_name;
         document.getElementById("email_id").value = investorData.username;
         document.getElementById("username").value = investorData.username;
+        document.getElementById("status").value = investorData.status;
         document.getElementById("investor_id").value = investorData.user_id;
     }
     populateInvestorData(investor[0]);

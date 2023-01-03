@@ -125,13 +125,16 @@ $(document).ready(function () {
         const elm = e.target.closest(".send-document");
         const documentDetails = JSON.parse(elm.dataset.document);
         const investorEmailID = (documentDetails.investor_id === -999) ? 'All' : investorEmail[`'${documentDetails.investor_id}'`];
-
-        const res = confirm(`Are your sure to send details to ${investorEmailID}`);
+        const invStatus = investorStatus[`'${documentDetails.investor_id}'`];
+        const res = confirm(`Are your sure to send details to ${investorEmailID} ?`);
+        document.querySelector("p.form-label").innerHTML = '';
         if (res) {
-            $.post("./send-document", {...documentDetails, investorEmailID: investorEmailID},
+            $.post("./send-document", {...documentDetails, investorEmailID: investorEmailID, investorStatus: invStatus},
                 function (data, status) {
-                    console.log(data);
-                    //location.href = "./documents";
+                if(data.message) {
+                    document.querySelector("p.form-label").innerHTML = `<span class="danger">${data.message}</span>`;
+                }
+                // console.log(data);
                 });
         }
     });

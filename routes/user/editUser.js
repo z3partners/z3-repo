@@ -34,7 +34,7 @@ router.post('/', async function(req, res, next) {
                 status: status
             });
             req.session.msg = resposne.message;
-            if (resposne.status === 200) {
+            if (resposne.status === 200 && status) {
                 const transporter = emailService.getTransporter();
                 const textData = 'User updated successfully!!';
                 const subject = 'Z3Partners: User updated successfully';
