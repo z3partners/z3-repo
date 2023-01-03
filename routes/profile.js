@@ -31,7 +31,7 @@ router.post('/', async function(req, res, next) {
         const transporter = emailService.getTransporter();
         const textData = 'User profile updated successfully!!';
         const subject = 'Z3Partners: User profile updated successfully';
-        const mailData = emailService.getMailData('production2@4thdimension.in', subject, textData);
+        const mailData = emailService.getMailData(req.session.username, subject, textData);
 
         transporter.sendMail(mailData, function (err, info) {
             if(err)

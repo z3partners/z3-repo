@@ -9,6 +9,7 @@ router.post('/', async function(req, res, next) {
 
     const password = req.body.password;
     const confirmPassword = req.body['confirm-password'];
+    const username = req.body['username'];
     const investorId = req.body.investor_id;
     try {
         if(investorId) {
@@ -17,7 +18,7 @@ router.post('/', async function(req, res, next) {
                 const transporter = emailService.getTransporter();
                 const textData = 'Password reset successfully!!';
                 const subject = 'Z3Partners: Password reset successfully';
-                const mailData = emailService.getMailData('production2@4thdimension.in', subject, textData);
+                const mailData = emailService.getMailData(username, subject, textData);
                 transporter.sendMail(mailData, function (err, info) {
                     if(err)
                         console.log(err);

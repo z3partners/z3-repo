@@ -72,6 +72,7 @@ router.post('/',  async function(req, res) {
             }
         }
         if(fileUploadStatus) {
+            const toEmail = req.session.username;
             if(document_id) {
                 dataForDB.document_id = document_id;
                 const resposne = await documentService.updateDocument(dataForDB);
@@ -79,7 +80,7 @@ router.post('/',  async function(req, res) {
                 const transporter = emailService.getTransporter();
                 const textData = 'Document updated successfully!!';
                 const subject = 'Z3Partners: Document updated successfully';
-                const mailData = emailService.getMailData('production2@4thdimension.in', subject, textData);
+                const mailData = emailService.getMailData(toEmail, subject, textData);
                 transporter.sendMail(mailData, function (err, info) {
                     if(err)
                         console.log(err);
@@ -93,7 +94,7 @@ router.post('/',  async function(req, res) {
                 const transporter = emailService.getTransporter();
                 const textData = 'Document created successfully!!';
                 const subject = 'Z3Partners: Document created successfully';
-                const mailData = emailService.getMailData('production2@4thdimension.in', subject, textData);
+                const mailData = emailService.getMailData(toEmail, subject, textData);
                 transporter.sendMail(mailData, function (err, info) {
                     if(err)
                         console.log(err);

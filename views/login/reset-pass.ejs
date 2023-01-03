@@ -19,6 +19,7 @@
                 <% } %>
             <form name="investor" action="/reset-pass" method="post" autocomplete="off"  id="change-pass">
                 <input type="hidden" name="investor_id" value="" id="investor_id" />
+                <input type="hidden" name="username" value="" id="username" />
                 <div class="mb-3">
                     <label class="form-label" for="contact_name">CONTACT PERSON Name</label>
                     <div class="input-group input-group-merge">
@@ -61,6 +62,7 @@
     function populateInvestorData(investorData) {
         document.getElementById("contact_name").value = investorData.first_name;
         document.getElementById("email_id").value = investorData.username;
+        document.getElementById("username").value = investorData.username;
         document.getElementById("investor_id").value = investorData.user_id;
     }
     populateInvestorData(investor);

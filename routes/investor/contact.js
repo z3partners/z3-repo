@@ -42,7 +42,7 @@ router.post('/', async function(req, res, next) {
         const sub = req.body['contact-subject'];
         const feedbackQuery = req.body['feedback-query'];
         const transporter = emailService.getTransporter();
-        const mailData = emailService.getMailData('production2@4thdimension.in', sub, feedbackQuery);
+        const mailData = emailService.getMailData('partner@z3partners.com', sub, feedbackQuery);
 
         transporter.sendMail(mailData, function (err, info) {
             if(err)
