@@ -48,7 +48,7 @@ router.post("/", async function (req, res, next) {
       const transporter = emailService.getTransporter();
       const textData = "Password changed successfully!!";
 
-      const subject = "Z3 Partners: Password changed successfully";
+      const subject = "Z3Partners: Password changed successfully";
       const mailData = emailService.getMailData([username], subject, textData);
       transporter.sendMail(mailData, function (err, info) {});
       res.render("login/login", {

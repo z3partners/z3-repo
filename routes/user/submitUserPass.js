@@ -19,7 +19,7 @@ router.post('/', async function(req, res, next) {
             const transporter = emailService.getTransporter();
             req.session.msg = resposne.message;
             const textData = `Password created successfully, your password is [${password}]`;
-            const subject = 'Z3 Partners: Password created successfully';
+            const subject = 'Z3Partners: Password created successfully';
             const toEmailList = (username) ? [username] : 'production2@4thdimension.in';
             const mailData = emailService.getMailData(toEmailList, subject, textData);
             transporter.sendMail(mailData, function (err, info) {

@@ -13,8 +13,8 @@ router.post('/', async function (req, res, next) {
         const emailId = req.body.investorEmailID;
         if(emailId !== 'All') {
             const transporter = emailService.getTransporter();
-            const textData = 'Please find attached document sent by Z3 Partners';
-            const subject = 'Z3 Partners: Please find attachment';
+            const textData = 'Please find attached document sent by Z3Partners';
+            const subject = 'Z3Partners: Please find attachment';
             const mailData = emailService.getMailData(emailId, subject, textData, fileData);
             transporter.sendMail(mailData, function (err, info) {
                 if (err)

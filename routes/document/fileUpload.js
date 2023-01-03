@@ -78,7 +78,7 @@ router.post('/',  async function(req, res) {
                 req.session.msg = resposne.message;
                 const transporter = emailService.getTransporter();
                 const textData = 'Document updated successfully!!';
-                const subject = 'Z3 Partners: Document updated successfully';
+                const subject = 'Z3Partners: Document updated successfully';
                 const mailData = emailService.getMailData('production2@4thdimension.in', subject, textData);
                 transporter.sendMail(mailData, function (err, info) {
                     if(err)
@@ -92,7 +92,7 @@ router.post('/',  async function(req, res) {
                 req.session.msg = resposne.message;
                 const transporter = emailService.getTransporter();
                 const textData = 'Document created successfully!!';
-                const subject = 'Z3 Partners: Document created successfully';
+                const subject = 'Z3Partners: Document created successfully';
                 const mailData = emailService.getMailData('production2@4thdimension.in', subject, textData);
                 transporter.sendMail(mailData, function (err, info) {
                     if(err)

@@ -61,7 +61,7 @@ router.post('/', async function(req, res, next) {
             if (resposne.status === 200) {
                 const transporter = emailService.getTransporter();
                 const textData = 'Investor created successfully!!';
-                const subject = 'Z3 Partners: New investor created successfully';
+                const subject = 'Z3Partners: New investor created successfully';
                 const mailData = emailService.getMailData(email_id, subject, textData);
 
                 transporter.sendMail(mailData, function (err, info) {

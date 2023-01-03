@@ -17,7 +17,7 @@ router.post('/', async function (req, res, next) {
             if(investorEmailID !== 'All') {
                 const transporter = emailService.getTransporter();
                 const textData = 'Document deleted successfully!!';
-                const subject = 'Z3 Partners: Document deleted successfully';
+                const subject = 'Z3Partners: Document deleted successfully';
                 const mailData = emailService.getMailData(investorEmailID, subject, textData);
                 transporter.sendMail(mailData, function (err, info) {
                     if(err)

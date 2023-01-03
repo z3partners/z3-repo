@@ -44,7 +44,7 @@ router.post('/', async function(req, res, next) {
                 const transporter = emailService.getTransporter();
                 //const textData = 'Investor data Updated successfully!!';
                  const textData = '<p style="color:red">Investor data Updated successfully!!</p>';
-                const subject = 'Z3 Partners: Investor data Updated successfully';
+                const subject = 'Z3Partners: Investor data Updated successfully';
                 const mailData = emailService.getMailData([username], subject , textData);
                 transporter.sendMail(mailData, function (err, info) {
                     if(err)

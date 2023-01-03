@@ -25,7 +25,7 @@ router.post('/', async function(req, res, next) {
             if(resposne.status === 200) {
                 const transporter = emailService.getTransporter();
                 const textData = 'Password created successfully!!';
-                const subject = 'Z3 Partners: Password created successfully';
+                const subject = 'Z3Partners: Password created successfully';
                 const mailData = emailService.getMailData(username, subject, textData);
                 transporter.sendMail(mailData, function (err, info) {
                     if(err)

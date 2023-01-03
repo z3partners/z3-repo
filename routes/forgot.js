@@ -24,7 +24,7 @@ router.post('/', async function(req, res, next) {
                 if (response.token) {
                     const transporter = emailService.getTransporter();
                     const textData = 'Please click the link to reset password: https://irportal.z3partners.com/reset/?token=' + response.token;
-                    const subject = 'Z3 Partners: Password reset link';
+                    const subject = 'Z3Partners: Password reset link';
                     const mailData = emailService.getMailData(user_email, subject, textData);
                     transporter.sendMail(mailData, function (err, info) {
                         if (err)
