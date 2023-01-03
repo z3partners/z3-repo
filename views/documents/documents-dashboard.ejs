@@ -233,13 +233,14 @@ var columns = {
         documentList.forEach(doc => {
             const investor = investorName[`'${doc.investor_id}'`];
             doc.document_type = (investor) ? '' : 'general';
+            const sentLink = (doc.status) ? `<a class="dropdown-item send-document" href="javascript:void(0);" data-document='${JSON.stringify(doc)}'><i class="bx bx-mail-send me-1"></i> Send</a>` : '';
             const actionHTML  = `<div class="dropdown">
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                 <i class="bx bx-dots-vertical-rounded"></i>
                 </button>
                 <div class="dropdown-menu">
                 <a class="dropdown-item edit-link" data-category='document' href='javascript:void(0)' data-document='${JSON.stringify(doc)}'><i class="bx bx-edit-alt me-1"></i> Edit</a>
-        <a class="dropdown-item send-document" href="javascript:void(0);" data-document='${JSON.stringify(doc)}'><i class="bx bx-mail-send me-1"></i> Send</a>
+        ${sentLink}
         <a class="dropdown-item del-document-btn" href="javascript:void(0);" data-document='${JSON.stringify(doc)}'><i class="bx bx-trash me-1"></i> Delete</a>
                 </div>
                 </div>`;
