@@ -52,7 +52,7 @@ const fileUpload = require('express-fileupload');
 app.use(fileUpload());
 
 
-const oneDay = 1000*60*60*24;
+const oneDay = 86400000;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -70,7 +70,7 @@ app.use(session({
   store: new MemoryStore(),
   resave: true,
   secret: 'irportal.z3partners.com',
-  saveUninitialized: false
+  saveUninitialized: false 
 }));
 
 app.use('/', homeRouter);
