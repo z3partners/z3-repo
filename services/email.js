@@ -2,6 +2,8 @@ const nodemailer = require('nodemailer');
 const fromEmail = 'partner@z3partners.com';
 const replyToEmail = 'partner@z3partners.com';
 const ccEmailList = 'production2@4thdimension.in';
+const configData = require('../config.json');
+const smtpPassword = configData.password.smtp;
 
 function getTransporter() {
     return nodemailer.createTransport({
@@ -9,7 +11,7 @@ function getTransporter() {
         host: "smtp.gmail.com",
         auth: {
             user: 'prayas@z3partners.com',
-            pass: 'caztdqdppdhngabr'
+            pass: smtpPassword
         },
         secure: true,
         tls: {
