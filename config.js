@@ -3,10 +3,11 @@ const dbPassword = configData.password.db;
 const config = {
     db: {
         host: "localhost",
-        user: "emofmimy",
+        user: "emofmimy_z3partners-prod",
         password: dbPassword,
-        database: "irpo_z3partners"
+        database: "emofmimy_z3partners_prod"
     }
 };
+
 
 module.exports = config;
