@@ -1,9 +1,36 @@
 var express = require('express');
-const router = express.Router();
-const investorService = require('../../services/investor');
+var router = express.Router();
+var categoryService = require('../../services/category');
+var investorService = require('../../services/investor');
+var documentService = require('../../services/document');
 const emailService = require("../../services/email");
 
 router.get('/', async function(req, res, next) {
+    if(!req.session.loggedin) {
+        res.redirect('./login');
+    }
+    try {
+        const resposne = await categoryService.listCategory();
+        const resAll = await categoryService.listAll();
+        const investorList = await investorService.listAll(false, {});
+        req.session.catList = resposne;
+        res.locals.allCategory = JSON.stringify(resAll.message);
+        res.locals.investorList = JSON.stringify(investorList.message);
+
+        res.locals.invSearchFields = JSON.stringify({});
+        const msg = req.session.msg;
+        const catList = req.session.catList ? req.session.catList : [];
+        req.session.msg = '';
+        req.session.catList = resposne;
+    } catch (err) {
+        console.error(`Error while getting category details`, err.message);
+        next(err);
+    }
+    const msg = req.session.msg ;
+    req.session.msg = '';
+    const catList = req.session.catList ? req.session.catList : [];
+    res.render(`documents/general-document`, {message: msg, catList: catList, users: req.session.users, roles: req.session.roleDetails});
+
 });
 
 router.post('/', async function (req, res) {
@@ -12,7 +39,7 @@ router.post('/', async function (req, res) {
         allInvestor.message.forEach(function (investor) {
             const fileData = JSON.parse(req.body.file_path);
             const emailId = investor.username;
-            if(+investor.status) {
+            if(+investor.status && false) {
                 const transporter = emailService.getTransporter();
                 const textData = 'Please find attached document sent by Z3Partners';
                 const subject = 'Z3Partners: Please find attachment';
