@@ -22,9 +22,7 @@ function getTransporter() {
 }
 function getMailData(toEmailList, subject, textData, fileData = '') {
     
-    const filePath = (process.env.NODE_ENV === 'production')
-        ? `/home/irportal.z3partners.com/z3-documents/`
-        : `./z3-documents/` ;
+    const filePath = `./z3-documents/` ;
     const attachmentDetails = (fileData) ? [{
         filename: fileData.originalname,
         path: `${filePath}/${fileData.filename}`
