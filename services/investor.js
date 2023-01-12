@@ -80,7 +80,7 @@ async function createInvestorPass(data) {
 }
 
 
-async function listAll(status, searchFields) {
+async function listAll(status, searchFields = {}) {
     let condition = [];
     let conStr = '';
     if(status) {

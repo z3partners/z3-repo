@@ -129,13 +129,20 @@ $(document).ready(function () {
         const res = confirm(`Are your sure to send details to ${investorEmailID} ?`);
         document.querySelector("p.form-label").innerHTML = '';
         if (res) {
-            $.post("./send-document", {...documentDetails, investorEmailID: investorEmailID, investorStatus: invStatus},
-                function (data, status) {
-                if(data.message) {
+            let route = "./send-document";
+            if (investorEmailID === 'All') {
+                route = "./send-all";
+            }
+            $.post(route, {
+                ...documentDetails,
+                investorEmailID: investorEmailID,
+                investorStatus: invStatus
+            }, function (data, status) {
+                if (data.message) {
                     document.querySelector("p.form-label").innerHTML = `<span class="danger">${data.message}</span>`;
                 }
                 // console.log(data);
-                });
+            });
         }
     });
 
