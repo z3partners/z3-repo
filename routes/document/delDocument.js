@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var documentService = require('../../services/document');
 const emailService = require("../../services/email");
+const emailTemplate = require("../../email-template/document/delete-doc");
 
 router.post('/', async function (req, res, next) {
 
@@ -17,7 +18,7 @@ router.post('/', async function (req, res, next) {
             response = await documentService.deleteDocument(document_id);
             if(investorEmailID !== 'All') {
                 const transporter = emailService.getTransporter();
-                const textData = 'Document deleted successfully!!';
+                const textData = emailTemplate.deleteDoc.replace("{username}", req.session.users.fName)
                 const subject = 'Z3Partners: Document deleted successfully';
                 const mailData = emailService.getMailData(toEmail, subject, textData);
                 transporter.sendMail(mailData, function (err, info) {
