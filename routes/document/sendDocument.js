@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var emailService = require('../../services/email');
+const emailTemplate = require('../../email-template/document/document-received');
 
 router.post('/', async function (req, res, next) {
 
@@ -16,9 +17,10 @@ router.post('/', async function (req, res, next) {
         if(emailId !== 'All' && +investorStatus) {
             message = `Document sent successfully to [${emailId}].`
             const transporter = emailService.getTransporter();
-            const textData = 'Please find attached document sent by Z3Partners';
-            const subject = 'Z3Partners: Please find attachment';
-            const mailData = emailService.getMailData(emailId, subject, textData, fileData);
+            const textData = (emailTemplate.documentReceived.replace("{investor}", emailId)).replace("{document_name}", fileData.originalname);
+            const subject = 'Z3Partners has uploaded new document';
+            // const mailData = emailService.getMailData(emailId, subject, textData, fileData);
+            const mailData = emailService.getMailData(emailId, subject, textData);
             transporter.sendMail(mailData, function (err, info) {
                 if (err)
                     console.log(err);

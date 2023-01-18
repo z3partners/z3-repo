@@ -4,6 +4,7 @@ var categoryService = require('../../services/category');
 var investorService = require('../../services/investor');
 var documentService = require('../../services/document');
 const emailService = require("../../services/email");
+const emailTemplate = require('../../email-template/document/document-received');
 
 router.get('/', async function(req, res, next) {
     if(!req.session.loggedin) {
@@ -39,11 +40,12 @@ router.post('/', async function (req, res) {
         allInvestor.message.forEach(function (investor) {
             const fileData = JSON.parse(req.body.file_path);
             const emailId = investor.username;
-            if(+investor.status && false) {
+            if(+investor.status) {
                 const transporter = emailService.getTransporter();
-                const textData = 'Please find attached document sent by Z3Partners';
-                const subject = 'Z3Partners: Please find attachment';
-                const mailData = emailService.getMailData(emailId, subject, textData, fileData);
+                const textData = (emailTemplate.documentReceived.replace("{investor}", emailId)).replace("{document_name}", fileData.originalname);
+                const subject = 'Z3Partners has uploaded new document';
+                // const mailData = emailService.getMailData(emailId, subject, textData, fileData);
+                const mailData = emailService.getMailData(emailId, subject, textData);
                 transporter.sendMail(mailData, function (err, info) {
                     if (err)
                         console.log(err);
