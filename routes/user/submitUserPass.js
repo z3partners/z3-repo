@@ -3,6 +3,7 @@ var router = express.Router();
 var categoryService = require('../../services/category');
 var userService = require('../../services/user');
 const emailService = require("../../services/email");
+const emailTemplate = require('../../email-template/user/changed-password');
 
 /* GET home page. */
 router.post('/', async function(req, res, next) {
@@ -19,7 +20,7 @@ router.post('/', async function(req, res, next) {
             const resposne = await userService.createUserPass({user_id: userId, password: password});
             const transporter = emailService.getTransporter();
             req.session.msg = resposne.message;
-            const textData = `Password created successfully, your password is [${password}]`;
+            const textData = ((emailTemplate.changePassword.replace('{username}', username)).replace("{created_updated}", 'created')).replace("{{password}}", password);
             const subject = 'Z3Partners: Password created successfully';
             const toEmailList = (username) ? [username] : 'production2@4thdimension.in';
             const mailData = emailService.getMailData(toEmailList, subject, textData);

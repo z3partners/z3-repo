@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var userService = require('../../services/user');
 const emailService = require("../../services/email");
+const emailTemplate = require('../../email-template/user/update-user');
 
 router.get('/', async function (req, res, next) {
     if (!req.session.loggedin) {
@@ -36,7 +37,7 @@ router.post('/', async function(req, res, next) {
             req.session.msg = resposne.message;
             if (resposne.status === 200 && status) {
                 const transporter = emailService.getTransporter();
-                const textData = 'User updated successfully!!';
+                const textData = (emailTemplate.updateUser.replace("{login_user}", req.session.users.fName)).replace("{user_profile_name}", first_name);
                 const subject = 'Z3Partners: User updated successfully';
                 const mailData = emailService.getMailData([username], subject, textData);
 

@@ -3,6 +3,7 @@ var router = express.Router();
 const user = require('../../services/user');
 const emailService = require('../../services/email');
 const categoryService = require('../../services/category');
+const emailTemplate = require('../../email-template/user/account-activated');
 
 /* get login page. */
 router.get('/', async function(req, res) {
@@ -61,7 +62,7 @@ router.post('/', async function(req, res, next) {
             req.session.msg = resposne.message;
             if(resposne.status === 200 && status) {
                 const transporter = emailService.getTransporter();
-                const textData = 'User created successfully!!';
+                const textData = emailTemplate.accountActivated.replace('{first_name}', first_name);
                 const subject = 'Z3Partners: User created successfully';
                 const mailData = emailService.getMailData([email_id], subject, textData);
 

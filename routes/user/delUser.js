@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var userService = require('../../services/user');
 const emailService = require("../../services/email");
+const emailTemplate = require("../../email-template/user/delete-account");
 
 router.post('/', async function (req, res, next) {
 
@@ -15,7 +16,7 @@ router.post('/', async function (req, res, next) {
         if (user_id) {
             resposne = await userService.deleteUser(user_id);
             const transporter = emailService.getTransporter();
-            const textData = 'User deleted successfully!!';
+            const textData = emailTemplate.deleteAccount.replace("{username}", req.session.users.fName);
             const subject = 'Z3Partners: User deleted successfully';
             const mailData = emailService.getMailData('partner@z3partners.com', subject, textData);
 
