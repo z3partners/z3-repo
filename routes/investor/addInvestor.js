@@ -3,6 +3,7 @@ var router = express.Router();
 var categoryService = require('../../services/category');
 var investorService = require('../../services/investor');
 const emailService = require("../../services/email");
+const emailTemplate = require('../../email-template/investor/account-activated');
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
@@ -60,7 +61,7 @@ router.post('/', async function(req, res, next) {
             req.session.msg = resposne.message;
             if (resposne.status === 200 && status) {
                 const transporter = emailService.getTransporter();
-                const textData = 'Investor created successfully!!';
+                const textData = emailTemplate.accountActivated.replace('{first_name}', first_name);
                 const subject = 'Z3Partners: New investor created successfully';
                 const mailData = emailService.getMailData(email_id, subject, textData);
 
