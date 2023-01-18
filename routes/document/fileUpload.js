@@ -93,7 +93,6 @@ router.post('/',  async function(req, res) {
                 req.session.msg = resposne.message;
                 const transporter = emailService.getTransporter();
                 const textData = (emailTemplate.documentReceived.replace("{investor}", req.session.username)).replace("{document_name}", dataForDB.document_name);
-                // const textData = 'Document created successfully!!';
                 const subject = 'Z3Partners: Document created successfully';
                 const mailData = emailService.getMailData(toEmail, subject, textData);
                 transporter.sendMail(mailData, function (err, info) {

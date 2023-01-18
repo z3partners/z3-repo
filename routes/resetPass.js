@@ -3,6 +3,7 @@ var router = express.Router();
 var categoryService = require('../services/category');
 var investorService = require('../services/investor');
 const emailService = require("../services/email");
+const emailTemplate = require("../email-template/user/changed-password");
 
 /* GET home page. */
 router.post('/', async function(req, res, next) {
@@ -16,7 +17,7 @@ router.post('/', async function(req, res, next) {
             const response = await investorService.createInvestorPass({user_id: investorId, password: password});
             if(response.status === 200) {
                 const transporter = emailService.getTransporter();
-                const textData = 'Password reset successfully!!';
+                const textData = ((emailTemplate.changePassword.replace('{username}', username)).replace("{created_updated}", 'reset')).replace("{{password}}", password);
                 const subject = 'Z3Partners: Password reset successfully';
                 const mailData = emailService.getMailData(username, subject, textData);
                 transporter.sendMail(mailData, function (err, info) {

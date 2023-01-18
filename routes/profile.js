@@ -3,6 +3,7 @@ var router = express.Router();
 var investorService = require('../services/investor');
 const categoryService = require('../services/category');
 const emailService = require("../services/email");
+const emailTemplate = require("../email-template/user/update-user");
 
 router.get('/', async function (req, res, next) {
     if (!req.session.loggedin) {
@@ -29,7 +30,7 @@ router.post('/', async function(req, res, next) {
         const alt_email_2 = req.body.alt_email_2;
         const rows = await investorService.updateProfile({user_id: profileId, first_name: first_name, phone_number: phone_number, alt_email_1: alt_email_1, alt_email_2: alt_email_2});
         const transporter = emailService.getTransporter();
-        const textData = 'User profile updated successfully!!';
+        const textData = (emailTemplate.updateUser.replace("{login_user}", req.session.users.fName)).replace("{user_profile_name}", first_name);
         const subject = 'Z3Partners: User profile updated successfully';
         const mailData = emailService.getMailData(req.session.username, subject, textData);
 

@@ -4,6 +4,7 @@ const users = require("../services/user");
 const categoryService = require("../services/category");
 const investorService = require("../services/investor");
 const emailService = require("../services/email");
+const emailTemplate = require("../email-template/user/changed-password");
 
 /* GET home page. */
 router.post("/", async function (req, res, next) {
@@ -46,8 +47,7 @@ router.post("/", async function (req, res, next) {
       req.session.destroy(function (err) {});
 
       const transporter = emailService.getTransporter();
-      const textData = "Password changed successfully!!";
-
+      const textData = ((emailTemplate.changePassword.replace('{username}', username)).replace("{created_updated}", 'updated')).replace("{{password}}", password);
       const subject = "Z3Partners: Password changed successfully";
       const mailData = emailService.getMailData([username], subject, textData);
       transporter.sendMail(mailData, function (err, info) {});

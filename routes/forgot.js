@@ -2,6 +2,7 @@ var express = require('express');
 var     router = express.Router();
 const users = require('../services/user');
 var emailService = require('../services/email');
+const emailTemplate = require('../email-template/forgot-password');
 
 /* get login page. */
 router.get('/', function(req, res) {
@@ -23,7 +24,7 @@ router.post('/', async function(req, res, next) {
             if (response.status === 200) {
                 if (response.token) {
                     const transporter = emailService.getTransporter();
-                    const textData = 'Please click the link to reset password: https://irportal.z3partners.com/reset/?token=' + response.token;
+                    const textData =  (emailTemplate.forgotPassword.replace("{reset_link}", `https://irportal.z3partners.com/reset/?token=${response.token}`)).replace("{username}", user_email);
                     const subject = 'Z3Partners: Password reset link';
                     const mailData = emailService.getMailData(user_email, subject, textData);
                     transporter.sendMail(mailData, function (err, info) {
