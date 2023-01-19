@@ -126,6 +126,7 @@ $(document).ready(function () {
         const documentDetails = JSON.parse(elm.dataset.document);
         const investorEmailID = (documentDetails.investor_id === -999) ? 'All' : investorEmail[`'${documentDetails.investor_id}'`];
         const invStatus = investorStatus[`'${documentDetails.investor_id}'`];
+        const invFirstName = investorFName[`'${documentDetails.investor_id}'`];
         const res = confirm(`Are your sure to send details to ${investorEmailID} ?`);
         document.querySelector("p.form-label").innerHTML = '';
         if (res) {
@@ -136,6 +137,7 @@ $(document).ready(function () {
             $.post(route, {
                 ...documentDetails,
                 investorEmailID: investorEmailID,
+                invFirstName: invFirstName,
                 investorStatus: invStatus
             }, function (data, status) {
                 if (data.message) {

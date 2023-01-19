@@ -18,7 +18,7 @@ router.post('/', async function (req, res, next) {
             response = await documentService.deleteDocument(document_id);
             if(investorEmailID !== 'All') {
                 const transporter = emailService.getTransporter();
-                const textData = emailTemplate.deleteDoc.replace("{username}", req.session.users.fName)
+                const textData = emailTemplate.deleteDoc.replace("{first_name}", req.session.users.fName)
                 const subject = 'Z3Partners: Document deleted successfully';
                 const mailData = emailService.getMailData(toEmail, subject, textData);
                 transporter.sendMail(mailData, function (err, info) {

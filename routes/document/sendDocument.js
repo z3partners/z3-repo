@@ -12,12 +12,13 @@ router.post('/', async function (req, res, next) {
         // console.log(req.body.investorEmailID, req.body);
         const fileData = JSON.parse(req.body.file_path);
         const emailId = req.body.investorEmailID;
+        const invFirstName = req.body.invFirstName;
         const investorStatus = req.body.investorStatus;
         let message = `Failed to sent document to [${emailId}]. Please check investor details.`;
         if(emailId !== 'All' && +investorStatus) {
             message = `Document sent successfully to [${emailId}].`
             const transporter = emailService.getTransporter();
-            const textData = (emailTemplate.documentReceived.replace("{investor}", emailId)).replace("{document_name}", fileData.originalname);
+            const textData = (emailTemplate.documentReceived.replace("{first_name}", invFirstName)).replace("{document_name}", fileData.originalname);
             const subject = 'Z3Partners has uploaded new document';
             // const mailData = emailService.getMailData(emailId, subject, textData, fileData);
             const mailData = emailService.getMailData(emailId, subject, textData);
