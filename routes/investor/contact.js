@@ -41,7 +41,7 @@ router.post('/', async function(req, res, next) {
         res.locals.showFilter =  false;
         res.locals.showCat =  false;
         const sub = req.body['contact-subject'];
-        const feedbackQuery = (emailTemplate.contactUs.replace("{investor_email}", req.session.username)).replace("{feedback_data}", req.body['feedback-query']);//req.body['feedback-query'];
+        const feedbackQuery = (emailTemplate.contactUs.replace("{investor_email}", `${req.session.users.fName} [${req.session.username}]`)).replace("{feedback_data}", req.body['feedback-query']);//req.body['feedback-query'];
         const transporter = emailService.getTransporter();
         const mailData = emailService.getMailData('partner@z3partners.com', sub, feedbackQuery);
 

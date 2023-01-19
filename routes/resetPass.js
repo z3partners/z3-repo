@@ -11,13 +11,14 @@ router.post('/', async function(req, res, next) {
     const password = req.body.password;
     const confirmPassword = req.body['confirm-password'];
     const username = req.body['username'];
+    const first_name = req.body['first_name'];
     const investorId = req.body.investor_id;
     try {
         if(investorId) {
             const response = await investorService.createInvestorPass({user_id: investorId, password: password});
             if(response.status === 200) {
                 const transporter = emailService.getTransporter();
-                const textData = ((emailTemplate.changePassword.replace('{username}', username)).replace("{created_updated}", 'reset')).replace("{{password}}", password);
+                const textData = ((emailTemplate.changePassword.replace('{first_name}', first_name)).replace("{created_updated}", 'reset')).replace("{{password}}", password);
                 const subject = 'Z3Partners: Password reset successfully';
                 const mailData = emailService.getMailData(username, subject, textData);
                 transporter.sendMail(mailData, function (err, info) {
