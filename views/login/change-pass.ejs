@@ -38,6 +38,7 @@
                         <div class="card-body">
                             <form name="investor" action="./password" method="post" id="change-pass">
                                 <input type="hidden" name="investor_id" value="" id="investor_id" />
+                                <input type="hidden" name="first_name" value="" id="first_name" />
                                 <div class="mb-3 form-password-toggle">
                                     <label class="form-label" for="password">Current Password</label>
                                     <div class="input-group input-group-merge">
@@ -84,6 +85,7 @@
 <script>
     function populateInvestorData(investorData) {
         document.getElementById("investor_id").value = investorData.user_id;
+        document.getElementById("first_name").value = investorData.first_name;
     }
     populateInvestorData(investor[0]);
 </script>

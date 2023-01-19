@@ -40,6 +40,7 @@ router.post("/", async function (req, res, next) {
     }
   } else {
     const password = req.body.password;
+    const firstName = req.body.first_name;
     const newPassword = req.body.new_password;
     const confirmPassword = req.body["confirm-password"];
     const passRes = await users.changePassword(userId, password, newPassword);
@@ -47,7 +48,7 @@ router.post("/", async function (req, res, next) {
       req.session.destroy(function (err) {});
 
       const transporter = emailService.getTransporter();
-      const textData = ((emailTemplate.changePassword.replace('{username}', username)).replace("{created_updated}", 'updated')).replace("{{password}}", password);
+      const textData = ((emailTemplate.changePassword.replace('{first_name}', firstName)).replace("{created_updated}", 'updated')).replace("{{password}}", password);
       const subject = "Z3Partners: Password changed successfully";
       const mailData = emailService.getMailData([username], subject, textData);
       transporter.sendMail(mailData, function (err, info) {});

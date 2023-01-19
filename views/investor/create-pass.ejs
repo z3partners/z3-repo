@@ -49,6 +49,7 @@
                                 <input type="hidden" name="investor_id" value="" id="investor_id" />
                                 <input type="hidden" name="username" value="" id="username" />
                                 <input type="hidden" name="status" value="" id="status" />
+                                <input type="hidden" name="first_name" value="" id="first_name" />
                                 <div class="mb-3">
                                     <label class="form-label" for="company_legal_name">Company LEGAL NAME</label>
                                     <div class="input-group input-group-merge">
@@ -127,6 +128,7 @@
     function populateInvestorData(investorData) {
         document.getElementById("company_legal_name").value = investorData.company_legal_name;
         document.getElementById("contact_name").value = investorData.first_name;
+        document.getElementById("first_name").value = investorData.first_name;
         document.getElementById("email_id").value = investorData.username;
         document.getElementById("username").value = investorData.username;
         document.getElementById("status").value = investorData.status;

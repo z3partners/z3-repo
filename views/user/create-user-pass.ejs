@@ -46,6 +46,7 @@
                                 <input type="hidden" name="user_id" value="" id="user_id" />
                                 <input type="hidden" name="username" value="" id="username" />
                                 <input type="hidden" name="status" value="" id="status" />
+                                <input type="hidden" name="first_name" value="" id="first_name" />
                                 <div class="mb-3">
                                     <label class="form-label" for="contact_name">FULL NAME</label>
                                     <div class="input-group input-group-merge">
@@ -109,6 +110,7 @@
     const user = <%- user%>;
     function populateUserData(userData) {
         document.getElementById("contact_name").value = userData.first_name;
+        document.getElementById("first_name").value = userData.first_name;
         document.getElementById("user_id").value = userData.user_id;
         document.getElementById("username").value = userData.username;
         document.getElementById("status").value = userData.status;

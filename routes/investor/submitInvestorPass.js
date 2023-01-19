@@ -15,6 +15,7 @@ router.post('/', async function(req, res, next) {
     const investorId = req.body.investor_id;
     const username = req.body.username;
     const status = req.body.status;
+    const first_name = req.body.first_name;
     if(confirmPassword !== password){
         req.session.msg = "Password and Confirm Password is not matching.";
         res.redirect(`./create-investor-pass?id=${investorId}`);
@@ -26,7 +27,7 @@ router.post('/', async function(req, res, next) {
             req.session.msg = resposne.message;
             if(resposne.status === 200 && +status) {
                 const transporter = emailService.getTransporter();
-                const textData = (emailTemplate.changePassword.replace('{username}', username)).replace("{created_updated}", 'created');
+                const textData = (emailTemplate.changePassword.replace('{first_name}', first_name)).replace("{created_updated}", 'created');
                 const subject = 'Z3Partners: Password created successfully';
                 const mailData = emailService.getMailData(username, subject, textData);
                 transporter.sendMail(mailData, function (err, info) {

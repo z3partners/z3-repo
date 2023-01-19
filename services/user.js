@@ -22,6 +22,7 @@ async function getResetToken(emailId) {
             return {
                 message: `Reset link sent successfully. Please check your email.`,
                 token: resetPasswordToken,
+                first_name: userDetails.first_name,
                 status: 200
             };
         }
