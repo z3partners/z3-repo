@@ -128,8 +128,13 @@ async function deleteDocument(document_id) {
     const response = await db.query(`DELETE from z3_documents where document_id = ?`, [document_id]);
     return {message: `Document deleted!!`, status: 200};
 }
+async function updateDocumentSendStatus(document_id) {
+    const response = await db.query(`UPDATE  z3_documents
+            set send_status = 1,  updated_at = current_timestamp() where document_id = ?`, [document_id]);
+    return {message: `Document send status updated!!`, status: 200};
+}
 
 
 module.exports = {
-    createDocument, getMaxId, listAll, getDocument, updateDocument, deleteDocument
+    createDocument, getMaxId, listAll, getDocument, updateDocument, deleteDocument, updateDocumentSendStatus
 }
