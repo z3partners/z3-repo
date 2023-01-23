@@ -9,9 +9,15 @@ router.get('/', async function(req, res, next) {
         res.redirect('./login');
     }
     try {
+        let investorType = '';
+        if(req.session.roleDetails.role_id === 4) {
+            investorType = 'Domestic';
+        } else if(req.session.roleDetails.role_id === 5) {
+            investorType = 'International';
+        }
         const resposne = await categoryService.listCategory();
         const resAll = await categoryService.listAll();
-        const investorList = await investorService.listAll(false, {});
+        const investorList = await investorService.listAll(false, {investor_type: investorType});
         req.session.catList = resposne;
         res.locals.allCategory = JSON.stringify(resAll.message);
         res.locals.investorList = JSON.stringify(investorList.message);
