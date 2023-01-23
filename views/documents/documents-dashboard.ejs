@@ -226,6 +226,7 @@ var columns = {
         'category_id': 'Category',
         'quarter': 'Quarter',
         'financial_year': 'Financial year',
+        'created_at': 'Created Date',
         'status': 'Status',
         'action': 'Action'
     };
@@ -248,6 +249,7 @@ var columns = {
                 </div>`;
         doc.action = actionHTML;
         doc.investor_id = (investor) ? investor : null;
+        doc.created_at = new Date(doc.created_at).toLocaleDateString();
         doc.category_id = allCat[`'${doc.category_id}'`]['category_name'];
         doc.document_name = `<strong><a href="./download-document?doc=${JSON.parse(doc.file_path).filename}">${doc.document_name}</a></strong>`;
         });

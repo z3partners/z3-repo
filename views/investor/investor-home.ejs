@@ -202,14 +202,14 @@
         'document_name': 'Document Name',
         'category_id': 'Category',
         'quarter': 'Quarter',
-        'created_at': 'DATE(DD/MM/YYYY',
+        'created_at': 'DATE(DD/MM/YYYY)',
         'download': 'Download'
     };
     const showCat = <%- showCat %>;
     const documentList = <%- JSON.stringify(documentList) %>
     if (Array.isArray(documentList) && documentList.length) {
         documentList.forEach(doc => {
-            doc.created_at = new Date(doc.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
+            doc.created_at = new Date(doc.created_at).toLocaleDateString();
             doc.document_name = `<strong><a href="./download-document?doc=${JSON.parse(doc.file_path).filename}">${doc.document_name}</a></strong>`;
             doc.download =`<a href="./download-document?doc=${JSON.parse(doc.file_path).filename}"><u>Download</u></a>`;
             doc.category_id = allCat[`'${doc.category_id}'`]['category_name'];

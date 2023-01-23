@@ -178,6 +178,7 @@
         'first_name': 'Contact Name',
         'username': 'Email',
         'phone_number': 'Contact Number',
+        'created_at': 'Created Date',
         'status': 'Status',
         'action': 'Action'
     };
@@ -197,6 +198,7 @@
     </div>
     </div>`;
         inv.action = actionHTML;
+        inv.created_at = new Date(inv.created_at).toLocaleDateString();
     });
 
     var table = $('#table-sortable').tableSortable({
