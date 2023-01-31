@@ -51,7 +51,7 @@ async function getUserDetailByToken(token) {
     if (data.length) {
         const userDetails = data[0];
         if (userDetails.status === 0) {
-            return {message: `User is not active please contact Z3Partners`, status: 400};
+            return {message: `User is not active, please contact Z3Partners at partner@z3partners.com`, status: 400};
         } else {
             return {
                 message: ``,
@@ -60,7 +60,7 @@ async function getUserDetailByToken(token) {
             };
         }
     } else {
-        return {message: `Invalid data please contact Z3Partners!!`, status: 400};
+        return {message: `Invalid data, please contact Z3Partners at partner@z3partners.com!!`, status: 400};
     }
 }
 
@@ -91,7 +91,7 @@ async function loginUser(username, password) {
             const roles = (roleDetails.length) ? roleDetails[0] : {};
             return {message: {userDetail: data[0], roleDetails: roles}, status: 200};
         } else {
-            return {message: "User is not active, please contact Z3partners.", status: 400};
+            return {message: "User is not active, please contact Z3Partners at partner@z3partners.com.", status: 400};
         }
     } else {
         return {message: "Incorrect username/password", status: 400};
