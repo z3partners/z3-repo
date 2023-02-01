@@ -230,7 +230,6 @@ var columns = {
         'status': 'Status',
         'action': 'Action'
     };
-
     const documentList = <%- JSON.stringify(documentList) %>
     if (Array.isArray(documentList) && documentList.length) {
         documentList.forEach(doc => {
@@ -249,7 +248,8 @@ var columns = {
                 </div>`;
         doc.action = actionHTML;
         doc.investor_id = (investor) ? investor : null;
-        doc.created_at = new Date(doc.created_at).toLocaleDateString();
+        const options = { day: '2-digit', month: '2-digit',  year: 'numeric'};
+        doc.created_at = new Date(doc.created_at).toLocaleDateString("in", options);
         doc.category_id = allCat[`'${doc.category_id}'`]['category_name'];
         doc.document_name = `<strong><a href="./download-document?doc=${JSON.parse(doc.file_path).filename}">${doc.document_name}</a></strong>`;
         });
