@@ -60,6 +60,7 @@ const changePassword = `<body style="background-color: #f3f3f3; margin: 0; paddi
 <p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Dear {first_name},</span></p>
 <p style="margin: 0; font-size: 14px; mso-line-height-alt: 14.399999999999999px;"> </p>
 <p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">We are pleased to inform you that your password has been {created_updated} successfully.</span></p>
+<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Your Password is : [{password}]</span></p>
 </div>
 </div>
 </td>

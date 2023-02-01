@@ -31,6 +31,7 @@ router.post('/', async function(req, res, next) {
         const alt_email_2 = req.body.alt_email_2;
         const phone_number = req.body.contact_number;
         const status = req.body.status ? 1 : 0;
+        const hasPassword = req.body.hasPassword;
 
         let fund_association = '';
         if (funds) {
@@ -45,7 +46,7 @@ router.post('/', async function(req, res, next) {
                  const textData = emailTemplate.updateProfile.replace('{first_name}', first_name);
                 const subject = 'Z3Partners: Investor data Updated successfully';
                 const mailData = emailService.getMailData([username], subject , textData);
-                if (status) {
+                if (status && hasPassword) {
                     transporter.sendMail(mailData, function (err, info) {
                         if (err)
                             console.log(err);

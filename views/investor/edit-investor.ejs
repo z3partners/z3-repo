@@ -138,6 +138,7 @@
                                 <div class="form-check form-switch mb-2">
                                     <input class="form-check-input" type="checkbox" id="status" name="status">
                                     <label class="form-check-label" for="status">Active</label>
+                                    <input type="hidden" name="hasPassword" value="" id="hasPassword" />
                                 </div>
                                 <button type="submit" class="btn btn-primary" id="investorEditBtn">Edit</button>
                             </form>
@@ -177,6 +178,7 @@
         document.getElementById("alt_email_2").value = investorData.alt_email_2;
         document.getElementById("financial_year").value = investorData.financial_year;
         document.getElementById("investor_id").value = investorData.user_id;
+        document.getElementById("hasPassword").value = (investorData.password) ? true : false;
         if(investorData.investor_type === 'Domestic') {
             document.getElementById("investor_type1").checked = 'checked';
         } else {

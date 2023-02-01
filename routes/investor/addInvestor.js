@@ -60,7 +60,7 @@ router.post('/', async function(req, res, next) {
             });
             req.session.msg = resposne.message;
             if (resposne.status === 200 && status) {
-                const transporter = emailService.getTransporter();
+/*                const transporter = emailService.getTransporter();
                 const textData = emailTemplate.accountActivated.replace('{first_name}', first_name);
                 const subject = 'Z3Partners: New investor created successfully';
                 const mailData = emailService.getMailData(email_id, subject, textData);
@@ -70,7 +70,7 @@ router.post('/', async function(req, res, next) {
                         console.log(err);
                     else
                         console.log(info);
-                });
+                });*/
             }
             res.redirect('./investor');
         }

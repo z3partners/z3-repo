@@ -22,6 +22,7 @@ async function getInvestor(id, role_id) {
         company_legal_name,
         first_name,
         username,
+        password,
         alt_email_1,
         alt_email_2,
         phone_number,
