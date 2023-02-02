@@ -106,7 +106,8 @@
 <script>
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirm-password");
-    function validatePassword(){
+
+    function validatePassword() {
         if(password.value != confirmPassword.value) {
             confirmPassword.setCustomValidity("Passwords Don't Match");
         } else {
@@ -116,5 +117,13 @@
 
     password.onchange = validatePassword;
     confirmPassword.onkeyup = validatePassword;
+
+
+    const createPassBtn = document.getElementById("new-user-btn");
+    createPassBtn.onclick = validatePasswordFormat;
+    password.onkeyup = validatePasswordFormat;
+    function validatePasswordFormat() {
+        passwordFormat(password.value,  password);
+    }
 
 </script>

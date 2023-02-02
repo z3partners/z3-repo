@@ -68,7 +68,7 @@
                                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Create Password</button>
+                                <button type="submit" class="btn btn-primary" id="createPassBtn">Create Password</button>
                             </form>
                         </div>
                     </div>
@@ -130,4 +130,11 @@
 
     password.onchange = validatePassword;
     confirmPassword.onkeyup = validatePassword;
+
+    const createPassBtn = document.getElementById("createPassBtn");
+    createPassBtn.onclick = validatePasswordFormat;
+    password.onkeyup = validatePasswordFormat;
+    function validatePasswordFormat() {
+        passwordFormat(password.value,  password);
+    }
 </script>

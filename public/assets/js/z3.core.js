@@ -173,10 +173,17 @@ $(document).ready(function () {
         const password = document.getElementById("password").value;
         const newPassword = document.getElementById("new_password").value;
         const confirmPassword = document.getElementById("confirm-password").value;
+
         if(newPassword.trim()=== '' || confirmPassword.trim() === '' || password.trim() === '') {
-            $("span.danger").text('Please enter all fields.');
+            $("span.danger").html(`Please enter all fields.`);
+        } else if(!newPassword.match(regularExpression)) {
+            $("span.danger").html(`
+        1. Password should be at least 6 characters long<br>
+        2. Password should contain at least one number<br>
+        3. Password should contain at least one special character
+        `);
         } else if(newPassword !== confirmPassword) {
-            $("span.danger").text('New Password and Confirm Password is not matching.');
+            $("span.danger").html('New Password and Confirm Password is not matching.');
         } else {
             let formElem = document.getElementById("change-pass");
             formElem.submit();
@@ -188,9 +195,15 @@ $(document).ready(function () {
         const password = document.getElementById("password").value;
         const confirmPassword = document.getElementById("confirm-password").value;
         if(confirmPassword.trim() === '' || password.trim() === '') {
-            $("span.danger").text('Please enter all fields.');
-        } else if(password !== confirmPassword) {
-            $("span.danger").text('New Password and Confirm Password is not matching.');
+            $("span.danger").html('Please enter all fields.');
+        } else if(!password.match(regularExpression)) {
+            $("span.danger").html(`
+        1. Password should be at least 6 characters long<br>
+        2. Password should contain at least one number<br>
+        3. Password should contain at least one special character
+        `);
+        }  else if(password !== confirmPassword) {
+            $("span.danger").html('New Password and Confirm Password is not matching.');
         } else {
             let formElem = document.getElementById("change-pass");
             formElem.submit();
@@ -258,3 +271,17 @@ function populateFinancialYear(selector, data) {
     });
 }
 
+
+
+const regularExpression = /^(?=.*[\d])(?=.*[!@#$%^&*])[\w!@#$%^&*]{6,16}$/;
+function passwordFormat(password, passwordElem) {
+    if(!password.match(regularExpression)) {
+        passwordElem.setCustomValidity(`
+        1. Password should be at least 6 characters long
+        2. Password should contain at least one number
+        3. Password should contain at least one special character
+        `);
+    } else {
+        passwordElem.setCustomValidity('');
+    }
+}

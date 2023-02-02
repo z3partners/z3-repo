@@ -61,7 +61,7 @@ const forgotPassword = `<body style="background-color: #f3f3f3; margin: 0; paddi
 <p style="margin: 0; font-size: 14px; mso-line-height-alt: 14.399999999999999px;"> </p>
 <p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">We have received a request to reset your password. Please click the link below to set a new password.</span></p>
 <p style="margin: 0; font-size: 14px; mso-line-height-alt: 14.399999999999999px;"> </p>
-<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Click here ({reset_link}})</span></p>
+<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Click here ({reset_link})</span></p>
 </div>
 </div>
 </td>
