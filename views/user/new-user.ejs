@@ -71,7 +71,7 @@
                             <label class="form-label" for="contact_number">Phone Number</label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text"><i class="bx bx-phone"></i></span>
-                                <input type="text" id="contact_number" name="contact_number" required class="form-control phone-mask" placeholder="(Country Code) 999 999 9999" aria-label="(Country Code) 658 799 8941" aria-describedby="basic-icon-default-phone2">
+                                <input type="tel" maxlength="10" minlength="9" id="contact_number" name="contact_number" required class="form-control phone-mask" placeholder="(Country Code) 999 999 9999" aria-label="(Country Code) 658 799 8941" aria-describedby="basic-icon-default-phone2">
                             </div>
                         </div>
 
@@ -107,7 +107,7 @@
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirm-password");
 
-    function validatePassword(){
+    function validatePassword() {
         if(password.value != confirmPassword.value) {
             confirmPassword.setCustomValidity("Passwords Don't Match");
         } else {
@@ -117,5 +117,13 @@
 
     password.onchange = validatePassword;
     confirmPassword.onkeyup = validatePassword;
+
+
+    const createPassBtn = document.getElementById("new-user-btn");
+    createPassBtn.onclick = validatePasswordFormat;
+    password.onkeyup = validatePasswordFormat;
+    function validatePasswordFormat() {
+        passwordFormat(password.value,  password);
+    }
 
 </script>

@@ -86,7 +86,7 @@
                                         <input type="password" id="confirm-password" name="confirm-password" required class="form-control" placeholder="Confirm password" aria-label="Password">
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Create Password</button>
+                                <button type="submit" class="btn btn-primary" id="createPassBtn">Create Password</button>
                             </form>
                         </div>
                     </div>
@@ -135,4 +135,27 @@
         document.getElementById("investor_id").value = investorData.user_id;
     }
     populateInvestorData(investor[0]);
+
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirm-password");
+
+    function validatePassword() {
+        if(password.value != confirmPassword.value) {
+            confirmPassword.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirmPassword.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirmPassword.onkeyup = validatePassword;
+
+
+    const createPassBtn = document.getElementById("createPassBtn");
+    createPassBtn.onclick = validatePasswordFormat;
+    password.onkeyup = validatePasswordFormat;
+    function validatePasswordFormat() {
+        passwordFormat(password.value,  password);
+    }
+
 </script>

@@ -22,6 +22,7 @@ async function getInvestor(id, role_id) {
         company_legal_name,
         first_name,
         username,
+        password,
         alt_email_1,
         alt_email_2,
         phone_number,
@@ -113,7 +114,7 @@ async function listAll(status, searchFields = {}) {
         updated_at,
         status from z3_user
         left join z3_user_role_mapping using(user_id) where z3_user_role_mapping.role_id = 3
-    ${conStr}`);
+    ${conStr} order by created_at DESC `);
     const data = helper.emptyOrRows(rows);
     if (data.length) {
         return { message: data, status: 200 };

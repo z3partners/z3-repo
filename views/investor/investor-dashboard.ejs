@@ -178,6 +178,7 @@
         'first_name': 'Contact Name',
         'username': 'Email',
         'phone_number': 'Contact Number',
+        'created_at': 'Created Date',
         'status': 'Status',
         'action': 'Action'
     };
@@ -197,6 +198,8 @@
     </div>
     </div>`;
         inv.action = actionHTML;
+        const options = { day: '2-digit', month: '2-digit',  year: 'numeric'};
+        inv.created_at = new Date(inv.created_at).toLocaleDateString("in", options);
     });
 
     var table = $('#table-sortable').tableSortable({
