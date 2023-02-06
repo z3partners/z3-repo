@@ -20,18 +20,19 @@ function getTransporter() {
         }
     });
 }
-function getMailData(toEmailList, subject, textData, fileData = '') {
+function getMailData(toEmailList, subject, textData, ccList='', fileData = '') {
     
     const filePath = `./z3-documents/` ;
     const attachmentDetails = (fileData) ? [{
         filename: fileData.originalname,
         path: `${filePath}/${fileData.filename}`
     }] : [] ;
-     return {
+    const finalCC = (ccList) ? `${ccEmailList} , ${ccList}`: ccEmailList;
+    return {
          to: Array.isArray(toEmailList) ?  toEmailList.join(", ") : toEmailList,   // list of receivers
          from: fromEmail,  // sender address
          replyTo: replyToEmail,  // reply address
-         cc: ccEmailList,
+         cc: finalCC,
          subject: subject,
          html: textData,
          attachments: attachmentDetails

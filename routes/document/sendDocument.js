@@ -10,9 +10,10 @@ router.post('/', async function (req, res, next) {
         res.redirect('./login');
     }
     try {
-        console.log(req.body.investorEmailID, req.body);
+        // console.log(req.body.investorCCList);
         const fileData = JSON.parse(req.body.file_path);
         const emailId = req.body.investorEmailID;
+        const ccList = req.body.investorCCList;
         const invFirstName = req.body.invFirstName;
         const investorStatus = req.body.investorStatus;
         const documentId = req.body.document_id;
@@ -22,8 +23,8 @@ router.post('/', async function (req, res, next) {
             const transporter = emailService.getTransporter();
             const textData = (emailTemplate.documentReceived.replace("{first_name}", invFirstName)).replace("{document_name}", fileData.originalname);
             const subject = 'Z3Partners has uploaded new document';
-            // const mailData = emailService.getMailData(emailId, subject, textData, fileData);
-            const mailData = emailService.getMailData(emailId, subject, textData);
+            // const mailData = emailService.getMailData(emailId, subject, textData, ccList, fileData);
+            const mailData = emailService.getMailData(emailId, subject, textData, ccList);
             transporter.sendMail(mailData, function (err, info) {
                 if (err)
                     console.log(err);
