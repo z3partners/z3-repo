@@ -125,6 +125,7 @@ $(document).ready(function () {
         const elm = e.target.closest(".send-document");
         const documentDetails = JSON.parse(elm.dataset.document);
         const investorEmailID = (documentDetails.investor_id === -999) ? 'All' : investorEmail[`'${documentDetails.investor_id}'`];
+        const ccList = (documentDetails.investor_id !== -999) ? investorEmailCCList[`'${documentDetails.investor_id}'`] : '';
         const invStatus = investorStatus[`'${documentDetails.investor_id}'`];
         const invFirstName = investorFName[`'${documentDetails.investor_id}'`];
         const res = confirm(`Are your sure to send details to ${investorEmailID} ?`);
@@ -137,6 +138,7 @@ $(document).ready(function () {
             $.post(route, {
                 ...documentDetails,
                 investorEmailID: investorEmailID,
+                investorCCList: ccList,
                 invFirstName: invFirstName,
                 investorStatus: invStatus
             }, function (data, status) {

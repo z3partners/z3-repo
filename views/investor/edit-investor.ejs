@@ -186,7 +186,9 @@
         }
         funds.forEach(f => {
             const fundNumber = f.replaceAll(" ", "_");
-            document.getElementById(fundNumber).checked = 'checked';
+            if(fundNumber) {
+                document.getElementById(fundNumber).checked = 'checked';
+            }
         });
 
         document.getElementById("status").checked = investorData.status ? "checked" : '';

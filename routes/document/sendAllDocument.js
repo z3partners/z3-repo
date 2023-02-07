@@ -37,16 +37,25 @@ router.get('/', async function(req, res, next) {
 router.post('/', async function (req, res) {
     const allInvestor = await investorService.listAll(true);
     if(Array.isArray(allInvestor.message)) {
+        let ccList = [];
+        const documentId = req.body.document_id;
+        await documentService.updateDocumentSendStatus(+documentId);
         allInvestor.message.forEach(function (investor) {
             const fileData = JSON.parse(req.body.file_path);
             const emailId = investor.username;
             const first_name = investor.first_name;
+            if(investor.alt_email_1) {
+                ccList.push(investor.alt_email_1);
+            }
+            if(investor.alt_email_2) {
+                ccList.push(investor.alt_email_2);
+            }
             if(+investor.status) {
                 const transporter = emailService.getTransporter();
                 const textData = (emailTemplate.documentReceived.replace("{first_name}", first_name)).replace("{document_name}", fileData.originalname);
                 const subject = 'Z3Partners has uploaded new document';
-                // const mailData = emailService.getMailData(emailId, subject, textData, fileData);
-                const mailData = emailService.getMailData(emailId, subject, textData);
+                // const mailData = emailService.getMailData(emailId, subject, textData, ccList.join(", "), fileData);
+                const mailData = emailService.getMailData(emailId, subject, textData, ccList.join(", "));
                 transporter.sendMail(mailData, function (err, info) {
                     if (err)
                         console.log(err);
