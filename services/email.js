@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const fromEmail = 'partner@z3partners.com';
 const replyToEmail = 'partner@z3partners.com';
+const bccEmailList = 'partner@z3partners.com';
 const ccEmailList = 'production2@4thdimension.in';
 const configData = require('../config.json');
 const smtpPassword = configData.password.smtp;
@@ -33,6 +34,7 @@ function getMailData(toEmailList, subject, textData, ccList='', fileData = '') {
          from: fromEmail,  // sender address
          replyTo: replyToEmail,  // reply address
          cc: finalCC,
+         bcc: bccEmailList,
          subject: subject,
          html: textData,
          attachments: attachmentDetails
