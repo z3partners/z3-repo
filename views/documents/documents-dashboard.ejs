@@ -288,6 +288,17 @@ var columns = {
 
             }
             return row[key];
+        },
+        tableDidUpdate: function() {
+            $(".edit-link").click(function (e) {
+                editLink(e);
+            });
+            $(".send-document").click(function (e) {
+                sendDocument(e);
+            });
+            $(".del-document-btn").click(function (e) {
+                delDocumentBtnClick(e);
+            });
         }
     });
     }

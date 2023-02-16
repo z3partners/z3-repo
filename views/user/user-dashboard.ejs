@@ -175,6 +175,14 @@ const userRoleMap = {
 
             }
             return row[key];
+        },
+        tableDidUpdate: function() {
+            $(".edit-link").click(function (e) {
+                editLink(e);
+            });
+            $(".del-user-btn").click(function (e) {
+                delUserBtnClick(e);
+            });
         }
     });
     }

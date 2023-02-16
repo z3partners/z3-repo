@@ -225,6 +225,14 @@
 
             }
             return row[key];
+        },
+        tableDidUpdate: function() {
+            $(".edit-link").click(function (e) {
+                editLink(e);
+            });
+            $(".del-investor-btn").click(function (e) {
+                delInvestorBtnClick(e);
+            });
         }
     });
     }

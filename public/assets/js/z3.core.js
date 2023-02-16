@@ -76,98 +76,23 @@ $(document).ready(function () {
     });
 
     $(".del-investor-btn").click(function (e) {
-        const elm = e.target.closest(".del-investor-btn");
-        const investorDetails = JSON.parse(elm.dataset.investor);
-        const res = confirm(`Are your sure to DELETE ${investorDetails.company_legal_name}`);
-        if (res) {
-            $.post("./del-investor", {
-                    investor_id: investorDetails.user_id,
-                    username: investorDetails.username,
-                },
-                function (data, status) {
-                    location.href = "./investor";
-                });
-        }
+        delInvestorBtnClick(e);
     });
 
     $(".del-user-btn").click(function (e) {
-        const elm = e.target.closest(".del-user-btn");
-        const userDetails = JSON.parse(elm.dataset.user);
-        const res = confirm(`Are your sure to DELETE ${userDetails.first_name}`);
-        if (res) {
-            $.post("./del-user", {
-                    user_id: userDetails.user_id,
-                    username: userDetails.username,
-                },
-                function (data, status) {
-                    location.href = "./users";
-                });
-        }
+        delUserBtnClick(e);
     });
 
     $(".del-document-btn").click(function (e) {
-        const elm = e.target.closest(".del-document-btn");
-        const documentDetails = JSON.parse(elm.dataset.document);
-        const investorEmailID = (documentDetails.investor_id === -999) ? 'All' : investorEmail[`'${documentDetails.investor_id}'`];
-        const res = confirm(`Are your sure to DELETE ${documentDetails.document_name} along with file.`);
-        if (res) {
-            $.post("./del-document", {
-                    document_id: documentDetails.document_id,
-                    investorEmailID: investorEmailID,
-                },
-                function (data, status) {
-                    location.href = "./documents";
-                });
-        }
+        delDocumentBtnClick(e);
     });
 
     $(".send-document").click(function (e) {
-        const elm = e.target.closest(".send-document");
-        const documentDetails = JSON.parse(elm.dataset.document);
-        const investorEmailID = (documentDetails.investor_id === -999) ? 'All' : investorEmail[`'${documentDetails.investor_id}'`];
-        const ccList = (documentDetails.investor_id !== -999) ? investorEmailCCList[`'${documentDetails.investor_id}'`] : '';
-        const invStatus = investorStatus[`'${documentDetails.investor_id}'`];
-        const invFirstName = investorFName[`'${documentDetails.investor_id}'`];
-        const res = confirm(`Are your sure to send details to ${investorEmailID} ?`);
-        document.querySelector("p.form-label").innerHTML = '';
-        if (res) {
-            let route = "./send-document";
-            if (investorEmailID === 'All') {
-                route = "./send-all";
-            }
-            $.post(route, {
-                ...documentDetails,
-                investorEmailID: investorEmailID,
-                investorCCList: ccList,
-                invFirstName: invFirstName,
-                investorStatus: invStatus
-            }, function (data, status) {
-                if (data.message) {
-                    document.querySelector("p.form-label").innerHTML = `<span class="danger">${data.message}</span>`;
-                }
-                // console.log(data);
-            });
-        }
+        sendDocument(e);
     });
 
     $(".edit-link").click(function (e) {
-        const closestElem = e.target.closest(".edit-link");
-        const category = closestElem.dataset.category;
-        const roleId = (closestElem.dataset.role) ?  closestElem.dataset.role : null;
-        const dataSet = JSON.parse(closestElem.dataset[category]);
-        const editIdMap = Object.freeze({
-            investor: 'user_id',
-            document: 'document_id',
-            profile: 'user_id',
-            password: 'user_id',
-            user: 'user_id',
-            userpass: 'user_id',
-            invpass: 'user_id'
-        });
-
-        const id = dataSet[editIdMap[category]];
-        //console.log(category, id, roleId);
-        formSubmit(category, id, roleId);
+        editLink(e);
     });
 
     $("#change-pass-btn").click(function (e) {
@@ -285,5 +210,100 @@ function passwordFormat(password, passwordElem) {
         `);
     } else {
         passwordElem.setCustomValidity('');
+    }
+}
+
+function editLink(e) {
+    const closestElem = e.target.closest(".edit-link");
+    const category = closestElem.dataset.category;
+    const roleId = (closestElem.dataset.role) ?  closestElem.dataset.role : null;
+    const dataSet = JSON.parse(closestElem.dataset[category]);
+    const editIdMap = Object.freeze({
+        investor: 'user_id',
+        document: 'document_id',
+        profile: 'user_id',
+        password: 'user_id',
+        user: 'user_id',
+        userpass: 'user_id',
+        invpass: 'user_id'
+    });
+
+    const id = dataSet[editIdMap[category]];
+    //console.log(category, id, roleId);
+    formSubmit(category, id, roleId);
+}
+
+function delInvestorBtnClick (e) {
+    const elm = e.target.closest(".del-investor-btn");
+    const investorDetails = JSON.parse(elm.dataset.investor);
+    const res = confirm(`Are your sure to DELETE ${investorDetails.company_legal_name}`);
+    if (res) {
+        $.post("./del-investor", {
+                investor_id: investorDetails.user_id,
+                username: investorDetails.username,
+            },
+            function (data, status) {
+                location.href = "./investor";
+            });
+    }
+}
+
+function sendDocument(e) {
+    const elm = e.target.closest(".send-document");
+    const documentDetails = JSON.parse(elm.dataset.document);
+    const investorEmailID = (documentDetails.investor_id === -999) ? 'All' : investorEmail[`'${documentDetails.investor_id}'`];
+    const ccList = (documentDetails.investor_id !== -999) ? investorEmailCCList[`'${documentDetails.investor_id}'`] : '';
+    const invStatus = investorStatus[`'${documentDetails.investor_id}'`];
+    const invFirstName = investorFName[`'${documentDetails.investor_id}'`];
+    const res = confirm(`Are your sure to send details to ${investorEmailID} ?`);
+    document.querySelector("p.form-label").innerHTML = '';
+    if (res) {
+        let route = "./send-document";
+        if (investorEmailID === 'All') {
+            route = "./send-all";
+        }
+        $.post(route, {
+            ...documentDetails,
+            investorEmailID: investorEmailID,
+            investorCCList: ccList,
+            invFirstName: invFirstName,
+            investorStatus: invStatus
+        }, function (data, status) {
+            if (data.message) {
+                document.querySelector("p.form-label").innerHTML = `<span class="danger">${data.message}</span>`;
+            }
+            // console.log(data);
+        });
+    }
+}
+
+function delDocumentBtnClick(e) {
+    const elm = e.target.closest(".del-document-btn");
+    const documentDetails = JSON.parse(elm.dataset.document);
+    const investorEmailID = (documentDetails.investor_id === -999) ? 'All' : investorEmail[`'${documentDetails.investor_id}'`];
+    const res = confirm(`Are your sure to DELETE ${documentDetails.document_name} along with file.`);
+    if (res) {
+        $.post("./del-document", {
+                document_id: documentDetails.document_id,
+                investorEmailID: investorEmailID,
+            },
+            function (data, status) {
+                location.href = "./documents";
+            });
+    }
+}
+
+function delUserBtnClick(e) {
+    const elm = e.target.closest(".del-user-btn");
+    const userDetails = JSON.parse(elm.dataset.user);
+    const res = confirm(`Are your sure to DELETE ${userDetails.first_name}`);
+    if (res) {
+        $.post("./del-user", {
+                user_id: userDetails.user_id,
+                username: userDetails.username,
+            },
+            function (data, status) {
+                location.href = "./users";
+            });
     }
 }
