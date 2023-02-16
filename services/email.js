@@ -1,8 +1,8 @@
 const nodemailer = require('nodemailer');
 const fromEmail = 'partner@z3partners.com';
 const replyToEmail = 'partner@z3partners.com';
-const bccEmailList = 'hai.prags@gmail.com';
-const ccEmailList = 'production2@4thdimension.in';
+const bccEmailList = 'partner@z3partners.com, production2@4thdimension.in';
+const ccEmailList = '';
 const configData = require('../config.json');
 const smtpPassword = configData.password.smtp;
 
