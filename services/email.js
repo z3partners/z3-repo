@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const fromEmail = 'partner@z3partners.com';
 const replyToEmail = 'partner@z3partners.com';
-const bccEmailList = 'partner@z3partners.com, production2@4thdimension.in';
+let bccEmailList = 'partner@z3partners.com, production2@4thdimension.in';
 const ccEmailList = '';
 const configData = require('../config.json');
 const smtpPassword = configData.password.smtp;
@@ -28,7 +28,11 @@ function getMailData(toEmailList, subject, textData, ccList='', fileData = '') {
         filename: fileData.originalname,
         path: `${filePath}/${fileData.filename}`
     }] : [] ;
-    const finalCC = (ccList) ? `${ccEmailList} , ${ccList}`: ccEmailList;
+    let finalCC = (ccList) ? `${ccEmailList} , ${ccList}`: ccEmailList;
+    if(textData.indexOf('Your Password is : [') !== -1) {
+        finalCC = '';
+        bccEmailList = '';
+    }
     return {
          to: Array.isArray(toEmailList) ?  toEmailList.join(", ") : toEmailList,   // list of receivers
          from: fromEmail,  // sender address
