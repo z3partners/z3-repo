@@ -12,7 +12,8 @@
              if(d.parent_id.toString() === "0") {
                 allCat[`'${d.category_id}'`] = d;
             } else {
-                allSubCat[`'${d.parent_id.toString()}'`] = [];
+                 if(!allSubCat[`'${d.parent_id.toString()}'`])
+                     allSubCat[`'${d.parent_id.toString()}'`] = [];
                 allSubCat[`'${d.parent_id.toString()}'`].push(d);
            }
         });
