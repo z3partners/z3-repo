@@ -17,9 +17,9 @@ router.post('/', async function (req, res, next) {
         const invFirstName = req.body.invFirstName;
         const investorStatus = req.body.investorStatus;
         const documentId = req.body.document_id;
-        let message = `Failed to sent document to [${emailId}]. Please check investor details.`;
+        let message = `Failed to sent notification to [${emailId}]. Please check investor details.`;
         if(emailId !== 'All' && +investorStatus) {
-            message = `Document sent successfully to [${emailId}].`
+            message = `Notification sent successfully to [${emailId}].`
             const transporter = emailService.getTransporter();
             const textData = (emailTemplate.documentReceived.replace("{first_name}", invFirstName)).replace("{document_name}", fileData.originalname);
             const subject = 'Z3Partners has uploaded new document';

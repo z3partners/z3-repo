@@ -60,7 +60,7 @@ const accountActivated = `
 <div class="" style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #374260; line-height: 1.2; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
 <p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Dear {first_name},</span></p>
 <p style="margin: 0; font-size: 14px; mso-line-height-alt: 14.399999999999999px;"> </p>
-<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Welcome to Z3Partners Investor Portal. We are pleased to inform you that your Investor account has been activated. You can view/download Z3Partners Investment documents here</span></p>
+<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Your account is active </span></p>
 </div>
 </div>
 </td>
