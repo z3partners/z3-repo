@@ -30,7 +30,7 @@ router.post('/', async function(req, res, next) {
         const alt_email_2 = req.body.alt_email_2;
         const rows = await investorService.updateProfile({user_id: profileId, first_name: first_name, phone_number: phone_number, alt_email_1: alt_email_1, alt_email_2: alt_email_2});
         const transporter = emailService.getTransporter();
-        const textData = (emailTemplate.updateUser.replace("{login_user}", req.session.users.fName)).replace("{user_profile_name}", first_name);
+        const textData = (emailTemplate.updateUser.replace("{login_user}", req.session.users.fName));
         const subject = 'Z3Partners: User profile updated successfully';
         const mailData = emailService.getMailData(req.session.username, subject, textData);
 

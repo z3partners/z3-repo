@@ -36,11 +36,11 @@ router.get('/', async function(req, res, next) {
 
 router.post('/', async function (req, res) {
     const allInvestor = await investorService.listAll(true);
-    if(Array.isArray(allInvestor.message)) {
-        let ccList = [];
+    if(Array.isArray(allInvestor.message)) { 
         const documentId = req.body.document_id;
         await documentService.updateDocumentSendStatus(+documentId);
         allInvestor.message.forEach(function (investor) {
+            let ccList = [];
             const fileData = JSON.parse(req.body.file_path);
             const emailId = investor.username;
             const first_name = investor.first_name;

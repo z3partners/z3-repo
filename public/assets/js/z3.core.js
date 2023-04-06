@@ -255,7 +255,7 @@ function sendDocument(e) {
     const ccList = (documentDetails.investor_id !== -999) ? investorEmailCCList[`'${documentDetails.investor_id}'`] : '';
     const invStatus = investorStatus[`'${documentDetails.investor_id}'`];
     const invFirstName = investorFName[`'${documentDetails.investor_id}'`];
-    const res = confirm(`Are your sure to send notification to ${investorEmailID} ?`);
+    const res = confirm(`Are you sure you want to send an email notification to ${investorEmailID} ?`);
     document.querySelector("p.form-label").innerHTML = '';
     if (res) {
         let route = "./send-document";

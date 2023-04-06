@@ -59,7 +59,7 @@ const updateUser = `<body style="background-color: #f3f3f3; margin: 0; padding: 
 <div class="" style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #374260; line-height: 1.2; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
 <p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Dear {login_user},</span></p>
 <p style="margin: 0; font-size: 14px; mso-line-height-alt: 14.399999999999999px;"> </p>
-<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">We are pleased to inform you that profile information of {user_profile_name} has been updated successfully.</span></p>
+<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">We are pleased to inform you that profile information has been updated successfully.</span></p>
 </div>
 </div>
 </td>

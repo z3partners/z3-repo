@@ -78,7 +78,7 @@ async function createUser(userDetails) {
         const user = await db.query(`INSERT into z3_user (username, password, salt, first_name, phone_number, status) values (?, ?, ?, ?, ?, ?)`,[userDetails.username, hash, salt, userDetails.first_name, userDetails.phone_number, userDetails.status]);
         const userId = user.insertId;
         const userRole = await db.query(`INSERT into z3_user_role_mapping (user_id, role_id) values (?, ?)`,[userId, userDetails.role]);
-        return  {message: `User [${userDetails.username}] created!!, `, status: 200};
+        return  {message: `User [${userDetails.username}] created!! `, status: 200};
     }
 }
 

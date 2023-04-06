@@ -77,30 +77,30 @@ router.post('/',  async function(req, res) {
                 dataForDB.document_id = document_id;
                 const resposne = await documentService.updateDocument(dataForDB);
                 req.session.msg = resposne.message;
-                const transporter = emailService.getTransporter();
-                const textData = (emailTemplate.documentReceived.replace("{first_name}", req.session.users.fName)).replace("{document_name}", dataForDB.document_name);
-                const subject = 'Z3Partners: Document updated successfully';
-                const mailData = emailService.getMailData(toEmail, subject, textData);
-                transporter.sendMail(mailData, function (err, info) {
-                    if(err)
-                        console.log(err);
-                    else
-                        console.log(info);
-                });
+                // const transporter = emailService.getTransporter();
+                // const textData = (emailTemplate.documentReceived.replace("{first_name}", req.session.users.fName)).replace("{document_name}", dataForDB.document_name);
+                // const subject = 'Z3Partners: Document updated successfully';
+                // const mailData = emailService.getMailData(toEmail, subject, textData);
+                // transporter.sendMail(mailData, function (err, info) {
+                //     if(err)
+                //         console.log(err);
+                //     else
+                //         console.log(info);
+                // });
                 res.redirect('./documents');
             } else {
                 const resposne = await documentService.createDocument(dataForDB);
                 req.session.msg = resposne.message;
-                const transporter = emailService.getTransporter();
-                const textData = (emailTemplate.documentReceived.replace("{first_name}", req.session.users.fName)).replace("{document_name}", dataForDB.document_name);
-                const subject = 'Z3Partners: Document created successfully';
-                const mailData = emailService.getMailData(toEmail, subject, textData);
-                transporter.sendMail(mailData, function (err, info) {
-                    if(err)
-                        console.log(err);
-                    else
-                        console.log(info);
-                });
+                // const transporter = emailService.getTransporter();
+                // const textData = (emailTemplate.documentReceived.replace("{first_name}", req.session.users.fName)).replace("{document_name}", dataForDB.document_name);
+                // const subject = 'Z3Partners: Document created successfully';
+                // const mailData = emailService.getMailData(toEmail, subject, textData);
+                // transporter.sendMail(mailData, function (err, info) {
+                //     if(err)
+                //         console.log(err);
+                //     else
+                //         console.log(info);
+                // });
                 res.redirect('./documents');
             }
         }
