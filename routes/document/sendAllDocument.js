@@ -12,7 +12,7 @@ router.get('/', async function(req, res, next) {
     }
     try {
         const resposne = await categoryService.listCategory();
-        const resAll = await categoryService.listAll();
+        const resAll = await categoryService.listAll(1);
         const investorList = await investorService.listAll(false, {});
         req.session.catList = resposne;
         res.locals.allCategory = JSON.stringify(resAll.message);
