@@ -10,8 +10,8 @@ router.get('/', async function(req, res, next) {
         const subCategory = await categoryService.listSubCategory();
         req.session.subCatList = subCategory;
 
-        const activeCategory = await categoryService.listCategory(true);
-        req.session.catList = activeCategory;
+        const allCategory = await categoryService.listCategory();
+        req.session.catList = allCategory;
     } catch (err) {
         console.error(`Error while getting category details`, err.message);
         next(err);
