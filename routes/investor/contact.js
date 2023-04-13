@@ -56,7 +56,7 @@ router.post('/', async function(req, res, next) {
         const resAll = await categoryService.listAll();
         req.session.catList = resposne;
         res.locals.allCategory = JSON.stringify(resAll.message);
-        const msg = 'Feedback sent!!';
+        const msg = 'Notification Sent!';
         const catList = req.session.catList ? req.session.catList : [];
         res.render(`./investor/contact`, {
             message: msg,

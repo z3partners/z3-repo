@@ -37,7 +37,7 @@ $(document).ready(function () {
     $(".del-cat-btn").click(function (e) {
         const elm = e.target.closest(".del-cat-btn");
         const catDetails = JSON.parse(elm.dataset.category);
-        const res = confirm(`Are your sure to DELETE ${catDetails.category_name}`);
+        const res = confirm(`Are you sure to DELETE ${catDetails.category_name}`);
         if (res) {
             $.post("./del-category", {
                     catId: catDetails.category_id,
@@ -63,7 +63,7 @@ $(document).ready(function () {
     $(".del-subcat-btn").click(function (e) {
         const elm = e.target.closest(".del-subcat-btn");
         const catDetails = JSON.parse(elm.dataset.category);
-        const res = confirm(`Are your sure to DELETE ${catDetails.category_name}`);
+        const res = confirm(`Are you sure to DELETE ${catDetails.category_name}`);
         if (res) {
             $.post("./del-category", {
                     catId: catDetails.category_id,
@@ -105,7 +105,7 @@ $(document).ready(function () {
             $("span.danger").html(`Please enter all fields.`);
         } else if(!newPassword.match(regularExpression)) {
             $("span.danger").html(`
-        1. Password should be at least 6 characters long<br>
+        1. Password should be at least six characters long<br>
         2. Password should contain at least one number<br>
         3. Password should contain at least one special character
         `);
@@ -125,7 +125,7 @@ $(document).ready(function () {
             $("span.danger").html('Please enter all fields.');
         } else if(!password.match(regularExpression)) {
             $("span.danger").html(`
-        1. Password should be at least 6 characters long<br>
+        1. Password should be at least six characters long<br>
         2. Password should contain at least one number<br>
         3. Password should contain at least one special character
         `);
@@ -204,7 +204,7 @@ const regularExpression = /^(?=.*[\d])(?=.*[!@#$%^&*])[\w!@#$%^&*]{6,16}$/;
 function passwordFormat(password, passwordElem) {
     if(!password.match(regularExpression)) {
         passwordElem.setCustomValidity(`
-        1. Password should be at least 6 characters long
+        1. Password should be at least six characters long
         2. Password should contain at least one number
         3. Password should contain at least one special character
         `);
@@ -236,7 +236,7 @@ function editLink(e) {
 function delInvestorBtnClick (e) {
     const elm = e.target.closest(".del-investor-btn");
     const investorDetails = JSON.parse(elm.dataset.investor);
-    const res = confirm(`Are your sure to DELETE ${investorDetails.company_legal_name}`);
+    const res = confirm(`Are you sure to DELETE ${investorDetails.company_legal_name}`);
     if (res) {
         $.post("./del-investor", {
                 investor_id: investorDetails.user_id,
@@ -281,7 +281,7 @@ function delDocumentBtnClick(e) {
     const elm = e.target.closest(".del-document-btn");
     const documentDetails = JSON.parse(elm.dataset.document);
     const investorEmailID = (documentDetails.investor_id === -999) ? 'All' : investorEmail[`'${documentDetails.investor_id}'`];
-    const res = confirm(`Are your sure to DELETE ${documentDetails.document_name} along with file.`);
+    const res = confirm(`Are you sure to DELETE ${documentDetails.document_name} along with file.`);
     if (res) {
         $.post("./del-document", {
                 document_id: documentDetails.document_id,
@@ -296,7 +296,7 @@ function delDocumentBtnClick(e) {
 function delUserBtnClick(e) {
     const elm = e.target.closest(".del-user-btn");
     const userDetails = JSON.parse(elm.dataset.user);
-    const res = confirm(`Are your sure to DELETE ${userDetails.first_name}`);
+    const res = confirm(`Are you sure to DELETE ${userDetails.first_name}`);
     if (res) {
         $.post("./del-user", {
                 user_id: userDetails.user_id,

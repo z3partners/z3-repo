@@ -17,7 +17,7 @@ router.post('/', async function (req, res, next) {
             resposne = await investorService.deleteInvestor(investor_id);
             const transporter = emailService.getTransporter();
             const textData = emailTemplate.deleteAccount.replace("{first_name}", req.session.users.fName);
-            const subject = 'Z3Partners: investor deleted successfully';
+            const subject = 'Z3Partners: Investor deleted successfully';
             const mailData = emailService.getMailData('partner@z3partners.com', subject, textData);
             transporter.sendMail(mailData, function (err, info) {
                 if(err)

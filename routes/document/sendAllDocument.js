@@ -64,7 +64,7 @@ router.post('/', async function (req, res) {
                 });
             }
         });
-        res.send({message: "Send to all"});
+        res.send({message: "Sent to all"});
     } else {
         res.send({message: "Unable to send email: Investor list is empty"});
     }

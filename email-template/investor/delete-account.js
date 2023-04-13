@@ -60,22 +60,13 @@ const deleteAccount = `
 <div class="" style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #374260; line-height: 1.2; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
 <p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Dear {first_name},</span></p>
 <p style="margin: 0; font-size: 14px; mso-line-height-alt: 14.399999999999999px;"> </p>
-<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Welcome to Z3Partners Investor Portal. Investor deleted successfully!!</span></p>
+<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Investor deleted successfully!!</span></p>
 </div>
 </div>
 </td>
 </tr>
 </table>
-<table border="0" cellpadding="0" cellspacing="0" class="button_block block-2" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-<tr>
-<td class="pad" style="padding-left:25px;padding-right:25px;text-align:left;">
-<div align="left" class="alignment">
-<!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://irportal.z3partners.com/" style="height:42px;width:289px;v-text-anchor:middle;" arcsize="0%" stroke="false" fillcolor="#96cdeb"><w:anchorlock/><v:textbox inset="0px,0px,0px,0px"><center style="color:#000000; font-family:Arial, sans-serif; font-size:16px"><![endif]--><a href="https://irportal.z3partners.com/" style="text-decoration:none;display:inline-block;color:#000000;background-color:#96cdeb;border-radius:0px;width:auto;border-top:0px solid transparent;font-weight:400;border-right:0px solid transparent;border-bottom:0px solid transparent;border-left:0px solid transparent;padding-top:5px;padding-bottom:5px;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank"><span style="padding-left:45px;padding-right:45px;font-size:16px;display:inline-block;letter-spacing:normal;"><span dir="ltr" style="word-break: break-word; line-height: 32px;">LOGIN TO THE IR PORTAL</span></span></a>
-<!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
-</div>
-</td>
-</tr>
-</table>
+
 <table border="0" cellpadding="0" cellspacing="0" class="text_block block-3" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
 <tr>
 <td class="pad" style="padding-bottom:15px;padding-left:25px;padding-right:45px;padding-top:15px;">

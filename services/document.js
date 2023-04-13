@@ -6,7 +6,7 @@ async function createDocument(documentDetails) {
     const rows = await db.query(`select * from z3_documents where document_name = ?`, [documentDetails.document_name]);
     const data = helper.emptyOrRows(rows);
     if (data.length) {
-        return {message: `Document Name should be unique`, status: 400};
+        return {message: `Document Title should be unique`, status: 400};
     } else {
 
     const response = await db.query(`
@@ -52,7 +52,7 @@ async function updateDocument(documentDetails) {
             dataArr);
             return {message: `Document updated!!`, status: 200, docs : response};
         } else {
-            return {message: `Document Name should be unique`, status: 400};
+            return {message: `Document Title should be unique`, status: 400};
         }
     } else {
     const response = await db.query(`
