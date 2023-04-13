@@ -13,9 +13,9 @@ router.get('/', async function(req, res, next) {
     try {
         res.locals.showFilter =  false;
         res.locals.showCat =  false;
-        const resposne = await categoryService.listCategory();
+        const response = await categoryService.listCategory();
         const resAll = await categoryService.listAll();
-        req.session.catList = resposne;
+        req.session.catList = response;
         res.locals.allCategory = JSON.stringify(resAll.message);
         const msg = req.session.msg;
         const catList = req.session.catList ? req.session.catList : [];
@@ -41,7 +41,8 @@ router.post('/', async function(req, res, next) {
         res.locals.showFilter =  false;
         res.locals.showCat =  false;
         const sub = req.body['contact-subject'];
-        const feedbackQuery = (emailTemplate.contactUs.replace("{investor_email}", `${req.session.users.fName} [${req.session.username}]`)).replace("{feedback_data}", req.body['feedback-query']);//req.body['feedback-query'];
+        const cname = req.body.cname;
+        const feedbackQuery = (emailTemplate.contactUs.replace("{investor_cname}", `${cname} [${req.session.username}]`)).replace("{feedback_data}", req.body['feedback-query']);//req.body['feedback-query'];
         const transporter = emailService.getTransporter();
         const mailData = emailService.getMailData('partner@z3partners.com', sub, feedbackQuery);
 

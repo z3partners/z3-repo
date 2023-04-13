@@ -60,7 +60,7 @@ const contactUs = `
 <div class="" style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #374260; line-height: 1.2; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
 <p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Dear  Z3Partners,</span></p>
 <p style="margin: 0; font-size: 14px; mso-line-height-alt: 14.399999999999999px;"> </p>
-<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">{investor_email} has given below feedback.</span></p>
+<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">{investor_cname} has given below feedback.</span></p>
 <br />
 <p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">{feedback_data}</span></p>
 </div>

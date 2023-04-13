@@ -58,9 +58,9 @@ const deleteAccount = `
 <td class="pad" style="padding-bottom:15px;padding-left:25px;padding-right:45px;padding-top:45px;">
 <div style="font-family: sans-serif">
 <div class="" style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #374260; line-height: 1.2; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
-<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Dear {first_name},</span></p>
+<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Dear Admin,</span></p>
 <p style="margin: 0; font-size: 14px; mso-line-height-alt: 14.399999999999999px;"> </p>
-<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Investor deleted successfully!!</span></p>
+<p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:14px;">Account name "{company_legal_name}" has been deleted successfully.</span></p>
 </div>
 </div>
 </td>

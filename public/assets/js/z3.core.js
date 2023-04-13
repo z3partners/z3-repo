@@ -241,6 +241,7 @@ function delInvestorBtnClick (e) {
         $.post("./del-investor", {
                 investor_id: investorDetails.user_id,
                 username: investorDetails.username,
+                company_legal_name: investorDetails.company_legal_name
             },
             function (data, status) {
                 location.href = "./investor";
