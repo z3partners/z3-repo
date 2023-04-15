@@ -10,19 +10,21 @@ router.get('/', async function(req, res, next) {
     if(!req.session.loggedin) {
         res.redirect('./login');
     }
-
+    // console.log(req.session.users.created_at);
     try {
         res.locals.showFilter =  false;
         res.locals.showCat =  false;
         let searchParams = {};
         res.locals.docSearchFields = JSON.stringify({});
         searchParams.investor_id = req.session.users.user_id;
-        const resposne = await categoryService.listCategory();
+        const response = await categoryService.listCategory();
         const resAll = await categoryService.listAll();
         const investorList = await investorService.listAll(false, {});
-        searchParams.limit = 6;
+        // searchParams.limit = 1;
+        // searchParams.
+        // searchParams.date_range = ` between '${start_date} 00:00:00' and '${end_date} 23:59:59' `: '';
         const documentList = await documentService.listAll(true, searchParams);
-        req.session.catList = resposne;
+        req.session.catList = response;
         res.locals.allCategory = JSON.stringify(resAll.message);
         res.locals.invSearchFields = JSON.stringify({});
         res.locals.documentList = JSON.stringify(documentList.message);
@@ -51,7 +53,8 @@ router.post('/', async function(req, res, next) {
 
     try {
         let searchParams = {};
-        //console.log(req.session.users);
+        console.log(req.session.users);
+        console.log(req.body.start_date);
         res.locals.showFilter =  true;
         let docCat = "-1";
         searchParams.investor_id = req.session.users.user_id;

@@ -15,7 +15,9 @@ router.post('/', async function(req, res, next) {
       if(resposne.status===200) {
         req.session.loggedin = true;
         req.session.username = emailUsername;
-        req.session.users = {"user_id": resposne.message.userDetail.user_id, "fName": resposne.message.userDetail.first_name, "lName":resposne.message.userDetail.last_name, 'cname': resposne.message.userDetail.company_legal_name};
+        const userCreatedDate = new Date(resposne.message.userDetail.created_at);
+        const created_at =  `0${}`('0' + userCreatedDate.getDate()).slice(-2)'2023-04-13';
+        req.session.users = {"user_id": resposne.message.userDetail.user_id, "fName": resposne.message.userDetail.first_name, "lName":resposne.message.userDetail.last_name, 'cname': resposne.message.userDetail.company_legal_name, 'created_at': created_at};
         req.session.roleDetails = resposne.message.roleDetails;
          //console.log(resposne);
         if(admin_roles.includes(resposne.message.roleDetails.role_id)) {
