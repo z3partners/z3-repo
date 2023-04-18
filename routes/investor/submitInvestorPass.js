@@ -39,7 +39,7 @@ router.post('/', async function(req, res, next) {
             }
             res.redirect('./investor');
         } else {
-            req.session.msg = "Something went wrong. Please try again!!";
+            req.session.msg = "Something went wrong. Please try again";
             res.redirect('./investor');
         }
     } catch (err) {

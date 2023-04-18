@@ -65,7 +65,7 @@ router.post('/', async function(req, res, next) {
         const category_id = req.body.selectCat;
         const sub_category_id = req.body.selectSubCat;
         if((start_date === '' && end_date !=='') || !isValidateDate(start_date, end_date)) {
-            req.session.msg = 'Please choose validate date range!!';
+            req.session.msg = 'Please choose validate date range';
         } else {
             (start_date !== '' && end_date !=='') ? searchParams.date_range = ` between '${start_date} 00:00:00' and '${end_date} 23:59:59' `: '';
             quarter ? searchParams.quarter = quarter : '';

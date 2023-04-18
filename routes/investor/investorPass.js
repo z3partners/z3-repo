@@ -23,7 +23,7 @@ router.post('/', async function(req, res, next) {
     const resposne = await categoryService.listCategory();
     const investor = await investorService.getInvestor(id);
     if(!Array.isArray(investor.message)) {
-        req.session.msg = 'Something went wrong. Please try again!!';
+        req.session.msg = 'Something went wrong. Please try again.';
         res.redirect('./investor');
     }
     req.session.catList = resposne;

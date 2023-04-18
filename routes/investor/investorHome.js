@@ -20,7 +20,7 @@ router.get('/', async function(req, res, next) {
         const resposne = await categoryService.listCategory();
         const resAll = await categoryService.listAll();
         const investorList = await investorService.listAll(false, {});
-        searchParams.limit = 6;
+        searchParams.userCreatedDate = req.session.users.created_at;
         const documentList = await documentService.listAll(true, searchParams);
         req.session.catList = resposne;
         res.locals.allCategory = JSON.stringify(resAll.message);
@@ -55,6 +55,7 @@ router.post('/', async function(req, res, next) {
         res.locals.showFilter =  true;
         let docCat = "-1";
         searchParams.investor_id = req.session.users.user_id;
+        searchParams.userCreatedDate = req.session.users.created_at;
         if(req.body.nav_cat_id) {
             searchParams.category_id = req.body.nav_cat_id;
             docCat = req.body.nav_cat_id;
@@ -66,7 +67,7 @@ router.post('/', async function(req, res, next) {
         const quarter = req.body.quarter;
         const category_id = req.body.selectCat;
         if((start_date === '' && end_date !=='') || !isValidateDate(start_date, end_date)) {
-            req.session.msg = 'Please choose validate date range!!';
+            req.session.msg = 'Please choose validate date range';
         } else {
             (start_date && end_date ) ? searchParams.date_range = ` between '${start_date} 00:00:00' and '${end_date} 23:59:59' `: '';
             quarter ? searchParams.quarter = quarter : '';

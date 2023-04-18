@@ -8,14 +8,15 @@ router.post('/', async function(req, res, next) {
   const emailUsername = req.body.emailUsername;
   const password = req.body.password;
   if(!emailUsername || !password) {
-    res.render('login/login', { message: 'Invalid Username/Password. Please try again!!' });
+    res.render('login/login', { message: 'Invalid Username/Password. Please try again.' });
   } else  {
     try {
       const resposne = await users.loginUser(emailUsername, password);
       if(resposne.status===200) {
         req.session.loggedin = true;
         req.session.username = emailUsername;
-        req.session.users = {"user_id": resposne.message.userDetail.user_id, "fName": resposne.message.userDetail.first_name, "lName":resposne.message.userDetail.last_name, 'cname': resposne.message.userDetail.company_legal_name};
+        const userCreatedDate = resposne.message.userDetail.created_at;
+        req.session.users = {"user_id": resposne.message.userDetail.user_id, "fName": resposne.message.userDetail.first_name, "lName":resposne.message.userDetail.last_name, 'cname': resposne.message.userDetail.company_legal_name, 'created_at': userCreatedDate};
         req.session.roleDetails = resposne.message.roleDetails;
          //console.log(resposne);
         if(admin_roles.includes(resposne.message.roleDetails.role_id)) {

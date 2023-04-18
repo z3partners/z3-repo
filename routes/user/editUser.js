@@ -8,7 +8,7 @@ router.get('/', async function (req, res, next) {
     if (!req.session.loggedin) {
         res.redirect('./login');
     }
-    req.session.msg = "User data not found!!";
+    req.session.msg = "User data not found";
     res.redirect('./users');
 });
 
@@ -59,7 +59,7 @@ router.post('/', async function(req, res, next) {
             res.locals.user = JSON.stringify(rows.message[0]);
             res.render(`./user/edit-user`, {message: '', catList: '', users:  req.session.users, roles: req.session.roleDetails});
         } else {
-            req.session.msg = "User data not found!!";
+            req.session.msg = "User data not found";
             res.redirect('./users');
         }
     }

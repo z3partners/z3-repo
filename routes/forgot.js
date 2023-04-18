@@ -34,7 +34,7 @@ router.post('/', async function(req, res, next) {
                             console.log(info);
                     });
                 } else {
-                    msg = 'Error while sending reset link, please try again!!';
+                    msg = 'Error while sending reset link, please try again.';
                 }
             }
         } catch (err) {

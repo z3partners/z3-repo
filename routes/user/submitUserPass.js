@@ -35,7 +35,7 @@ router.post('/', async function(req, res, next) {
             }
             res.redirect('./users');
         } else {
-            req.session.msg = "Something went wrong. Please try again!!";
+            req.session.msg = "Something went wrong. Please try again";
             res.redirect('./users');
         }
     } catch (err) {

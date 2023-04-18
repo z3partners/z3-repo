@@ -29,11 +29,11 @@ router.post('/', async function(req, res, next) {
                 });
                 req.session.msg = "Password reset successfully, try Login now";
             } else {
-                req.session.msg = "Something went wrong. Please try again!!";
+                req.session.msg = "Something went wrong. Please try again.";
             }
 
         } else {
-            req.session.msg = "Something went wrong. Please try again!!";
+            req.session.msg = "Something went wrong. Please try again.";
         }
         res.redirect('./login');
     } catch (err) {

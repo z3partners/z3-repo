@@ -14,7 +14,7 @@ async function getResetToken(emailId) {
     if (data.length) {
         const userDetails = data[0];
         if (!userDetails.password || !userDetails.salt || userDetails.status === 0) {
-            return {message: `User is not active or password not created!!`, status: 400};
+            return {message: `User is not active or password not created`, status: 400};
         } else {
             const resetPasswordExpires = Date.now() + 900000; //expires in 15 mins
             const resetPasswordToken = crypto.randomBytes(16).toString('hex');
@@ -60,7 +60,7 @@ async function getUserDetailByToken(token) {
             };
         }
     } else {
-        return {message: `Invalid data, please contact Z3Partners at partner@z3partners.com!!`, status: 400};
+        return {message: `Invalid data, please contact Z3Partners at partner@z3partners.com`, status: 400};
     }
 }
 
@@ -73,12 +73,12 @@ async function createUser(userDetails) {
     const rows = await db.query(`select * from z3_user where username = '${userDetails.username}'`);
     const data = helper.emptyOrRows(rows);
     if(data.length) {
-        return  {message: "Username exist!!", status: 400};
+        return  {message: "Username exist", status: 400};
     } else {
         const user = await db.query(`INSERT into z3_user (username, password, salt, first_name, phone_number, status) values (?, ?, ?, ?, ?, ?)`,[userDetails.username, hash, salt, userDetails.first_name, userDetails.phone_number, userDetails.status]);
         const userId = user.insertId;
         const userRole = await db.query(`INSERT into z3_user_role_mapping (user_id, role_id) values (?, ?)`,[userId, userDetails.role]);
-        return  {message: `User [${userDetails.username}] created!! `, status: 200};
+        return  {message: `User [${userDetails.username}] created `, status: 200};
     }
 }
 
@@ -123,7 +123,7 @@ async function createUserPass(data) {
 
         const response = await db.query(`UPDATE z3_user set password = ?, salt = ?, updated_at = current_timestamp() where user_id = ?`,
             [hash, salt, data.user_id]);
-        return {message: `User password created!!`, status: 200};
+        return {message: `User password created`, status: 200};
     } catch (err) {
         console.error(`Error while creating user password`, err.message);
         return {message: `Error while creating user password`, status: 500};
@@ -196,7 +196,7 @@ async function updateUser(data) {
             [data.first_name, data.phone_number, data.status, data.user_id]);
 
         const userRole = await db.query(`UPDATE z3_user_role_mapping set role_id = ? where user_id = ? `,[data.role_id, data.user_id]);
-        return {message: `User updated!!`, status: 200};
+        return {message: `User updated`, status: 200};
     } catch (err) {
         console.error(`Error while updating user details`, err.message);
         return {message: `Error while updating user details`, status: 500};
@@ -206,7 +206,7 @@ async function updateUser(data) {
 async function deleteUser(user_id) {
     const userRes = await db.query(`DELETE from z3_user where user_id = ?`, [user_id]);
     const roleRes = await db.query(`DELETE from z3_user_role_mapping where user_id = ?`, [user_id]);
-    return {message: `User deleted!!`, status: 200};
+    return {message: `User deleted`, status: 200};
 }
 
 module.exports = {

@@ -8,7 +8,7 @@ router.get('/', async function(req, res, next) {
     if(!req.session.loggedin) {
         res.redirect('./login');
     }
-            req.session.msg = "Document data not found!!";
+            req.session.msg = "Document data not found";
             res.redirect('./documents');
 });
 
@@ -46,7 +46,7 @@ router.post('/', async function(req, res, next) {
                 res.render(`./documents/edit-document`, {message: '', catList: '', users:  req.session.users, roles: req.session.roleDetails});
             }
         } else {
-            req.session.msg = "Document data not found!!";
+            req.session.msg = "Document data not found.";
             res.redirect('./documents');
         }
 

@@ -8,7 +8,7 @@ router.post('/', async function (req, res, next) {
     if (!req.session.loggedin) {
         res.redirect('./login');
     }
-    let resposne = {message: "Unable to send document", status: 500};
+    let resposne = {message: "Unable to send document.", status: 500};
     try {
         console.log(req.body);
         const transporter = nodemailer.createTransport({
@@ -49,7 +49,7 @@ router.post('/', async function (req, res, next) {
             else
                 console.log(info);
         });
-        res.send({message: 'Email sent!!'});
+        res.send({message: 'Email sent'});
     } catch (err) {
         console.error(`Error while getting category details`, err.message);
         next(err);

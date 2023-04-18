@@ -10,7 +10,7 @@ router.get('/', async function(req, res) {
     if(response.status === 200) {
         const userDetails = response.userDetails;
         if(Date.now() > userDetails.reset_token_expiry) {
-            req.session.msg = "Token expired please reset again!!";
+            req.session.msg = "Token expired please reset again.";
             res.redirect('/forgot-password');
         } else {
             res.render('login/reset-pass', { message: "", investor:  userDetails});

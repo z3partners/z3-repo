@@ -62,7 +62,7 @@ router.post('/',  async function(req, res) {
                 if(err) {
                     console.log(err);
                     fileUploadStatus = false;
-                    return res.end("Error uploading document!!");
+                    return res.end("Error uploading document");
                 }
             });
             const file_path = JSON.stringify({originalname: originalName, filename: uploadFileName});

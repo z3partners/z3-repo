@@ -12,7 +12,7 @@ async function addInvestor(data) {
         (alt_email_1, alt_email_2, company_legal_name, financial_year, investor_type, fund_association, first_name, username, phone_number, status)
         values (?,?,?, ?, ?, ?, ?, ?, ?, ?)`, [data.alt_email_1, data.alt_email_2, data.company_legal_name, data.financial_year, data.investor_type, data.fund_association, data.first_name, data.email_id, data.phone_number, data.status]);
         const roles = await db.query(`INSERT into z3_user_role_mapping (user_id, role_id) values (?, ?)`, [response.insertId, 3]);
-        return {message: `Investor created!!`, status: 200};
+        return {message: `Investor created`, status: 200};
     }
 }
 
@@ -46,7 +46,7 @@ async function updateProfile(data) {
         set first_name = ?, phone_number = ?, alt_email_1 = ?, alt_email_2 = ?, updated_at = current_timestamp()
         where user_id = ?`,
             [data.first_name, data.phone_number, data.alt_email_1, data.alt_email_2, data.user_id]);
-        return {message: `Profile updated!!`, status: 200};
+        return {message: `Profile updated`, status: 200};
     } catch (err) {
         console.error(`Error while updating profile details`, err.message);
         return {message: `Error while updating profile details`, status: 500};
@@ -59,7 +59,7 @@ async function updateInvestor(data) {
         set alt_email_1 = ?, alt_email_2 = ?, company_legal_name = ?, financial_year = ?, investor_type = ?, fund_association = ?, first_name = ?, phone_number = ?, status = ?, updated_at = current_timestamp()
         where user_id = ?`,
         [data.alt_email_1, data.alt_email_2, data.company_legal_name, data.financial_year, data.investor_type, data.fund_association, data.first_name, data.phone_number, data.status, data.user_id]);
-        return {message: `Investor updated!!`, status: 200};
+        return {message: `Investor updated`, status: 200};
     } catch (err) {
         console.error(`Error while updating investor details`, err.message);
         return {message: `Error while updating investor details`, status: 500};
@@ -73,7 +73,7 @@ async function createInvestorPass(data) {
 
         const response = await db.query(`UPDATE z3_user set password = ?, salt = ?, updated_at = current_timestamp() where user_id = ?`,
         [hash, salt, data.user_id]);
-        return {message: `Investor password created!!`, status: 200};
+        return {message: `Investor password created`, status: 200};
     } catch (err) {
         console.error(`Error while creating investor password`, err.message);
         return {message: `Error while creating investor password`, status: 500};
@@ -126,7 +126,7 @@ async function listAll(status, searchFields = {}) {
 async function deleteInvestor(user_id) {
     const response = await db.query(`DELETE from z3_user where user_id = ?`, [user_id]);
     const roleRes = await db.query(`DELETE from z3_user_role_mapping where user_id = ?`, [user_id]);
-    return {message: `Investor deleted!!`, status: 200};
+    return {message: `Investor deleted`, status: 200};
 }
 
 module.exports = {

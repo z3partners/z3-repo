@@ -22,7 +22,7 @@ router.post("/", async function (req, res, next) {
     );
     res.locals.investor = JSON.stringify(investor.message);
     if (!Array.isArray(investor.message)) {
-      req.session.msg = "Something went wrong. Please try again!!";
+      req.session.msg = "Something went wrong. Please try again.";
       res.render(`./login/change-pass`, {
         message: req.session.msg,
         catList: catList,
@@ -53,7 +53,7 @@ router.post("/", async function (req, res, next) {
       const mailData = emailService.getMailData([username], subject, textData);
       transporter.sendMail(mailData, function (err, info) {});
       res.render("login/login", {
-        message: "Password updated, please re-login!!!",
+        message: "Password updated, please re-login.",
       });
     } else {
       const investor = await investorService.getInvestor(userId);
