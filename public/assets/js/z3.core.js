@@ -37,7 +37,7 @@ $(document).ready(function () {
     $(".del-cat-btn").click(function (e) {
         const elm = e.target.closest(".del-cat-btn");
         const catDetails = JSON.parse(elm.dataset.category);
-        const res = confirm(`Are you sure to delete ${catDetails.category_name}`);
+        const res = confirm(`Are you sure you want to delete ${catDetails.category_name}`);
         if (res) {
             $.post("./del-category", {
                     catId: catDetails.category_id,
@@ -63,7 +63,7 @@ $(document).ready(function () {
     $(".del-subcat-btn").click(function (e) {
         const elm = e.target.closest(".del-subcat-btn");
         const catDetails = JSON.parse(elm.dataset.category);
-        const res = confirm(`Are you sure to delete ${catDetails.category_name}`);
+        const res = confirm(`Are you sure you want to delete ${catDetails.category_name}`);
         if (res) {
             $.post("./del-category", {
                     catId: catDetails.category_id,
@@ -236,7 +236,7 @@ function editLink(e) {
 function delInvestorBtnClick (e) {
     const elm = e.target.closest(".del-investor-btn");
     const investorDetails = JSON.parse(elm.dataset.investor);
-    const res = confirm(`Are you sure to delete ${investorDetails.company_legal_name}`);
+    const res = confirm(`Are you sure you want to delete ${investorDetails.company_legal_name}`);
     if (res) {
         $.post("./del-investor", {
                 investor_id: investorDetails.user_id,
@@ -282,7 +282,7 @@ function delDocumentBtnClick(e) {
     const elm = e.target.closest(".del-document-btn");
     const documentDetails = JSON.parse(elm.dataset.document);
     const investorEmailID = (documentDetails.investor_id === -999) ? 'All' : investorEmail[`'${documentDetails.investor_id}'`];
-    const res = confirm(`Are you sure to delete ${documentDetails.document_name} along with file.`);
+    const res = confirm(`Are you sure you want to delete ${documentDetails.document_name} along with file.`);
     if (res) {
         $.post("./del-document", {
                 document_id: documentDetails.document_id,
@@ -297,7 +297,7 @@ function delDocumentBtnClick(e) {
 function delUserBtnClick(e) {
     const elm = e.target.closest(".del-user-btn");
     const userDetails = JSON.parse(elm.dataset.user);
-    const res = confirm(`Are you sure to delete ${userDetails.first_name}`);
+    const res = confirm(`Are you sure you want to delete ${userDetails.first_name}`);
     if (res) {
         $.post("./del-user", {
                 user_id: userDetails.user_id,
