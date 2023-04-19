@@ -245,6 +245,11 @@
     populateSearchFields();
 
     <% if(roles.role_id === 5 || roles.role_id === 4) { %>
+    <% if(roles.role_id === 4) { %>
+    document.getElementById("investor_type").value = 'Domestic';
+    <% } else if (roles.role_id === 5) { %>
+    document.getElementById("investor_type").value = 'International';
+    <% } %>
     document.querySelector("div.inv-type-div").classList.add("hideVisibility");
     <% } %>
 </script>

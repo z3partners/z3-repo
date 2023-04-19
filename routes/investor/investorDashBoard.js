@@ -7,12 +7,12 @@ const admin_roles = [1, 4, 5];
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
-
     if(!req.session.loggedin) {
         res.redirect('./login');
     } else if(!admin_roles.includes(req.session.roleDetails.role_id)) {
         res.redirect('./inv-home');
     }
+    console.log(req.session);
     try {
         let investorType = '';
         if(req.session.roleDetails.role_id === 4) {
