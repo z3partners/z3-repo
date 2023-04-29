@@ -257,6 +257,8 @@
         if(showCat) {
             document.getElementById("doc-cat-title").innerHTML = (showCat===-1 ) ?  "All Documents" : allCat[`'${showCat}'`]['category_name'];
         }
+       
+        document.getElementById("selectSubCat").value = (docSearchFields.selectSubCat) ? docSearchFields.selectSubCat : '';
     }
 
     $(document).ready(function () {
