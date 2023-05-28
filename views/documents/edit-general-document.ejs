@@ -1,3 +1,4 @@
+
 <%- include("../common/head.ejs"); %>
 <%- include("../common/aside.ejs"); %>
 <div class="layout-page">
@@ -77,6 +78,17 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="mt-2 mb-3">
+                                        <div class="row gy-3">
+                                            <div class="col-md">
+                                                <label class="form-label" for="selectSendTo">Send To</label>
+                                                <select class="form-select placement-dropdown" id="selectSendTo" name="selectSendTo">
+                                                    <option value="">Select</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md">&nbsp;</div>
+                                        </div>
+                                    </div>
                                     <div class="mb-3">
                                         <label for="uploadFile" class="form-label">Browse Document</label>
                                         <input class="form-control" type="file" id="uploadFile" name="uploadFile">
@@ -125,10 +137,12 @@
         document.getElementById("selectCat").value = investorDocs.category_id;
         const subCat = (allSubCat[`'${investorDocs.category_id}'`]) ? allSubCat[`'${investorDocs.category_id}'`]: [];
         populateCategory('#selectSubCat', subCat);
-        document.getElementById("selectSubCat").value = investorDocs.sub_category_id;
+        document.getElementById("selectSubCat").value = investorDocs.sub_category_id || '';
         document.getElementById("document_id").value = investorDocs.document_id;
         document.getElementById("oldfilepath").value = JSON.parse(investorDocs.file_path).filename;
         document.getElementById("status").checked = investorDocs.status ? "checked" : '';
     }
     populateInvestorDocs(investorDocs);
+    populateSendTo(<%- roles.role_id %>);
+    document.getElementById("selectSendTo").value = investorDocs.send_to || '';
 </script>

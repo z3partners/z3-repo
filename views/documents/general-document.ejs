@@ -87,6 +87,17 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="mt-2 mb-3">
+                                        <div class="row gy-3">
+                                            <div class="col-md">
+                                                <label class="form-label" for="selectSendTo">Send To</label>
+                                                <select class="form-select placement-dropdown" id="selectSendTo" name="selectSendTo">
+                                                    <option value="">Select</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md">&nbsp;</div>
+                                        </div>
+                                    </div>
                                     <div class="mb-3">
                                         <label for="uploadFile" class="form-label">Browse Document</label>
                                         <input required class="form-control" type="file" id="uploadFile" name="uploadFile">
@@ -140,7 +151,7 @@
             fundSelect.append(`<option value="${fund}">${fund}</option>`);
     });
     }
-
+    populateSendTo(<%- roles.role_id %>);
     populateCategory('#selectCat', Object.values(allCat));
     populateInvestorName('#investor_list', Object.entries(investorName));
 </script>

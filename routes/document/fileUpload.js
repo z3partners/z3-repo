@@ -18,6 +18,7 @@ router.post('/',  async function(req, res) {
     try {
         //console.log(req.files);
         const document_type = req.body.document_type;
+        const selectSendTo = req.body.selectSendTo;
         const document_name = req.body.document_name;
         const financial_year = req.body.financial_year;
         const quarter = req.body.quarter;
@@ -30,6 +31,7 @@ router.post('/',  async function(req, res) {
         if(document_type === 'general') {
              dataForDB = {
                  document_name: document_name,
+                 send_to: selectSendTo,
                  investor_id: -999,
                  financial_year: null,
                  quarter: null,
@@ -42,6 +44,7 @@ router.post('/',  async function(req, res) {
             const investor_id = req.body.investor_list.replaceAll("'", "");
              dataForDB = {
                 document_name: document_name,
+                 send_to: null,
                 investor_id: +investor_id,
                 financial_year: financial_year,
                 quarter: quarter,

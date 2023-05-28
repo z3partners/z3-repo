@@ -10,7 +10,7 @@ router.post('/', async function (req, res, next) {
         res.redirect('./login');
     }
     try {
-        // console.log(req.body.investorCCList);
+        // console.log(req.body);
         const fileData = JSON.parse(req.body.file_path);
         const emailId = req.body.investorEmailID;
         const ccList = req.body.investorCCList;
