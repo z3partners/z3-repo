@@ -314,6 +314,7 @@ function populateSendTo(role_id) {
     let sendTo = $("#selectSendTo");
     sendTo.empty();
     if(role_id === 1)  {
+        sendTo.append(`<option value="">Select</option>`)
         sendTo.append(`<option value="All">All</option>`)
         sendTo.append(`<option value="Domestic">Domestic</option>`);
         sendTo.append(`<option value="International">International</option>`)
