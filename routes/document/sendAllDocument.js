@@ -35,7 +35,10 @@ router.get('/', async function(req, res, next) {
 });
 
 router.post('/', async function (req, res) {
-    const send_to = req.body.send_to;
+    let send_to = req.body.send_to;
+    if (send_to === "All") {
+        send_to = '';
+    }
     const allInvestor = await investorService.listAll(true, {investor_type: send_to});
     // console.log(allInvestor.message);
     if(Array.isArray(allInvestor.message)) { 

@@ -253,7 +253,7 @@ function sendDocument(e) {
     const elm = e.target.closest(".send-document");
     const documentDetails = JSON.parse(elm.dataset.document);
     const send_to = documentDetails.send_to || '';
-    const investorEmailID = (documentDetails.investor_id === -999) ? `All ${send_to}`.trim() : investorEmail[`'${documentDetails.investor_id}'`];
+    const investorEmailID = (documentDetails.investor_id === -999) ? `All ${send_to}`.trim().replace(" All", '') : investorEmail[`'${documentDetails.investor_id}'`];
     const ccList = (documentDetails.investor_id !== -999) ? investorEmailCCList[`'${documentDetails.investor_id}'`] : '';
     const invStatus = investorStatus[`'${documentDetails.investor_id}'`];
     const invFirstName = investorFName[`'${documentDetails.investor_id}'`];
@@ -314,7 +314,7 @@ function populateSendTo(role_id) {
     let sendTo = $("#selectSendTo");
     sendTo.empty();
     if(role_id === 1)  {
-        sendTo.append(`<option value="">Select</option>`)
+        sendTo.append(`<option value="All">All</option>`)
         sendTo.append(`<option value="Domestic">Domestic</option>`);
         sendTo.append(`<option value="International">International</option>`)
     } else if (role_id === 4) {
