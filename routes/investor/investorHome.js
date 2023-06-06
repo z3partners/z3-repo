@@ -15,6 +15,7 @@ router.get('/', async function(req, res, next) {
         res.locals.showFilter =  false;
         res.locals.showCat =  false;
         let searchParams = {};
+        searchParams.investor_type = req.session.users.investorType;
         res.locals.docSearchFields = JSON.stringify({});
         searchParams.investor_id = req.session.users.user_id;
         const resposne = await categoryService.listCategory();
@@ -75,6 +76,7 @@ router.post('/', async function(req, res, next) {
             category_id ? searchParams.category_id = category_id : '';
             sub_category_id ? searchParams.sub_category_id = sub_category_id : '';
         }
+        searchParams.investor_type = req.session.users.investorType;
         const resposne = await categoryService.listCategory();
         const resAll = await categoryService.listAll();
         const investorList = await investorService.listAll(false, {});
