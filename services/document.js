@@ -66,7 +66,7 @@ async function updateDocument(documentDetails) {
     }
 }
 
-async function listAll(status, searchFields, investorType = '') {
+async function listAll(status, searchFields, investorType = '', extraParam = '') {
     let condition = [];
     let conStr = '';
     let limitStr = '';
@@ -80,7 +80,7 @@ async function listAll(status, searchFields, investorType = '') {
     }
     if(searchFields.investor_type) {
         investorType = `and z3_user.investor_type = '${searchFields.investor_type}'`;
-        sentTo = `and z3_documents.send_to = '${searchFields.investor_type}'`;
+        sentTo = `and ( z3_documents.send_to = '${searchFields.investor_type}' ${extraParam})`;
     }
     if(searchFields.date_range) {
         condition.push(`created_at  ${searchFields.date_range} `);

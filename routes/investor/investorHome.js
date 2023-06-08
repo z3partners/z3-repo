@@ -22,7 +22,7 @@ router.get('/', async function(req, res, next) {
         const resAll = await categoryService.listAll();
         const investorList = await investorService.listAll(false, {});
         searchParams.userCreatedDate = req.session.users.created_at;
-        const documentList = await documentService.listAll(true, searchParams);
+        const documentList = await documentService.listAll(true, searchParams, '', " or z3_documents.send_to = 'All' ");
         req.session.catList = resposne;
         res.locals.allCategory = JSON.stringify(resAll.message);
         res.locals.invSearchFields = JSON.stringify({});
@@ -80,7 +80,7 @@ router.post('/', async function(req, res, next) {
         const resposne = await categoryService.listCategory();
         const resAll = await categoryService.listAll();
         const investorList = await investorService.listAll(false, {});
-        const documentList = await documentService.listAll(true, searchParams);
+        const documentList = await documentService.listAll(true, searchParams, '', " or z3_documents.send_to = 'All' ");
         req.session.catList = resposne;
         res.locals.allCategory = JSON.stringify(resAll.message);
         res.locals.invSearchFields = JSON.stringify({});
