@@ -60,7 +60,7 @@ router.post('/', async function (req, res) {
                 const textData = (emailTemplate.documentReceived.replace("{first_name}", first_name)).replace("{document_name}", fileData.originalname);
                 const subject = 'Z3Partners has uploaded new document';
                 // const mailData = emailService.getMailData(emailId, subject, textData, ccList.join(", "), fileData);
-                const mailData = emailService.getMailData(emailId, subject, textData, ccList.join(", "));
+                const mailData = emailService.getMailData(emailId, subject, textData, ccList.join(", "), true);
                 transporter.sendMail(mailData, function (err, info) {
                     if (err)
                         console.log(err);

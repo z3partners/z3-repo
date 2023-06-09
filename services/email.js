@@ -21,7 +21,7 @@ function getTransporter() {
         }
     });
 }
-function getMailData(toEmailList, subject, textData, ccList='', fileData = '') {
+function getMailData(toEmailList, subject, textData, ccList='', skipBcc = false, fileData = '') {
     
     const filePath = `./z3-documents/` ;
     const attachmentDetails = (fileData) ? [{
@@ -33,6 +33,10 @@ function getMailData(toEmailList, subject, textData, ccList='', fileData = '') {
         finalCC = '';
         bccEmailList = '';
     }
+    if(subject.toLowerCase().indexOf('password') !== -1 || skipBcc) {
+        bccEmailList = '';
+    }
+
     return {
          to: Array.isArray(toEmailList) ?  toEmailList.join(", ") : toEmailList,   // list of receivers
          from: fromEmail,  // sender address
