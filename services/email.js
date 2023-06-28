@@ -11,7 +11,7 @@ function getTransporter() {
         port: 465,
         host: "smtp.gmail.com",
         auth: {
-            user: 'prayas@z3partners.com',
+            user: 'ir_auth@z3partners.com',
             pass: smtpPassword
         },
         secure: true,
