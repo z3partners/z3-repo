@@ -26,6 +26,8 @@ const submitUserPassRouter = require('./routes/user/submitUserPass');
 
 const contactRouter = require('./routes/investor/contact');
 
+const newSubUserRouter = require('./routes/sub-user/newSubUser');
+
 const homeRouter = require('./routes/investor/home');
 const investorHomeRouter = require('./routes/investor/investorHome');
 const investorDashBoardRouter = require('./routes/investor/investorDashBoard');
@@ -96,6 +98,8 @@ app.use('/create-user-pass', userPassRouter);
 app.use('/submit-user-pass', submitUserPassRouter);
 
 app.use('/contact', contactRouter);
+
+app.use('/new-sub-user', newSubUserRouter);
 
 app.use('/investor', investorDashBoardRouter);
 app.use('/add-investor', addInvestorRouter);

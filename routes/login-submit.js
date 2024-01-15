@@ -16,7 +16,16 @@ router.post('/', async function(req, res, next) {
         req.session.loggedin = true;
         req.session.username = emailUsername;
         const userCreatedDate = resposne.message.userDetail.created_at;
-        req.session.users = {"user_id": resposne.message.userDetail.user_id, "fName": resposne.message.userDetail.first_name, "lName":resposne.message.userDetail.last_name, 'cname': resposne.message.userDetail.company_legal_name, 'investorType': resposne.message.userDetail.investor_type, 'created_at': userCreatedDate};
+        req.session.users = {
+          "user_id": resposne.message.userDetail.user_id,
+          "fName": resposne.message.userDetail.first_name,
+          "lName":resposne.message.userDetail.last_name,
+          'cname': resposne.message.userDetail.company_legal_name,
+          'investorType': resposne.message.userDetail.investor_type,
+          'alt_email_1': resposne.message.userDetail.alt_email_1,
+          'alt_email_2': resposne.message.userDetail.alt_email_2,
+          'created_at': userCreatedDate
+        };
         req.session.roleDetails = resposne.message.roleDetails;
          //console.log(resposne);
         if(admin_roles.includes(resposne.message.roleDetails.role_id)) {
