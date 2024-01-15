@@ -10,12 +10,17 @@ router.get('/', async function(req, res, next) {
     if(!req.session.loggedin) {
         res.redirect('./login');
     }
-
     const resposne = await categoryService.listCategory();
     req.session.catList = resposne;
-    const msg = req.session.msg;
-    const catList = req.session.catList ? req.session.catList : [];
-    res.render(`./sub-user/new-sub-user`, {message: msg, catList: catList, users:  req.session.users, roles: req.session.roleDetails});
+
+    if (req.session.users.alt_email_1 || req.session.users.alt_email_2) {
+        const msg = req.session.msg;
+        const catList = req.session.catList ? req.session.catList : [];
+        res.render(`./sub-user/new-sub-user`, {message: msg, catList: catList, users:  req.session.users, roles: req.session.roleDetails});
+    } else {
+
+    }
+
 });
 
 router.post('/', async function(req, res, next) {
@@ -23,7 +28,8 @@ router.post('/', async function(req, res, next) {
     if(!req.session.loggedin) {
         res.redirect('./login');
     }
-
+    res.send("New Sub User Submit!!")
+/*
     const company_legal_name = req.body.company_legal_name;
     const financial_year= req.body.financial_year;
     const investor_type = req.body.investor_type;
@@ -60,7 +66,7 @@ router.post('/', async function(req, res, next) {
             });
             req.session.msg = resposne.message;
             if (resposne.status === 200 && status) {
-/*                const transporter = emailService.getTransporter();
+/!*                const transporter = emailService.getTransporter();
                 const textData = emailTemplate.accountActivated.replace('{first_name}', first_name);
                 const subject = 'Z3Partners: Investor account created successfully';
                 const mailData = emailService.getMailData(email_id, subject, textData);
@@ -70,14 +76,14 @@ router.post('/', async function(req, res, next) {
                         console.log(err);
                     else
                         console.log(info);
-                });*/
+                });*!/
             }
             res.redirect('./investor');
         }
     } catch (err) {
         console.error(`Error while getting investor details`, err.message);
         next(err);
-    }
+    }*/
 });
 
 module.exports = router;

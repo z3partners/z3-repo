@@ -2,7 +2,6 @@
 <%- include("../common/inv-aside.ejs");%>
 <div class="layout-page">
     <%- include("../common/top-nav.ejs"); %>
-<%     console.log(users); %>
     <!-- Content wrapper -->
     <div class="content-wrapper">
         <!-- Content -->
@@ -26,9 +25,11 @@
                             <select id="email_id" name="email_id" class="form-select form-select-lg" required>
                                 <option value="">Select</option>
                                 <% if(users.alt_email_1) { %>
-                                <option value="<%%>>">April - March</option>
+                                <option value="<%-users.alt_email_1%>"><%-users.alt_email_1%></option>
                                 <% } %>
-                                <option value="January - December">January - December</option>
+                                <% if(users.alt_email_2) { %>
+                                <option value="<%-users.alt_email_2%>"><%-users.alt_email_2%></option>
+                                <% } %>
                             </select>
                         </div>
                         <div class="mb-3">

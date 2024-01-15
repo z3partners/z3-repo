@@ -7,7 +7,7 @@ const session = require('express-session');
 // const MemoryStore = require('memorystore')(session);
 const app = express();
 
-const indexRouter = require('./routes/index');
+// const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const forgotPassRouter = require('./routes/forgot');
 const loginSubmitRouter = require('./routes/login-submit');
