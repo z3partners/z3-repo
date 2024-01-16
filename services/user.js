@@ -141,7 +141,7 @@ async function getUserRoleBasedPermission(user_id) {
     return helper.emptyOrRows(rows); 
 }
 
-async function listAll(status, searchFields) {
+async function listAll(status, searchFields, userType = 'User') {
     let condition = [];
     let conStr = '';
     if(status) {
@@ -152,9 +152,14 @@ async function listAll(status, searchFields) {
         condition.push(`fund_association like '%${searchFields.funds}%'`);
     }
 
+    if(searchFields.parent_id_criteria) {
+        condition.push(`${searchFields.parent_id_criteria}`);
+    }
+
     if(condition.length) {
         conStr  =  " and " + condition.join(" and ");
     }
+
     const rows = await db.query(`select z3_user_role_mapping.role_id,  user_id,
         first_name,
         username,
@@ -168,7 +173,7 @@ async function listAll(status, searchFields) {
     if (data.length) {
         return { message: data, status: 200 };
     } else {
-        return { message: "User list is empty", status: 200 };
+        return { message: `${userType} list is empty`, status: 200 };
     }
 }
 

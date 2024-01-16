@@ -160,6 +160,8 @@ function formSubmit(action, id, roleId) {
         password: 'password',
         userpass: 'create-user-pass',
         user: 'edit-user',
+        subuser: 'edit-sub-user',
+        subuserpass: 'create-sub-user-pass',
         invpass: 'create-investor-pass'
 
     });
@@ -224,7 +226,9 @@ function editLink(e) {
         profile: 'user_id',
         password: 'user_id',
         user: 'user_id',
+        subUser: 'user_id',
         userpass: 'user_id',
+        subuserpass: 'user_id',
         invpass: 'user_id'
     });
 
