@@ -44,6 +44,11 @@
                                     <!--You have 2 documents to view.-->
                                     <!--<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
                                     <!--</div>-->
+                                    <p class="form-label" style="margin: 10px;">
+                                        <% if (message) { %>
+                                            <span class="danger"><%= message %></span>
+                                        <% } %>
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-sm-5 text-center text-sm-left">
