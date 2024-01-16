@@ -1,5 +1,5 @@
 <%- include("../common/head.ejs"); %>
-<%- include("../common/inv-aside.ejs");%>
+<%- [1, 4, 5].includes(roles.role_id) ? include("../common/aside.ejs") : include("../common/inv-aside.ejs"); %>
 <div class="layout-page">
     <%- include("../common/top-nav.ejs"); %>
 <script>

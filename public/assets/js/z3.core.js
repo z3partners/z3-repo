@@ -6,6 +6,11 @@ $(document).ready(function () {
         populateCategory('#selectSubCat', subCat);
     });
 
+    $('#subUserInvList').change(function (e) {
+        const selectedVal = e.target.value;
+        populateSubUser('#email_id', subUserInvData[selectedVal]);
+    });
+
     $('#investor_list').change(function (e) {
         const selectedVal = e.target.value;
         if (selectedVal) {
@@ -200,8 +205,6 @@ function populateFinancialYear(selector, data) {
     });
 }
 
-
-
 const regularExpression = /^(?=.*[\d])(?=.*[!@#$%^&*])[\w!@#$%^&*]{6,16}$/;
 function passwordFormat(password, passwordElem) {
     if(!password.match(regularExpression)) {
@@ -327,4 +330,16 @@ function populateSendTo(role_id) {
     } else if (role_id === 5) {
         sendTo.append(`<option value="International">International</option>`);
     }
+}
+
+function populateSubUser(selector, data) {
+    let subUserSelect = $(selector);
+    subUserSelect.empty();
+    subUserSelect.append(`<option value="">Select</option>`)
+
+    data.forEach(subUser => {
+        if(subUser.email) {
+            subUserSelect.append(`<option value="${subUser.email}">${subUser.email}</option>`)
+        }
+    });
 }

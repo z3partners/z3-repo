@@ -11,7 +11,6 @@ router.get('/', async function(req, res, next) {
     if(!admin_roles.includes(req.session.roleDetails.role_id)) {
         parent_id_criteria = ` parent_id = ${req.session.users.user_id} `;
     }
-
     if(!req.session.loggedin) {
         res.redirect('./login');
     }

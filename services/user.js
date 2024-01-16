@@ -214,6 +214,40 @@ async function deleteUser(user_id) {
     return {message: `User deleted`, status: 200};
 }
 
+
+async function createSubUser(userDetails) {
+
+    const salt = crypto.randomBytes(16).toString('hex');
+    const hash = crypto.pbkdf2Sync(userDetails.password, salt,
+        1000, 64, `sha512`).toString(`hex`);
+
+    const rows = await db.query(`select * from z3_user where username = '${userDetails.username}'`);
+    const data = helper.emptyOrRows(rows);
+    if(data.length) {
+        return  {message: "Username exist", status: 400};
+    } else {
+        const user = await db.query(`INSERT into z3_user (username, parent_id, password, salt, first_name, phone_number, status) values (?, ?, ?, ?, ?, ?, ?)`,[userDetails.username, userDetails.parent_id, hash, salt, userDetails.first_name, userDetails.phone_number, userDetails.status]);
+        const userId = user.insertId;
+        const userRole = await db.query(`INSERT into z3_user_role_mapping (user_id, role_id) values (?, ?)`,[userId, 6]);
+        return  {message: `Sub user [${userDetails.username}] created `, status: 200};
+    }
+}
+
+async function updateSubUser(data) {
+    try {
+        const response = await db.query(`UPDATE z3_user
+        set first_name = ?, phone_number = ?, status = ?, updated_at = current_timestamp()
+        where user_id = ?`,
+            [data.first_name, data.phone_number, data.status, data.user_id]);
+
+        const userRole = await db.query(`UPDATE z3_user_role_mapping set role_id = ? where user_id = ? `,[data.role_id, data.user_id]);
+        return {message: `User updated`, status: 200};
+    } catch (err) {
+        console.error(`Error while updating user details`, err.message);
+        return {message: `Error while updating user details`, status: 500};
+    }
+}
+
 module.exports = {
     loginUser,
     createUser,
@@ -224,5 +258,6 @@ module.exports = {
     getUserDetailByToken,
     listAll,
     createUserPass,
-    changePassword
+    changePassword,
+    createSubUser, updateSubUser
 }

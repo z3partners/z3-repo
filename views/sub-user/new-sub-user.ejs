@@ -1,7 +1,19 @@
 <%- include("../common/head.ejs"); %>
-<%- include("../common/inv-aside.ejs");%>
+<%- [1, 4, 5].includes(roles.role_id) ? include("../common/aside.ejs") : include("../common/inv-aside.ejs"); %>
+
 <div class="layout-page">
     <%- include("../common/top-nav.ejs"); %>
+    <script>
+        const invData = <%- JSON.stringify(users)%>;
+        const subUserInvData = {};
+        if (Array.isArray(invData)) {
+            invData.forEach( function (inv) {
+                subUserInvData[inv.user_id] = [{email: inv.alt_email_1}, {email: inv.alt_email_2}];
+            })
+        } else {
+            subUserInvData['loginUser'] = [{email: invData.alt_email_1}, {email: invData.alt_email_2}];
+        }
+    </script>
     <!-- Content wrapper -->
     <div class="content-wrapper">
         <!-- Content -->
@@ -20,16 +32,23 @@
                             <p class="mb-4 error-z3"><%= message %></p>
                             <% } %>
                     <form name="user" action="./new-sub-user" method="post" autocomplete="off"  id="new-sub-user">
+                        <% if ([1, 4, 5].includes(roles.role_id)) { %>
                         <div class="mb-3">
-                            <label for="email_id" class="form-label">Choose Sub Username</label>
+                            <label for="subUserInvList" class="form-label">Choose Investor</label>
+                            <select id="subUserInvList" name="parent_id" class="form-select form-select-lg" required>
+                                <option value="">Select Investor</option>
+                                <%
+                                    users.forEach(function (investor) {
+                                %>
+                                     <option value="<%-investor.user_id%>"><%-investor.username%></option>
+                                <% }); %>
+                            </select>
+                        </div>
+                        <% } %>
+                        <div class="mb-3">
+                            <label for="email_id" class="form-label">Choose Sub User</label>
                             <select id="email_id" name="email_id" class="form-select form-select-lg" required>
-                                <option value="">Select</option>
-                                <% if(users.alt_email_1) { %>
-                                <option value="<%-users.alt_email_1%>"><%-users.alt_email_1%></option>
-                                <% } %>
-                                <% if(users.alt_email_2) { %>
-                                <option value="<%-users.alt_email_2%>"><%-users.alt_email_2%></option>
-                                <% } %>
+                                <option value="">Select Sub User</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -110,5 +129,8 @@
     password.onkeyup = validatePasswordFormat;
     function validatePasswordFormat() {
         passwordFormat(password.value,  password);
+    }
+    if(subUserInvData['loginUser']) {
+        populateSubUser('#email_id', subUserInvData['loginUser']);
     }
 </script>
