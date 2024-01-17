@@ -19,7 +19,7 @@ router.post('/', async function(req, res, next) {
     } else {
         try {
             const response = await users.getResetToken(user_email);
-            console.log(response);
+            // console.log(response);
             msg = response.message;
             if (response.status === 200) {
                 if (response.token) {
