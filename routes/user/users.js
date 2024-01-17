@@ -15,9 +15,10 @@ router.get('/', async function(req, res, next) {
   }
   try {
     let investorType = '';
+    let parent_id_criteria = ' parent_id = 0 ';
     const resposne = await categoryService.listCategory();
     const resAll = await categoryService.listAll();
-    const userList = await userService.listAll(false, {investor_type: investorType});
+    const userList = await userService.listAll(false, {investor_type: investorType, parent_id_criteria: parent_id_criteria});
     req.session.catList = resposne;
     res.locals.allCategory = JSON.stringify(resAll.message);
     res.locals.invSearchFields = JSON.stringify({});
