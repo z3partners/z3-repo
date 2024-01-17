@@ -116,14 +116,14 @@ async function changePassword(id, password, newPassword) {
     }
 }
 
-async function createUserPass(data) {
+async function createUserPass(data, userType = 'User') {
     try {
         const salt = crypto.randomBytes(16).toString('hex');
         const hash = crypto.pbkdf2Sync(data.password, salt, 1000, 64, `sha512`).toString(`hex`);
 
         const response = await db.query(`UPDATE z3_user set password = ?, salt = ?, updated_at = current_timestamp() where user_id = ?`,
             [hash, salt, data.user_id]);
-        return {message: `User password created`, status: 200};
+        return {message: `${userType} password created`, status: 200};
     } catch (err) {
         console.error(`Error while creating user password`, err.message);
         return {message: `Error while creating user password`, status: 500};
@@ -240,14 +240,18 @@ async function updateSubUser(data) {
         where user_id = ?`,
             [data.first_name, data.phone_number, data.status, data.user_id]);
 
-        const userRole = await db.query(`UPDATE z3_user_role_mapping set role_id = ? where user_id = ? `,[data.role_id, data.user_id]);
-        return {message: `User updated`, status: 200};
+        return {message: `Sub User updated`, status: 200};
     } catch (err) {
-        console.error(`Error while updating user details`, err.message);
-        return {message: `Error while updating user details`, status: 500};
+        console.error(`Error while updating sub user details`, err.message);
+        return {message: `Error while updating sub user details`, status: 500};
     }
 }
 
+async function deleteSubUser(user_id) {
+    const userRes = await db.query(`DELETE from z3_user where user_id = ?`, [user_id]);
+    const roleRes = await db.query(`DELETE from z3_user_role_mapping where user_id = ?`, [user_id]);
+    return {message: `Sub User deleted`, status: 200};
+}
 module.exports = {
     loginUser,
     createUser,
@@ -259,5 +263,5 @@ module.exports = {
     listAll,
     createUserPass,
     changePassword,
-    createSubUser, updateSubUser
+    createSubUser, updateSubUser, deleteSubUser
 }

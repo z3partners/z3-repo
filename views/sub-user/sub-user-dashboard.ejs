@@ -143,8 +143,8 @@ const userRoleMap = {
             <i class='bx bx-dots-vertical-rounded'></i>
             </button>
             <div class='dropdown-menu'>
-            <a class='dropdown-item edit-link' data-category="subuser" href='javascript:void(0)' data-user='${JSON.stringify(user)}'><i class='bx bx-edit-alt me-1'></i> Edit</a>
-    <a class='dropdown-item create-investor-pass edit-link' href='javascript:void(0)' data-category="subuserpass" data-userpass='${JSON.stringify(user)}'><i class='bx bx-lock-alt me-1'></i> Create Password</a>
+            <a class='dropdown-item edit-link' data-category="subuser" href='javascript:void(0)' data-subuser='${JSON.stringify(user)}'><i class='bx bx-edit-alt me-1'></i> Edit</a>
+    <a class='dropdown-item create-investor-pass edit-link' href='javascript:void(0)' data-category="subuserpass" data-subuserpass='${JSON.stringify(user)}'><i class='bx bx-lock-alt me-1'></i> Create Password</a>
     <a class='dropdown-item del-sub-user-btn' href='javascript:void(0);' data-user='${JSON.stringify(user)}'><i class='bx bx-trash me-1'></i> Delete</a>
     </div>
     </div>`;
@@ -181,8 +181,8 @@ const userRoleMap = {
             $(".edit-link").click(function (e) {
                 editLink(e);
             });
-            $(".del-user-btn").click(function (e) {
-                delUserBtnClick(e);
+            $(".del-sub-user-btn").click(function (e) {
+                delUserBtnClick(e, '.del-sub-user-btn', 'sub-users');
             });
         }
     });

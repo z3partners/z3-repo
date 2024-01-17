@@ -88,6 +88,10 @@ $(document).ready(function () {
         delUserBtnClick(e);
     });
 
+    $(".del-sub-user-btn").click(function (e) {
+        delUserBtnClick(e, '.del-sub-user-btn', 'sub-users');
+    });
+
     $(".del-document-btn").click(function (e) {
         delDocumentBtnClick(e);
     });
@@ -229,14 +233,14 @@ function editLink(e) {
         profile: 'user_id',
         password: 'user_id',
         user: 'user_id',
-        subUser: 'user_id',
+        subuser: 'user_id',
         userpass: 'user_id',
         subuserpass: 'user_id',
         invpass: 'user_id'
     });
 
     const id = dataSet[editIdMap[category]];
-    //console.log(category, id, roleId);
+    // console.log(category, id, roleId);
     formSubmit(category, id, roleId);
 }
 
@@ -302,8 +306,8 @@ function delDocumentBtnClick(e) {
     }
 }
 
-function delUserBtnClick(e) {
-    const elm = e.target.closest(".del-user-btn");
+function delUserBtnClick(e, selector = '.del-user-btn', redirectPath = 'users') {
+    const elm = e.target.closest(`${selector}`);
     const userDetails = JSON.parse(elm.dataset.user);
     const res = confirm(`Are you sure you want to delete ${userDetails.first_name}`);
     if (res) {
@@ -312,7 +316,7 @@ function delUserBtnClick(e) {
                 username: userDetails.username,
             },
             function (data, status) {
-                location.href = "./users";
+                location.href = `./${redirectPath}`;
             });
     }
 }

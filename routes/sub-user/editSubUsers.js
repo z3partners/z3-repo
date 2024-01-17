@@ -27,18 +27,17 @@ router.post('/', async function(req, res, next) {
         const phone_number = req.body.contact_number;
         const status = req.body.status ? 1 : 0;
         try {
-            const resposne = await investorService.updateSubUser({
+            const resposne = await userService.updateSubUser({
                 user_id: userId,
                 first_name: first_name,
                 phone_number: phone_number,
-                role_id: role_id,
                 status: status
             });
             req.session.msg = resposne.message;
             if (resposne.status === 200 && status) {
                 const transporter = emailService.getTransporter();
                 const textData = (emailTemplate.updateUser.replace("{login_user}", req.session.users.fName)).replace("{user_profile_name}", first_name);
-                const subject = 'Z3Partners: User updated successfully';
+                const subject = 'Z3Partners: Sub User updated successfully';
                 const mailData = emailService.getMailData([username], subject, textData);
 
                 transporter.sendMail(mailData, function (err, info) {
@@ -48,7 +47,7 @@ router.post('/', async function(req, res, next) {
                         console.log(info);
                 });
             }
-            res.redirect('./users');
+            res.redirect('./sub-users');
         } catch (err) {
             console.error(`Error while getting user details`, err.message);
             next(err);

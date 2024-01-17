@@ -1,0 +1,141 @@
+<%- include("../common/head.ejs"); %>
+<%- [1, 4, 5].includes(roles.role_id) ? include("../common/aside.ejs") : include("../common/inv-aside.ejs"); %>
+<div class="layout-page">
+    <%- include("../common/top-nav.ejs"); %>
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="row">
+                <div class="col-lg-12 mb-4 order-0">
+                    <div class="card">
+                        <div class="d-flex align-items-end row">
+                            <div class="col-sm-7">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary">User Management</h5>
+                                    <p class="mb-4">
+                                        View the list of the users with the button below
+                                    </p>
+
+                                    <a href="./sub-users" class="btn btn-lg btn-outline-primary">Sub Users</a>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 text-center text-sm-left">
+                                <div class="card-body pb-0 px-0 px-md-4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Create password for sub user</h5>
+                        </div>
+                        <div class="form-text" style="margin-left: 25px;">
+                            <% if (message) { %>
+                            <span class="danger"><%= message %></span>
+                            <% } %>
+                        </div>
+
+                        <div class="card-body">
+                            <form name="investor" action="./submit-user-pass" method="post">
+                                <input type="hidden" name="user_id" value="" id="user_id" />
+                                <input type="hidden" name="username" value="" id="username" />
+                                <input type="hidden" name="status" value="" id="status" />
+                                <input type="hidden" name="first_name" value="" id="first_name" />
+                                <input type="hidden" name="userType" value="Sub User" id="userType" />
+                                <div class="mb-3">
+                                    <label class="form-label" for="contact_name">FULL NAME</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+                                        <input  disabled type="text" class="form-control" name="contact_name" id="contact_name" required aria-label="John Doe" aria-describedby="basic-icon-default-fullname2">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="password">Password</label>
+                                    <div class="input-group form-password-toggle">
+                                        <input type="password" id="password" name="password" required class="form-control" placeholder="Password" autocomplete="new-password">
+                                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="confirm-password">Confirm Password</label>
+                                    <div class="input-group form-password-toggle">
+                                        <input type="password" id="confirm-password" name="confirm-password" required class="form-control" placeholder="Confirm password" aria-label="Password">
+                                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="createPassBtn">Create Password</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="content-footer footer bg-footer-theme">
+        <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+            <div class="mb-2 mb-md-0">
+                ©
+                <script>
+                    document.write(new Date().getFullYear());
+                </script>
+                Z3Partners
+
+            </div>
+
+        </div>
+    </footer>
+    <!-- / Footer -->
+
+    <div class="content-backdrop fade"></div>
+</div>
+<!-- Content wrapper -->
+</div>
+<!-- / Layout page -->
+</div>
+
+<!-- Overlay -->
+<div class="layout-overlay layout-menu-toggle"></div>
+</div>
+<!-- / Layout wrapper -->
+</div>
+<%- include("../common/footer-imports.ejs"); %>
+<script>
+    const user = <%- user%>;
+    function populateUserData(userData) {
+        document.getElementById("contact_name").value = userData.first_name;
+        document.getElementById("first_name").value = userData.first_name;
+        document.getElementById("user_id").value = userData.user_id;
+        document.getElementById("username").value = userData.username;
+        document.getElementById("status").value = userData.status;
+    }
+    populateUserData(user[0]);
+
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirm-password");
+
+    function validatePassword(){
+        if(password.value != confirmPassword.value) {
+            confirmPassword.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirmPassword.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirmPassword.onkeyup = validatePassword;
+
+    const createPassBtn = document.getElementById("createPassBtn");
+    createPassBtn.onclick = validatePasswordFormat;
+    password.onkeyup = validatePasswordFormat;
+    function validatePasswordFormat() {
+        passwordFormat(password.value,  password);
+    }
+</script>
