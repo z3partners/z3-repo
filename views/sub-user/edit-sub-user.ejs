@@ -3,7 +3,8 @@
 <div class="layout-page">
     <%- include("../common/top-nav.ejs"); %>
     <script>
-        const userData = <%- user%>
+        const userData = <%- user%>;
+        const catPerm = <%- catPermList%>;
     </script>
     <!-- Content wrapper -->
     <div class="content-wrapper">
@@ -53,7 +54,7 @@
                                 <% catList.message.forEach(function(cat){ %>
                                     <% if (cat.status) { %>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" name="cat-permission[]" value="<%= cat.category_id %>">
+                                            <input class="form-check-input" type="checkbox" name="cat-permission[]" value="<%= cat.category_id %>" id="cat-<%= cat.category_id %>">
                                             <label class="form-check-label" for="cat-permission[]"><%= cat.category_name %></label>
                                         </div>
                                     <% } %>
@@ -97,4 +98,7 @@
         document.getElementById("status").checked = userData.status ? "checked" : '';
     }
     populateUserData(userData);
+    catPerm.forEach(function (cat) {
+        document.getElementById(`cat-${cat}`).checked = "checked";
+    });
 </script>

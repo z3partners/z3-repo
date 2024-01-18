@@ -87,6 +87,16 @@ async function deleteCategory(catId, parentId) {
     return {message: `Category/Subcategory deleted`, status: 200};
 }
 
+async function listUserCategory(user_id) {
+    const rows = await db.query(`select * from z3_user_categories where user_id = ?`, [user_id]);
+    const data = helper.emptyOrRows(rows);
+    if (data.length) {
+        return {message: data, status: 200};
+    } else {
+        return {message: "Category permission list is empty", status: 200};
+    }
+}
+
 module.exports = {
-    createCategory, listCategory, listSubCategory, updateCategory, deleteCategory, listAll
+    createCategory, listCategory, listSubCategory, updateCategory, deleteCategory, listAll, listUserCategory
 }

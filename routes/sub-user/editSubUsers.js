@@ -62,7 +62,13 @@ router.post('/', async function(req, res, next) {
     } else {
         const rows = await userService.getUser(+id);
         if(rows.status === 200) {
+            let userCat = [];
+            const userCatRes = await categoryService.listUserCategory(+id);
+            if (userCatRes.message[0].category_id) {
+                userCat = userCatRes.message[0].category_id.split(", ");
+            }
             res.locals.user = JSON.stringify(rows.message[0]);
+            res.locals.catPermList = JSON.stringify(userCat);
             res.render(`./sub-user/edit-sub-user`, {message: '', catList: catList, users:  req.session.users, roles: req.session.roleDetails});
         } else {
             req.session.msg = "User data not found";

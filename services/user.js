@@ -245,7 +245,7 @@ async function createSubUser(userDetails) {
         const userRole = await db.query(`INSERT into z3_user_role_mapping (user_id, role_id) values (?, ?)`,[userId, 6]);
         if (userDetails.categoryIds) {
             const categoryIds = Array.isArray(userDetails.categoryIds) ? userDetails.categoryIds.join(", ") : userDetails.categoryIds;
-            const catPermission = await db.query(`INSERT into z3_user_categories (user_id, category_id) values (?, ?)`, [userId, categoryIds]);
+            const catPermission = await db.query(`INSERT into z3_user_categories (user_id, category_id) values (?, ?)`, [userId, `${categoryIds}`]);
         }
         return  {message: `Sub user [${userDetails.username}] created `, status: 200};
     }
@@ -260,7 +260,7 @@ async function updateSubUser(data) {
 
         if (data.categoryIds) {
             const categoryIds = Array.isArray(data.categoryIds) ? data.categoryIds.join(", ") : data.categoryIds;
-            const catPermission = await db.query(`INSERT INTO z3_user_categories (user_id, category_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE category_id = ?`, [data.user_id, categoryIds, categoryIds]);
+            const catPermission = await db.query(`INSERT INTO z3_user_categories (user_id, category_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE category_id = ?`, [data.user_id, `${categoryIds}`, `${categoryIds}`]);
         } else {
             const catPermission = await db.query(`DELETE from z3_user_categories where user_id = ?`, [data.user_id]);
         }
