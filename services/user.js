@@ -81,16 +81,29 @@ async function createUser(userDetails) {
         return  {message: `User [${userDetails.username}] created `, status: 200};
     }
 }
+async function isParentUserActive(parent_id) {
+    if (parent_id === 0) {
+        return true;
+    } else {
+        const rows = await db.query(`select status from z3_user where user_id = ? and status = 1 `, [parent_id]);
+        let data = helper.emptyOrRows(rows);
+        return data.length;
+    }
+}
 
 async function loginUser(username, password) {
     const rows = await db.query(`select * from z3_user where username = ? `, [username]);
     let data = helper.emptyOrRows(rows);
     if (data.length && validPassword(password, data[0].password, data[0].salt)) {
-        if (data[0].status === 1) {
+        const isSubUser = await isParentUserActive(data[0].parent_id);
+        if (data[0].status === 1 && isSubUser) {
             const roleDetails = await getUserRoleBasedPermission(data[0].user_id);
             const roles = (roleDetails.length) ? roleDetails[0] : {};
             return {message: {userDetail: data[0], roleDetails: roles}, status: 200};
         } else {
+                if (data[0].parent_id !== 0) {
+                    return {message: "Sub User or Parent User is not active, please contact Z3Partners at partner@z3partners.com.", status: 400};
+                }
             return {message: "User Account is not active, please contact Z3Partners at partner@z3partners.com.", status: 400};
         }
     } else {

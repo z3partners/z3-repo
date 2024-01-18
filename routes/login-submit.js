@@ -12,6 +12,7 @@ router.post('/', async function(req, res, next) {
   } else  {
     try {
       const resposne = await users.loginUser(emailUsername, password);
+      // console.log("==>resposne==>", resposne);
       if(resposne.status===200) {
         req.session.loggedin = true;
         req.session.username = emailUsername;
