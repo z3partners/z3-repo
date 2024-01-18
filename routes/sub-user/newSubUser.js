@@ -45,6 +45,7 @@ router.post('/', async function(req, res, next) {
     const status = req.body.status ? 1 : 0;
     const user_id = req.body.user_id;
     const parent_id = req.body.parent_id;
+    const categoryIds = req.body['cat-permission[]'];
 
     try {
         if (user_id) {
@@ -58,7 +59,8 @@ router.post('/', async function(req, res, next) {
                 parent_id:  parent_id ? parent_id : req.session.users.user_id,
                 username: email_id,
                 phone_number: phone_number,
-                status: status
+                status: status,
+                categoryIds: categoryIds
             });
             req.session.msg = response.message;
             if ( response.status === 200 && status ) {

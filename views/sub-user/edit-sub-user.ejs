@@ -47,7 +47,19 @@
                                 <input type="tel" maxlength="17" minlength="9"  id="contact_number" name="contact_number" required class="form-control phone-mask" placeholder="(Country Code) 999 999 9999" aria-label="(Country Code) 658 799 8941" aria-describedby="basic-icon-default-phone2">
                             </div>
                         </div>
-
+                        <div class="mb-3">
+                            <small class="form-label d-block">Category Permission(s)</small>
+                            <% if (catList && Array.isArray(catList.message) && catList.message.length) { %>
+                                <% catList.message.forEach(function(cat){ %>
+                                    <% if (cat.status) { %>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="cat-permission[]" value="<%= cat.category_id %>">
+                                            <label class="form-check-label" for="cat-permission[]"><%= cat.category_name %></label>
+                                        </div>
+                                    <% } %>
+                                <% }); %>
+                            <% } %>
+                        </div>
                         <div class="form-check form-switch mb-2">
                             <input class="form-check-input" type="checkbox" id="status" name="status">
                             <label class="form-check-label" for="status">Active</label>

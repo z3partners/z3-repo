@@ -3,7 +3,7 @@ var router = express.Router();
 var userService = require('../../services/user');
 const emailService = require("../../services/email");
 const emailTemplate = require('../../email-template/user/update-user');
-const investorService = require("../../services/investor");
+var categoryService = require('../../services/category');
 
 router.get('/', async function (req, res, next) {
     if (!req.session.loggedin) {
@@ -19,6 +19,10 @@ router.post('/', async function(req, res, next) {
         res.redirect('./login');
     }
 
+    const catRes = await categoryService.listCategory();
+    req.session.catList = catRes;
+    const catList = req.session.catList ? req.session.catList : [];
+
     const id = req.body['edit-id'];
     const userId = req.body.user_id;
     if(userId) {
@@ -26,12 +30,15 @@ router.post('/', async function(req, res, next) {
         const username = req.body.username;
         const phone_number = req.body.contact_number;
         const status = req.body.status ? 1 : 0;
+        const categoryIds = req.body['cat-permission[]'];
+
         try {
             const resposne = await userService.updateSubUser({
                 user_id: userId,
                 first_name: first_name,
                 phone_number: phone_number,
-                status: status
+                status: status,
+                categoryIds: categoryIds
             });
             req.session.msg = resposne.message;
             if (resposne.status === 200 && status) {
@@ -56,7 +63,7 @@ router.post('/', async function(req, res, next) {
         const rows = await userService.getUser(+id);
         if(rows.status === 200) {
             res.locals.user = JSON.stringify(rows.message[0]);
-            res.render(`./sub-user/edit-sub-user`, {message: '', catList: '', users:  req.session.users, roles: req.session.roleDetails});
+            res.render(`./sub-user/edit-sub-user`, {message: '', catList: catList, users:  req.session.users, roles: req.session.roleDetails});
         } else {
             req.session.msg = "User data not found";
             res.redirect('./sub-users');

@@ -224,6 +224,7 @@ async function updateUser(data) {
 async function deleteUser(user_id) {
     const userRes = await db.query(`DELETE from z3_user where user_id = ?`, [user_id]);
     const roleRes = await db.query(`DELETE from z3_user_role_mapping where user_id = ?`, [user_id]);
+    const catPermissionRes = await db.query(`DELETE from z3_user_categories where user_id = ?`, [user_id]);
     return {message: `User deleted`, status: 200};
 }
 
@@ -242,6 +243,10 @@ async function createSubUser(userDetails) {
         const user = await db.query(`INSERT into z3_user (username, parent_id, password, salt, first_name, phone_number, status) values (?, ?, ?, ?, ?, ?, ?)`,[userDetails.username, userDetails.parent_id, hash, salt, userDetails.first_name, userDetails.phone_number, userDetails.status]);
         const userId = user.insertId;
         const userRole = await db.query(`INSERT into z3_user_role_mapping (user_id, role_id) values (?, ?)`,[userId, 6]);
+        if (userDetails.categoryIds) {
+            const categoryIds = Array.isArray(userDetails.categoryIds) ? userDetails.categoryIds.join(", ") : userDetails.categoryIds;
+            const catPermission = await db.query(`INSERT into z3_user_categories (user_id, category_id) values (?, ?)`, [userId, categoryIds]);
+        }
         return  {message: `Sub user [${userDetails.username}] created `, status: 200};
     }
 }
@@ -252,6 +257,13 @@ async function updateSubUser(data) {
         set first_name = ?, phone_number = ?, status = ?, updated_at = current_timestamp()
         where user_id = ?`,
             [data.first_name, data.phone_number, data.status, data.user_id]);
+
+        if (data.categoryIds) {
+            const categoryIds = Array.isArray(data.categoryIds) ? data.categoryIds.join(", ") : data.categoryIds;
+            const catPermission = await db.query(`INSERT INTO z3_user_categories (user_id, category_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE category_id = ?`, [data.user_id, categoryIds, categoryIds]);
+        } else {
+            const catPermission = await db.query(`DELETE from z3_user_categories where user_id = ?`, [data.user_id]);
+        }
 
         return {message: `Sub User updated`, status: 200};
     } catch (err) {
