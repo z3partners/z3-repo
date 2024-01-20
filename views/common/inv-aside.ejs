@@ -57,6 +57,9 @@
         </li>
 
         <!-- Misc -->
+        <script>
+            const abc = <%-JSON.stringify(users)%>
+        </script>
         <%
         if([3].includes(roles.role_id) && (users.alt_email_1 || users.alt_email_2)) {
         %>

@@ -28,7 +28,9 @@ router.post('/', async function(req, res, next) {
         const first_name = req.body.contact_name;
         const username = req.body.username;
         const alt_email_1 = req.body.alt_email_1;
+        const sec_email_update_1 = req.body.sec_email_update_1;
         const alt_email_2 = req.body.alt_email_2;
+        const sec_email_update_2 = req.body.sec_email_update_2;
         const phone_number = req.body.contact_number;
         const status = req.body.status ? 1 : 0;
         const hasPassword = req.body.hasPassword;
@@ -42,6 +44,7 @@ router.post('/', async function(req, res, next) {
             if(investorId) {
                 const response = await investorService.updateInvestor({alt_email_1: alt_email_1, alt_email_2: alt_email_2, user_id: investorId, company_legal_name: company_legal_name, financial_year: financial_year, investor_type: investor_type, fund_association: fund_association, first_name: first_name, username: username, phone_number: phone_number, status: status});
                 req.session.msg = response.message;
+                await investorService.checkSecEmailChanges(investorId, alt_email_1, sec_email_update_1, alt_email_2, sec_email_update_2);
                 const transporter = emailService.getTransporter();
                  const textData = emailTemplate.updateProfile.replace('{first_name}', first_name);
                 const subject = 'Z3Partners: Investor data Updated successfully';

@@ -126,9 +126,31 @@ async function listAll(status, searchFields = {}) {
 async function deleteInvestor(user_id) {
     const response = await db.query(`DELETE from z3_user where user_id = ?`, [user_id]);
     const roleRes = await db.query(`DELETE from z3_user_role_mapping where user_id = ?`, [user_id]);
+    const catPermissionRes = await db.query(`DELETE from z3_user_categories where user_id = ?`, [user_id]);
     return {message: `Investor deleted`, status: 200};
 }
 
+async function checkSecEmailChanges(investorId, alt_email_1, sec_email_update_1, alt_email_2, sec_email_update_2) {
+    if(alt_email_1 && alt_email_1 !== sec_email_update_1) {
+        const subUserRes1 = await manageSubUser(sec_email_update_1)
+    }
+    if(alt_email_2 && alt_email_2 !== sec_email_update_2) {
+        const subUserRes2 = await manageSubUser(sec_email_update_2)
+    }
+}
+async function getUserIdFromEmail(emailId) {
+    const rows = await db.query(`select user_id from z3_user where username = ?`, [emailId]);
+    return helper.emptyOrRows(rows);
+}
+async function manageSubUser(emailId) {
+    const data = await getUserIdFromEmail(emailId);
+    if (data.length) {
+        const user_id = data[0].user_id;
+        await deleteInvestor(user_id)
+        return {message: `Sub User deleted`, status: 200};
+    }
+}
+
 module.exports = {
-    addInvestor, updateInvestor, updateProfile, listAll, getInvestor, deleteInvestor, createInvestorPass
+    addInvestor, updateInvestor, updateProfile, listAll, getInvestor, deleteInvestor, createInvestorPass, checkSecEmailChanges
 }

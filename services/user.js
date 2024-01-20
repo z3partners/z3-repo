@@ -237,7 +237,9 @@ async function createSubUser(userDetails) {
     if(data.length) {
         return  {message: "Username exist", status: 400};
     } else {
-        const user = await db.query(`INSERT into z3_user (username, parent_id, investor_type, password, salt, first_name, phone_number, status) values (?, ?, ?, ?, ?, ?, ?, ?)`,[userDetails.username, userDetails.parent_id, userDetails.investor_type, hash, salt, userDetails.first_name, userDetails.phone_number, userDetails.status]);
+        const user = await db.query(`INSERT into z3_user (username, parent_id, password, salt, first_name, phone_number, status) values (?, ?, ?, ?, ?, ?, ?)`,
+            [userDetails.username, userDetails.parent_id, hash, salt, userDetails.first_name, userDetails.phone_number, userDetails.status]);
+
         const userId = user.insertId;
         const userRole = await db.query(`INSERT into z3_user_role_mapping (user_id, role_id) values (?, ?)`,[userId, 6]);
         if (userDetails.categoryIds) {
@@ -269,11 +271,7 @@ async function updateSubUser(data) {
     }
 }
 
-async function deleteSubUser(user_id) {
-    const userRes = await db.query(`DELETE from z3_user where user_id = ?`, [user_id]);
-    const roleRes = await db.query(`DELETE from z3_user_role_mapping where user_id = ?`, [user_id]);
-    return {message: `Sub User deleted`, status: 200};
-}
+
 module.exports = {
     loginUser,
     createUser,
@@ -285,5 +283,5 @@ module.exports = {
     listAll,
     createUserPass,
     changePassword,
-    createSubUser, updateSubUser, deleteSubUser
+    createSubUser, updateSubUser
 }

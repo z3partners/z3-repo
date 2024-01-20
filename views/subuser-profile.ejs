@@ -25,6 +25,7 @@
                             <form name="user" action="./edit-sub-user" method="post" autocomplete="off"  id="new-user">
                                 <input type="hidden" name="user_id" value="" id="user_id" />
                                 <input type="hidden" name="username" value="<%=JSON.parse(profile).username%>"  />
+                                <input type="hidden" name="cat-permission[]" id="cat-permission" value=""  />
                                 <div class="mb-3">
                                     <label class="form-label" for="email_id">Email</label>
                                     <div class="input-group">
@@ -77,12 +78,14 @@
 </div>
 <%- include("common/footer-imports.ejs"); %>
 <script>
+    const catPerm = <%- catPermList%>;
     function populateUserData(userData) {
         document.getElementById("first_name").value = userData.first_name;
         document.getElementById("contact_number").value = (userData.phone_number) ? userData.phone_number : '';
         document.getElementById("email_id").value = userData.username;
         document.getElementById("user_id").value = userData.user_id;
         document.getElementById("status").checked = userData.status ? "checked" : '';
+        document.getElementById("cat-permission").value= catPerm.join(", ");
     }
     populateUserData(userData);
 </script>

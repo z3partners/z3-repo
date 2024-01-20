@@ -54,7 +54,8 @@ router.post('/', async function(req, res, next) {
                         console.log(info);
                 });
             }
-            res.redirect('./sub-users');
+            const view = (+req.session.roleDetails.role_id === 6 ) ? 'inv-home' : 'sub-users';
+            res.redirect(`./${view}`);
         } catch (err) {
             console.error(`Error while getting user details`, err.message);
             next(err);
