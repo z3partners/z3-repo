@@ -18,13 +18,14 @@ router.get('/', async function(req, res, next) {
         res.locals.showFilter =  false;
         res.locals.showCat =  false;
         let searchParams = {};
-        searchParams.investor_type = req.session.users.investorType;
         res.locals.docSearchFields = JSON.stringify({});
-        searchParams.investor_id = req.session.users.user_id;
-        const resposne = await categoryService.listCategory();
-        const resAll = await categoryService.listAll();
+        const roleId = req.session.roleDetails.role_id;
+        searchParams.investor_type = ( roleId === 6 ) ? req.session.users.parentUserDetails.investor_type : req.session.users.investorType;
+        searchParams.investor_id = ( roleId === 6 ) ? req.session.users.parentUserDetails.user_id : req.session.users.user_id;
+        searchParams.userCreatedDate = ( roleId === 6 ) ? req.session.users.parentUserDetails.created_at : req.session.users.created_at;
+        const resposne = await getCategoryForUserType(roleId, req.session.users.user_id);
+        const resAll = await categoryService.listAll(true);
         const investorList = await investorService.listAll(false, {});
-        searchParams.userCreatedDate = req.session.users.created_at;
         const documentList = await documentService.listAll(true, searchParams, '', " or z3_documents.send_to = 'All' ");
         req.session.catList = resposne;
         res.locals.allCategory = JSON.stringify(resAll.message);
@@ -58,14 +59,16 @@ router.post('/', async function(req, res, next) {
         // console.log(req.body);
         res.locals.showFilter =  true;
         let docCat = "-1";
-        searchParams.investor_id = req.session.users.user_id;
-        searchParams.userCreatedDate = req.session.users.created_at;
         if(req.body.nav_cat_id) {
             searchParams.category_id = req.body.nav_cat_id;
             docCat = req.body.nav_cat_id;
         }
         res.locals.showCat = docCat;
         res.locals.docSearchFields = JSON.stringify(req.body);
+        const roleId = req.session.roleDetails.role_id;
+        searchParams.investor_type = ( roleId === 6 ) ? req.session.users.parentUserDetails.investor_type : req.session.users.investorType;
+        searchParams.investor_id = ( roleId === 6 ) ? req.session.users.parentUserDetails.user_id : req.session.users.user_id;
+        searchParams.userCreatedDate = ( roleId === 6 ) ? req.session.users.parentUserDetails.created_at : req.session.users.created_at;
         const start_date= req.body.start_date;
         const end_date= req.body.end_date;
         const quarter = req.body.quarter;
@@ -79,9 +82,8 @@ router.post('/', async function(req, res, next) {
             category_id ? searchParams.category_id = category_id : '';
             sub_category_id ? searchParams.sub_category_id = sub_category_id : '';
         }
-        searchParams.investor_type = req.session.users.investorType;
-        const resposne = await categoryService.listCategory();
-        const resAll = await categoryService.listAll();
+        const resposne = await getCategoryForUserType(roleId, req.session.users.user_id);
+        const resAll = await categoryService.listAll(true);
         const investorList = await investorService.listAll(false, {});
         const documentList = await documentService.listAll(true, searchParams, '', " or z3_documents.send_to = 'All' ");
         req.session.catList = resposne;
@@ -90,7 +92,6 @@ router.post('/', async function(req, res, next) {
         res.locals.documentList = JSON.stringify(documentList.message);
         const msg = req.session.msg;
         const catList = req.session.catList ? req.session.catList : [];
-        //console.log(req.session.roleDetails, req.session.users);
         req.session.msg = '';
         res.render(`./investor/investor-home`, {
             message: msg,
@@ -107,6 +108,15 @@ router.post('/', async function(req, res, next) {
 function getTimeStamp(date) {
     const  myDate = date.split("-");
     return new Date( myDate[0], myDate[1] - 1, myDate[2]);
+}
+
+async function getCategoryForUserType(role_id, user_id) {
+
+    if (role_id === 6) {
+        return await categoryService.getSubUserCategory(user_id);
+    } else {
+        return await categoryService.listCategory();
+    }
 }
 
 function isValidateDate(start_date, end_date) {

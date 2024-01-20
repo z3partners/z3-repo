@@ -12,20 +12,26 @@ router.post('/', async function(req, res, next) {
   } else  {
     try {
       const resposne = await users.loginUser(emailUsername, password);
-      // console.log("==>resposne==>", resposne);
       if(resposne.status===200) {
         req.session.loggedin = true;
         req.session.username = emailUsername;
         const userCreatedDate = resposne.message.userDetail.created_at;
+        let parentUserDetails = {};
+        if (resposne.message.roleDetails.role_id === 6) {
+          const { user_id, alt_email_1, alt_email_2, investor_type, created_at } = {...resposne.message.parentUser};
+          parentUserDetails = { user_id, alt_email_1, alt_email_2, investor_type, created_at }
+        }
         req.session.users = {
           "user_id": resposne.message.userDetail.user_id,
+          "parent_id": resposne.message.userDetail.parent_id,
           "fName": resposne.message.userDetail.first_name,
           "lName":resposne.message.userDetail.last_name,
           'cname': resposne.message.userDetail.company_legal_name,
           'investorType': resposne.message.userDetail.investor_type,
           'alt_email_1': resposne.message.userDetail.alt_email_1,
           'alt_email_2': resposne.message.userDetail.alt_email_2,
-          'created_at': userCreatedDate
+          'created_at': userCreatedDate,
+          parentUserDetails: parentUserDetails
         };
         req.session.roleDetails = resposne.message.roleDetails;
          //console.log(resposne);

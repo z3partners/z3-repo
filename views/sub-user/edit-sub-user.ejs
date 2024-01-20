@@ -99,6 +99,9 @@
     }
     populateUserData(userData);
     catPerm.forEach(function (cat) {
-        document.getElementById(`cat-${cat}`).checked = "checked";
+        const elm = document.getElementById(`cat-${cat}`);
+        if(elm) {
+            elm.checked = "checked";
+        }
     });
 </script>

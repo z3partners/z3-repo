@@ -3,6 +3,7 @@
 <div class="layout-page">
     <%- include("../common/top-nav.ejs"); %>
     <script>
+        const catList = [<%- catList.subUserCatList%>]
         const allCat = {};
         const allSubCat = {};
         const data = <%- allCategory %>
@@ -211,19 +212,34 @@
         'created_at': 'DATE(DD/MM/YYYY)',
         'download': 'Download'
     };
+    const roleId = <%- roles.role_id%>
     const showCat = <%- showCat %>;
     const documentList = <%- JSON.stringify(documentList) %>
+    const finalDocList = [];
     if (Array.isArray(documentList) && documentList.length) {
+        const options = { day: '2-digit', month: '2-digit',  year: 'numeric'};
         documentList.forEach(doc => {
-            const options = { day: '2-digit', month: '2-digit',  year: 'numeric'};
-            doc.created_at = new Date(doc.created_at).toLocaleDateString("in", options);
-            doc.document_name = `<strong><a href="./download-document?doc=${JSON.parse(doc.file_path).filename}">${doc.document_name}</a></strong>`;
-            doc.download =`<a href="./download-document?doc=${JSON.parse(doc.file_path).filename}"><u>Download</u></a>`;
-            doc.category_id = allCat[`'${doc.category_id}'`]['category_name'];
+            if (roleId === 6) {
+                if( catList.length && catList.includes(doc.category_id)) {
+                    const created_at = new Date(doc.created_at).toLocaleDateString("in", options);
+                    const document_name = `<strong><a href="./download-document?doc=${JSON.parse(doc.file_path).filename}">${doc.document_name}</a></strong>`;
+                    const download = `<a href="./download-document?doc=${JSON.parse(doc.file_path).filename}"><u>Download</u></a>`;
+                    const category_id = allCat[`'${doc.category_id}'`]['category_name'];
+                    finalDocList.push({document_name, download, category_id, created_at, quarter: doc.quarter});
+                }
+            } else {
+                const created_at = new Date(doc.created_at).toLocaleDateString("in", options);
+                const document_name = `<strong><a href="./download-document?doc=${JSON.parse(doc.file_path).filename}">${doc.document_name}</a></strong>`;
+                const download = `<a href="./download-document?doc=${JSON.parse(doc.file_path).filename}"><u>Download</u></a>`;
+                const category_id = allCat[`'${doc.category_id}'`]['category_name'];
+                finalDocList.push({document_name, download, category_id, created_at, quarter: doc.quarter});
+            }
+
+
         });
 
         var table = $('#table-sortable').tableSortable({
-            data: documentList,
+            data: finalDocList,
             columns: columns,
             rowsPerPage: 50,
             sorting:false,
@@ -239,6 +255,11 @@
                 return row[key];
             }
         });
+        if (!finalDocList.length) {
+            document.querySelector('div#table-sortable table.table >tbody').innerHTML = `<tr>
+                                    <td colspan="3"><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong class="success">Document list is empty</strong></td>
+                                </tr>`;
+        }
     }
     function populateCategory(selector, data) {
         let catSelect = $(selector);

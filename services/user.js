@@ -81,25 +81,22 @@ async function createUser(userDetails) {
         return  {message: `User [${userDetails.username}] created `, status: 200};
     }
 }
-async function isParentUserActive(parent_id) {
-    if (parent_id === 0) {
-        return true;
-    } else {
-        const rows = await db.query(`select status from z3_user where user_id = ? and status = 1 `, [parent_id]);
-        let data = helper.emptyOrRows(rows);
-        return data.length;
-    }
+
+async function getParentUser(parent_id) {
+    const rows = await db.query(`select * from z3_user where user_id = ? and status = 1 `, [parent_id]);
+    let data = helper.emptyOrRows(rows);
+    return data;
 }
 
 async function loginUser(username, password) {
     const rows = await db.query(`select * from z3_user where username = ? `, [username]);
     let data = helper.emptyOrRows(rows);
     if (data.length && validPassword(password, data[0].password, data[0].salt)) {
-        const isSubUser = await isParentUserActive(data[0].parent_id);
-        if (data[0].status === 1 && isSubUser) {
+        const parentUser = await getParentUser(data[0].parent_id);
+        if (data[0].status === 1 && (data[0].parent_id === 0 || parentUser.length)) {
             const roleDetails = await getUserRoleBasedPermission(data[0].user_id);
             const roles = (roleDetails.length) ? roleDetails[0] : {};
-            return {message: {userDetail: data[0], roleDetails: roles}, status: 200};
+            return {message: {userDetail: data[0], parentUser:parentUser[0], roleDetails: roles}, status: 200};
         } else {
                 if (data[0].parent_id !== 0) {
                     return {message: "Sub User or Parent User is not active, please contact Z3Partners at partner@z3partners.com.", status: 400};
@@ -240,7 +237,7 @@ async function createSubUser(userDetails) {
     if(data.length) {
         return  {message: "Username exist", status: 400};
     } else {
-        const user = await db.query(`INSERT into z3_user (username, parent_id, password, salt, first_name, phone_number, status) values (?, ?, ?, ?, ?, ?, ?)`,[userDetails.username, userDetails.parent_id, hash, salt, userDetails.first_name, userDetails.phone_number, userDetails.status]);
+        const user = await db.query(`INSERT into z3_user (username, parent_id, investor_type, password, salt, first_name, phone_number, status) values (?, ?, ?, ?, ?, ?, ?, ?)`,[userDetails.username, userDetails.parent_id, userDetails.investor_type, hash, salt, userDetails.first_name, userDetails.phone_number, userDetails.status]);
         const userId = user.insertId;
         const userRole = await db.query(`INSERT into z3_user_role_mapping (user_id, role_id) values (?, ?)`,[userId, 6]);
         if (userDetails.categoryIds) {

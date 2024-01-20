@@ -7,12 +7,12 @@ const admin_roles = [1, 4, 5];
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
+    if(!req.session.loggedin) {
+        res.redirect('./login');
+    }
     let parent_id_criteria = ' parent_id <> 0 ';
     if(!admin_roles.includes(req.session.roleDetails.role_id)) {
         parent_id_criteria = ` parent_id = ${req.session.users.user_id} `;
-    }
-    if(!req.session.loggedin) {
-        res.redirect('./login');
     }
     try {
         const response = await categoryService.listCategory();
