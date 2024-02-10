@@ -36,6 +36,11 @@ function getMailData(toEmailList, subject, textData, ccList='', skipBcc = false,
     if(subject.toLowerCase().indexOf('password') !== -1 || skipBcc) {
         bccEmailList = '';
     }
+    if (configData.dev) {
+        console.log("******* DEV ENV ACTIVATED FOR EMAIL NOTIFICATION ********");
+        subject = 'EMAIL FROM STAGE ENV: ' + subject;
+        textData = textData.replace('irportal.z3partners.com', 'irstaging.4thdimension.in');
+    }
 
     return {
          to: Array.isArray(toEmailList) ?  toEmailList.join(", ") : toEmailList,   // list of receivers
