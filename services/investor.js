@@ -131,10 +131,10 @@ async function deleteInvestor(user_id) {
 }
 
 async function checkSecEmailChanges(investorId, alt_email_1, sec_email_update_1, alt_email_2, sec_email_update_2) {
-    if(alt_email_1 && alt_email_1 !== sec_email_update_1) {
+    if(alt_email_1 !== sec_email_update_1) {
         const subUserRes1 = await manageSubUser(sec_email_update_1)
     }
-    if(alt_email_2 && alt_email_2 !== sec_email_update_2) {
+    if(alt_email_2 !== sec_email_update_2) {
         const subUserRes2 = await manageSubUser(sec_email_update_2)
     }
 }

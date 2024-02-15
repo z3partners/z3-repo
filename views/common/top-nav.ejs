@@ -12,6 +12,9 @@
         <% if(roles.role_id === 3 ) { %>
         <h5 class=" text-primary"><%= users.cname%></h5><br>
         <% } %>
+        <% if(roles.role_id === 6 ) { %>
+        <h5 class=" text-primary"><%= users.parentUserDetails.company_legal_name%></h5><br>
+        <% } %>
         <ul class="navbar-nav flex-row align-items-center ms-auto">
             <!-- User -->
             <li class="nav-item navbar-dropdown dropdown-user dropdown">

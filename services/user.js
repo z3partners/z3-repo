@@ -169,8 +169,7 @@ async function listAll(status, searchFields, userType = 'User') {
     if(condition.length) {
         conStr  =  " and " + condition.join(" and ");
     }
-
-    const rows = await db.query(`select z3_user_role_mapping.role_id,  user_id,
+    const rows = await db.query(`select user_tbl1.*, user_tbl2.company_legal_name from (select z3_user_role_mapping.role_id, user_id, parent_id,
         first_name,
         username,
         phone_number,
@@ -178,7 +177,8 @@ async function listAll(status, searchFields, userType = 'User') {
         updated_at,
         status from z3_user
         left join z3_user_role_mapping using(user_id) where z3_user_role_mapping.role_id <> 3
-    ${conStr}`);
+    ${conStr} ) as user_tbl1
+     left join z3_user user_tbl2 on user_tbl1.parent_id = user_tbl2.user_id`);
     const data = helper.emptyOrRows(rows);
     if (data.length) {
         return { message: data, status: 200 };

@@ -121,6 +121,7 @@
 
 <script>
     var columns = {
+        'company_legal_name': 'Investor Name',
         'first_name': 'Contact Name',
         'username': 'Email',
         'phone_number': 'Contact Number',
@@ -164,7 +165,7 @@ const userRoleMap = {
         nextText: '<i class="tf-icon bx bx-chevron-right"></i>',
         prevText: '<i class="tf-icon bx bx-chevron-left"></i>',
         formatCell: function(row, key) {
-            if (key === 'first_name') {
+            if (key === 'company_legal_name') {
                 return $('<strong></strong>').text(row[key]);
             }
             else if (key === 'status') {

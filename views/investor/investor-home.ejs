@@ -3,13 +3,18 @@
 <div class="layout-page">
     <%- include("../common/top-nav.ejs"); %>
     <script>
-        const catList = [<%- catList.subUserCatList%>]
+        const userRoleId = <%-roles.role_id%>;
+        const catList = [<%- catList.subUserCatList%>];
         const allCat = {};
         const allSubCat = {};
         const data = <%- allCategory %>
                 data.forEach(d => {
                     if(d.parent_id.toString() === "0") {
-                        allCat[`'${d.category_id}'`] = d;
+                        if (userRoleId === 6) {
+                         catList.includes(d.category_id) ? allCat[`'${d.category_id}'`] = d : '';
+                        } else {
+                            allCat[`'${d.category_id}'`] = d;
+                        }
                     } else {
                         if(!allSubCat[`'${d.parent_id.toString()}'`])
                             allSubCat[`'${d.parent_id.toString()}'`] = [];
