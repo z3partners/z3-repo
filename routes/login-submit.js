@@ -18,8 +18,8 @@ router.post('/', async function(req, res, next) {
         const userCreatedDate = resposne.message.userDetail.created_at;
         let parentUserDetails = {};
         if (resposne.message.roleDetails.role_id === 6) {
-          const { user_id, alt_email_1, alt_email_2, investor_type, created_at } = {...resposne.message.parentUser};
-          parentUserDetails = { user_id, alt_email_1, alt_email_2, investor_type, created_at }
+          const { user_id, company_legal_name, alt_email_1, alt_email_2, investor_type, created_at } = {...resposne.message.parentUser};
+          parentUserDetails = { user_id,company_legal_name, alt_email_1, alt_email_2, investor_type, created_at }
         }
         req.session.users = {
           "user_id": resposne.message.userDetail.user_id,

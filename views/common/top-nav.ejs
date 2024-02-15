@@ -35,7 +35,11 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <span class="fw-semibold d-block"><%= users.fName %> <%= users.lName %></span>
+                                    <% if(roles.role_id === 6 ) { %>
+                                        <small class="text-muted"><%= users.parentUserDetails.company_legal_name %> - Sub User</small>
+                                    <% } else { %>
                                     <small class="text-muted"><%= roles.role_name ? roles.role_name[0].toUpperCase() + roles.role_name.substring(1) : 'Readonly' %></small>
+                                    <% } %>
                                 </div>
                             </div>
                         </a>
