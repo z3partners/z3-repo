@@ -13,9 +13,11 @@ router.get('/', async function(req, res, next) {
     try {
         res.locals.showFilter =  false;
         res.locals.showCat =  false;
-        const response = await categoryService.listCategory();
+        const roleId = req.session.roleDetails.role_id;
+        // const response = await categoryService.listCategory();
+        const resposne = await getCategoryForUserType(roleId, req.session.users.user_id);
         const resAll = await categoryService.listAll();
-        req.session.catList = response;
+        req.session.catList = resposne;
         res.locals.allCategory = JSON.stringify(resAll.message);
         const msg = req.session.msg;
         const catList = req.session.catList ? req.session.catList : [];
@@ -70,5 +72,12 @@ router.post('/', async function(req, res, next) {
         res.sendStatus(500);
     }
 });
+async function getCategoryForUserType(role_id, user_id) {
 
+    if (role_id === 6) {
+        return await categoryService.getSubUserCategory(user_id);
+    } else {
+        return await categoryService.listCategory();
+    }
+}
 module.exports = router;
