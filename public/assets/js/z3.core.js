@@ -157,7 +157,11 @@ $(document).ready(function () {
 
     });
 
-
+    $("input.user-cat").click(function (e) {
+        if (!e.target.checked) {
+            document.getElementById("all-cat-check").checked = '';
+        }
+    });
 });
 
 function formSubmit(action, id, roleId) {
