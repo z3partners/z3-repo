@@ -40,7 +40,7 @@
                                 <%
                                     users.forEach(function (investor) {
                                 %>
-                                     <option value="<%-investor.user_id%>"><%-investor.first_name %></option>
+                                     <option value="<%-investor.user_id%>"><%-investor.company_legal_name %></option>
                                 <% }); %>
                             </select>
                         </div>
@@ -57,6 +57,7 @@
                                 <input type="password" id="password" name="password" required class="form-control" placeholder="Password" autocomplete="new-password">
                                 <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                             </div>
+                            <div class="form-text">Password should six char long, it should contain at least one number and special char</div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="confirm-password">Confirm Password</label>
