@@ -8,6 +8,8 @@ const smtpPassword = configData.password.smtp;
 
 function getTransporter() {
     return nodemailer.createTransport({
+        pool: true,
+        maxConnections: 20,
         port: 465,
         host: "smtp.gmail.com",
         auth: {
