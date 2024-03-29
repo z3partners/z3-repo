@@ -43,6 +43,7 @@ router.post('/', async function (req, res) {
     // console.log(allInvestor.message);
     if(Array.isArray(allInvestor.message)) { 
         const documentId = req.body.document_id;
+        const documentCat = req.body.catName;
         await documentService.updateDocumentSendStatus(+documentId);
         allInvestor.message.forEach(function (investor) {
             let ccList = [];
@@ -58,7 +59,7 @@ router.post('/', async function (req, res) {
             if(+investor.status) {
                 const transporter = emailService.getTransporter();
                 const textData = (emailTemplate.documentReceived.replace("{first_name}", first_name)).replace("{document_name}", fileData.originalname);
-                const subject = 'Z3Partners has uploaded new document';
+                const subject = `Z3Partners has uploaded new document [${documentCat}]`;
                 // const mailData = emailService.getMailData(emailId, subject, textData, ccList.join(", "), fileData);
                 const mailData = emailService.getMailData(emailId, subject, textData, ccList.join(", "), true);
                 transporter.sendMail(mailData, function (err, info) {

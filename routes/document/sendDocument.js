@@ -17,12 +17,13 @@ router.post('/', async function (req, res, next) {
         const invFirstName = req.body.invFirstName;
         const investorStatus = req.body.investorStatus;
         const documentId = req.body.document_id;
+        const documentCat = req.body.catName;
         let message = `Failed to sent notification to [${emailId}]. Please check investor details.`;
         if(emailId !== 'All' && +investorStatus) {
             message = `Notification sent successfully to [${emailId}].`
             const transporter = emailService.getTransporter();
             const textData = (emailTemplate.documentReceived.replace("{first_name}", invFirstName)).replace("{document_name}", fileData.originalname);
-            const subject = 'Z3Partners has uploaded new document';
+            const subject = `Z3Partners has uploaded new document [${documentCat}]`;
             // const mailData = emailService.getMailData(emailId, subject, textData, ccList, fileData);
             const mailData = emailService.getMailData(emailId, subject, textData, ccList, true);
             transporter.sendMail(mailData, function (err, info) {
