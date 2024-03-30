@@ -275,6 +275,7 @@ function sendDocument(e) {
     const res = confirm(`Are you sure you want to send an email notification to ${investorEmailID} ?`);
     document.querySelector("p.form-label").innerHTML = '';
     if (res) {
+        toggle_visibility();
         let route = "./send-document";
         if (investorEmailID.indexOf('All') > -1) {
             route = "./send-all";
@@ -287,11 +288,20 @@ function sendDocument(e) {
             investorStatus: invStatus
         }, function (data, status) {
             if (data.message) {
+                toggle_visibility();
                 document.querySelector("p.form-label").innerHTML = `<span class="danger">${data.message}</span>`;
             }
             // console.log(data);
         });
     }
+}
+//Modal Popup Controller
+function toggle_visibility(){
+    var e = document.getElementById('contact-popup');
+    if(e.style.display == 'block')
+        e.style.display = 'none';
+    else
+        e.style.display = 'block';
 }
 
 function delDocumentBtnClick(e) {

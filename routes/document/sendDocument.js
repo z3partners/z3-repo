@@ -23,7 +23,7 @@ router.post('/', async function (req, res, next) {
             message = `Notification sent successfully to [${emailId}].`
             const transporter = emailService.getTransporter();
             const textData = (emailTemplate.documentReceived.replace("{first_name}", invFirstName)).replace("{document_name}", fileData.originalname);
-            const subject = `Z3Partners has uploaded new document [${documentCat}]`;
+            const subject = `Z3Partners has uploaded ${documentCat}`;
             // const mailData = emailService.getMailData(emailId, subject, textData, ccList, fileData);
             const mailData = emailService.getMailData(emailId, subject, textData, ccList, true);
             transporter.sendMail(mailData, function (err, info) {
