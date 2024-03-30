@@ -71,7 +71,7 @@ router.post('/', async function (req, res) {
                     else
                         console.log(info);
                 });
-                await sleep(500);
+                await sleep(1000);
             }
         }
         res.send({message: "Sent to all"});
