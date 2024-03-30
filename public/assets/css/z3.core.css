@@ -57,15 +57,27 @@
     height: 100%;
     z-index: 15;
 }
+.modal-msg {
+    text-align: center;
+    position: relative;
+    top: 50%;
+    color: red;
+    font-size: larger;
+}
 
 #popup-wrapper {
     text-align: left;
 }
 
 #popup-container {
+
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     width: 300px;
     margin: 70px auto;
+}
+
+a {
+    cursor: pointer;
 }
