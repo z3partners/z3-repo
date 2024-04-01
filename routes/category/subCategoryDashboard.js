@@ -1,10 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var categoryService = require('../../services/category');
+const admin_roles = [1, 4, 5];
 
 router.get('/', async function(req, res, next) {
     if(!req.session.loggedin) {
         res.redirect('./login');
+    } else if(!admin_roles.includes(req.session.roleDetails.role_id)) {
+        res.redirect('./inv-home');
     }
     try {
         const subCategory = await categoryService.listSubCategory();
