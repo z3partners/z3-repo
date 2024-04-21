@@ -87,6 +87,35 @@ async function deleteCategory(catId, parentId) {
     return {message: `Category/Subcategory deleted`, status: 200};
 }
 
+async function getSubUserCategory (user_id) {
+
+    const catRows = await db.query(`SELECT category_id FROM z3_user_categories where user_id = ?`, [user_id]);
+    const catData = helper.emptyOrRows(catRows);
+    if (catData.length) {
+        const catInClause = catData[0].category_id;
+        const rows = await db.query(`select * from z3_document_categories where parent_id = 0 and status = 1 and category_id in (${catInClause})`);
+        const data = helper.emptyOrRows(rows);
+        if (data.length) {
+            return {message: data, subUserCatList: catInClause, status: 200};
+        } else {
+            return {message: "Category list is empty", status: 200};
+        }
+    } else {
+        return {message: "Category list is empty", status: 200};
+    }
+
+}
+
+async function listUserCategory(user_id) {
+    const rows = await db.query(`select * from z3_user_categories where user_id = ?`, [user_id]);
+    const data = helper.emptyOrRows(rows);
+    if (data.length) {
+        return {message: data, status: 200};
+    } else {
+        return {message: "Category permission list is empty", status: 200};
+    }
+}
+
 module.exports = {
-    createCategory, listCategory, listSubCategory, updateCategory, deleteCategory, listAll
+    createCategory, listCategory, listSubCategory, updateCategory, deleteCategory, listAll, listUserCategory, getSubUserCategory
 }

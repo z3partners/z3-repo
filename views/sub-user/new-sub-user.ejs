@@ -1,0 +1,174 @@
+<%- include("../common/head.ejs"); %>
+<%- [1, 4, 5].includes(roles.role_id) ? include("../common/aside.ejs") : include("../common/inv-aside.ejs"); %>
+
+<div class="layout-page">
+    <%- include("../common/top-nav.ejs"); %>
+    <script>
+        const invData = <%- JSON.stringify(users)%>;
+        const subUserInvData = {};
+        if (Array.isArray(invData)) {
+            invData.forEach( function (inv) {
+                subUserInvData[inv.user_id] = [{email: inv.alt_email_1}, {email: inv.alt_email_2}];
+            })
+        } else {
+            subUserInvData['loginUser'] = [{email: invData.alt_email_1}, {email: invData.alt_email_2}];
+        }
+        let allActiveCat = [];
+    </script>
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+            <div class="row">
+                <div class="col-xl">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Create Sub User</h5>
+                        </div>
+                        <div class="card-body">
+                            <span class="danger"></span>
+                            <% if (message) { %>
+                            <p class="mb-4 error-z3"><%= message %></p>
+                            <% } %>
+                    <form name="user" action="./new-sub-user" method="post" autocomplete="off"  id="new-sub-user">
+                        <% if ([1, 4, 5].includes(roles.role_id)) { %>
+                        <div class="mb-3">
+                            <label for="subUserInvList" class="form-label">Choose Investor</label>
+                            <select id="subUserInvList" name="parent_id" class="form-select form-select-lg" required>
+                                <option value="">Select Investor</option>
+                                <%
+                                    users.forEach(function (investor) {
+                                %>
+                                     <option value="<%-investor.user_id%>"><%-investor.company_legal_name %></option>
+                                <% }); %>
+                            </select>
+                        </div>
+                        <% } %>
+                        <div class="mb-3">
+                            <label for="email_id" class="form-label">Choose Sub User</label>
+                            <select id="email_id" name="email_id" class="form-select form-select-lg" required>
+                                <option value="">Select Sub User</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="password">Password</label>
+                            <div class="input-group form-password-toggle">
+                                <input type="password" id="password" name="password" required class="form-control" placeholder="Password" autocomplete="new-password">
+                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                            </div>
+                            <div class="form-text">Password should six char long, it should contain at least one number and special char</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="confirm-password">Confirm Password</label>
+                            <div class="input-group form-password-toggle">
+                                <input type="password" id="confirm-password" name="confirm-password" required class="form-control" placeholder="Confirm password" aria-label="Password">
+                                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="first_name">Full Name</label>
+                            <div class="input-group input-group-merge">
+                                <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+                                <input type="text" class="form-control" name="first_name" id="first_name" required placeholder="John" aria-label="John Doe" aria-describedby="basic-icon-default-fullname2">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="contact_number">Phone Number</label>
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text"><i class="bx bx-phone"></i></span>
+                                <input type="tel" maxlength="17" minlength="9" id="contact_number" name="contact_number" required class="form-control phone-mask" placeholder="(Country Code) 999 999 9999" aria-label="(Country Code) 658 799 8941" aria-describedby="basic-icon-default-phone2">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <small class="form-label d-block">Category Permission(s)</small>
+                            <% if (catList && Array.isArray(catList.message) && catList.message.length) { %>
+                                <div class="form-check form-check-inline" id="all-cat-div">
+                                    <input class="form-check-input" type="checkbox" name="" value="" id="all-cat-check">
+                                    <label class="form-check-label" for="">All</label>
+                                </div>
+                                <% catList.message.forEach(function(cat){ %>
+                                    <% if (cat.status) { %>
+                                        <script>
+                                            allActiveCat.push(<%= cat.category_id %>);
+                                        </script>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input user-cat" type="checkbox" name="cat-permission[]" value="<%= cat.category_id %>" id="cat-<%= cat.category_id %>">
+                                            <label class="form-check-label" for="cat-permission[]"><%= cat.category_name %></label>
+                                        </div>
+                                    <% } %>
+                                <% }); %>
+                            <% } %>
+                        </div>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="checkbox" id="status" name="status">
+                            <label class="form-check-label" for="status">Active</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="new-sub-user-btn">Create Sub User</button>
+                    </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include("../common/footer-content.ejs");%>
+
+    <div class="content-backdrop fade"></div>
+</div>
+<!-- Content wrapper -->
+</div>
+<!-- / Layout page -->
+</div>
+
+<!-- Overlay -->
+<div class="layout-overlay layout-menu-toggle"></div>
+</div>
+<!-- / Layout wrapper -->
+</div>
+<%- include("../common/footer-imports.ejs"); %>
+<script>
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirm-password");
+
+    function validatePassword() {
+        if(password.value != confirmPassword.value) {
+            confirmPassword.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirmPassword.setCustomValidity('');
+        }
+    }
+
+    password.onchange = validatePassword;
+    confirmPassword.onkeyup = validatePassword;
+
+
+    const createPassBtn = document.getElementById("new-sub-user-btn");
+    createPassBtn.onclick = validatePasswordFormat;
+    password.onkeyup = validatePasswordFormat;
+    function validatePasswordFormat() {
+        passwordFormat(password.value,  password);
+    }
+    if(subUserInvData['loginUser']) {
+        populateSubUser('#email_id', subUserInvData['loginUser']);
+    }
+
+    if (allActiveCat.length > 0) {
+        const allCatCheckbox  = document.getElementById("all-cat-check");
+        allCatCheckbox.addEventListener('click', () => {
+            if (allCatCheckbox.checked) {
+                allActiveCat.forEach(function (cat) {
+                    const elm = document.getElementById(`cat-${cat}`);
+                    elm.checked = "checked";
+                });
+            } else {
+                allActiveCat.forEach(function (cat) {
+                    const elm = document.getElementById(`cat-${cat}`);
+                    elm.checked = "";
+                });
+            }
+        });
+    }
+</script>

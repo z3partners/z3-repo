@@ -1,0 +1,91 @@
+<%- include("common/head.ejs"); %>
+<%- include("common/inv-aside.ejs"); %>
+<div class="layout-page">
+    <%- include("common/top-nav.ejs"); %>
+    <script>
+        const userData = <%- profile%>
+    </script>
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+
+            <div class="row">
+                <div class="col-xl">
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Edit Profile (Investor Name - <%= users.parentUserDetails.company_legal_name%>)</h5>
+                        </div>
+                        <div class="card-body">
+                            <span class="danger"></span>
+                            <% if (message) { %>
+                                <p class="mb-4 error-z3"><%= message %></p>
+                            <% } %>
+                            <form name="user" action="./edit-sub-user" method="post" autocomplete="off"  id="new-user">
+                                <input type="hidden" name="user_id" value="" id="user_id" />
+                                <input type="hidden" name="username" value="<%=JSON.parse(profile).username%>"  />
+                                <input type="hidden" name="cat-permission[]" id="cat-permission" value=""  />
+                                <div class="mb-3">
+                                    <label class="form-label" for="email_id">Email</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                                        <input disabled type="email" id="email_id" name="email_id" required class="form-control" placeholder="john.doe" aria-label="john.doe" aria-describedby="basic-icon-default-email2">
+                                        <span id="basic-icon-default-email2" class="input-group-text">@example.com</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="first_name">Full Name</label>
+                                    <div class="input-group input-group-merge">
+                                        <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-user"></i></span>
+                                        <input type="text" class="form-control" name="first_name" id="first_name" required placeholder="John" aria-label="John Doe" aria-describedby="basic-icon-default-fullname2">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="contact_number">Phone Number</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text"><i class="bx bx-phone"></i></span>
+                                        <input type="tel" maxlength="17" minlength="9"  id="contact_number" name="contact_number" required class="form-control phone-mask" placeholder="(Country Code) 999 999 9999" aria-label="(Country Code) 658 799 8941" aria-describedby="basic-icon-default-phone2">
+                                    </div>
+                                </div>
+
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input" type="checkbox" id="status" name="status">
+                                    <label class="form-check-label" for="status">Active</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="new-user-btn">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include("common/footer-content.ejs");%>
+
+    <div class="content-backdrop fade"></div>
+</div>
+<!-- Content wrapper -->
+</div>
+<!-- / Layout page -->
+</div>
+
+<!-- Overlay -->
+<div class="layout-overlay layout-menu-toggle"></div>
+</div>
+<!-- / Layout wrapper -->
+</div>
+<%- include("common/footer-imports.ejs"); %>
+<script>
+    const catPerm = <%- catPermList%>;
+    function populateUserData(userData) {
+        document.getElementById("first_name").value = userData.first_name;
+        document.getElementById("contact_number").value = (userData.phone_number) ? userData.phone_number : '';
+        document.getElementById("email_id").value = userData.username;
+        document.getElementById("user_id").value = userData.user_id;
+        document.getElementById("status").checked = userData.status ? "checked" : '';
+        document.getElementById("cat-permission").value= catPerm.join(", ");
+    }
+    populateUserData(userData);
+</script>

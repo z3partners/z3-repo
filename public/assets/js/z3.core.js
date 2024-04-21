@@ -6,6 +6,11 @@ $(document).ready(function () {
         populateCategory('#selectSubCat', subCat);
     });
 
+    $('#subUserInvList').change(function (e) {
+        const selectedVal = e.target.value;
+        populateSubUser('#email_id', subUserInvData[selectedVal]);
+    });
+
     $('#investor_list').change(function (e) {
         const selectedVal = e.target.value;
         if (selectedVal) {
@@ -83,6 +88,10 @@ $(document).ready(function () {
         delUserBtnClick(e);
     });
 
+    $(".del-sub-user-btn").click(function (e) {
+        delUserBtnClick(e, '.del-sub-user-btn', 'sub-users');
+    });
+
     $(".del-document-btn").click(function (e) {
         delDocumentBtnClick(e);
     });
@@ -148,7 +157,11 @@ $(document).ready(function () {
 
     });
 
-
+    $("input.user-cat").click(function (e) {
+        if (!e.target.checked) {
+            document.getElementById("all-cat-check").checked = '';
+        }
+    });
 });
 
 function formSubmit(action, id, roleId) {
@@ -160,6 +173,8 @@ function formSubmit(action, id, roleId) {
         password: 'password',
         userpass: 'create-user-pass',
         user: 'edit-user',
+        subuser: 'edit-sub-user',
+        subuserpass: 'create-sub-user-pass',
         invpass: 'create-investor-pass'
 
     });
@@ -198,8 +213,6 @@ function populateFinancialYear(selector, data) {
     });
 }
 
-
-
 const regularExpression = /^(?=.*[\d])(?=.*[!@#$%^&*])[\w!@#$%^&*]{6,16}$/;
 function passwordFormat(password, passwordElem) {
     if(!password.match(regularExpression)) {
@@ -224,12 +237,14 @@ function editLink(e) {
         profile: 'user_id',
         password: 'user_id',
         user: 'user_id',
+        subuser: 'user_id',
         userpass: 'user_id',
+        subuserpass: 'user_id',
         invpass: 'user_id'
     });
 
     const id = dataSet[editIdMap[category]];
-    //console.log(category, id, roleId);
+    // console.log(category, id, roleId);
     formSubmit(category, id, roleId);
 }
 
@@ -260,6 +275,7 @@ function sendDocument(e) {
     const res = confirm(`Are you sure you want to send an email notification to ${investorEmailID} ?`);
     document.querySelector("p.form-label").innerHTML = '';
     if (res) {
+        toggle_visibility();
         let route = "./send-document";
         if (investorEmailID.indexOf('All') > -1) {
             route = "./send-all";
@@ -272,11 +288,20 @@ function sendDocument(e) {
             investorStatus: invStatus
         }, function (data, status) {
             if (data.message) {
+                toggle_visibility();
                 document.querySelector("p.form-label").innerHTML = `<span class="danger">${data.message}</span>`;
             }
             // console.log(data);
         });
     }
+}
+//Modal Popup Controller
+function toggle_visibility(){
+    var e = document.getElementById('contact-popup');
+    if(e.style.display == 'block')
+        e.style.display = 'none';
+    else
+        e.style.display = 'block';
 }
 
 function delDocumentBtnClick(e) {
@@ -295,8 +320,8 @@ function delDocumentBtnClick(e) {
     }
 }
 
-function delUserBtnClick(e) {
-    const elm = e.target.closest(".del-user-btn");
+function delUserBtnClick(e, selector = '.del-user-btn', redirectPath = 'users') {
+    const elm = e.target.closest(`${selector}`);
     const userDetails = JSON.parse(elm.dataset.user);
     const res = confirm(`Are you sure you want to delete ${userDetails.first_name}`);
     if (res) {
@@ -305,7 +330,7 @@ function delUserBtnClick(e) {
                 username: userDetails.username,
             },
             function (data, status) {
-                location.href = "./users";
+                location.href = `./${redirectPath}`;
             });
     }
 }
@@ -323,4 +348,16 @@ function populateSendTo(role_id) {
     } else if (role_id === 5) {
         sendTo.append(`<option value="International">International</option>`);
     }
+}
+
+function populateSubUser(selector, data) {
+    let subUserSelect = $(selector);
+    subUserSelect.empty();
+    subUserSelect.append(`<option value="">Select</option>`)
+
+    data.forEach(subUser => {
+        if(subUser.email) {
+            subUserSelect.append(`<option value="${subUser.email}">${subUser.email}</option>`)
+        }
+    });
 }

@@ -7,7 +7,7 @@ const session = require('express-session');
 // const MemoryStore = require('memorystore')(session);
 const app = express();
 
-const indexRouter = require('./routes/index');
+// const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const forgotPassRouter = require('./routes/forgot');
 const loginSubmitRouter = require('./routes/login-submit');
@@ -25,6 +25,11 @@ const userPassRouter = require('./routes/user/userPass');
 const submitUserPassRouter = require('./routes/user/submitUserPass');
 
 const contactRouter = require('./routes/investor/contact');
+
+const newSubUserRouter = require('./routes/sub-user/newSubUser');
+const subUsersRouter = require('./routes/sub-user/subUsers');
+const editSubUserRouter = require('./routes/sub-user/editSubUsers');
+const subUserPassRouter = require('./routes/sub-user/subUserPass');
 
 const homeRouter = require('./routes/investor/home');
 const investorHomeRouter = require('./routes/investor/investorHome');
@@ -96,6 +101,11 @@ app.use('/create-user-pass', userPassRouter);
 app.use('/submit-user-pass', submitUserPassRouter);
 
 app.use('/contact', contactRouter);
+
+app.use('/new-sub-user', newSubUserRouter);
+app.use('/sub-users', subUsersRouter);
+app.use('/edit-sub-user', editSubUserRouter);
+app.use('/create-sub-user-pass', subUserPassRouter);
 
 app.use('/investor', investorDashBoardRouter);
 app.use('/add-investor', addInvestorRouter);

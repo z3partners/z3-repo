@@ -15,10 +15,11 @@ router.post('/', async function(req, res, next) {
     const username = req.body.username;
     const first_name = req.body.first_name;
     const status = req.body.status;
+    const userType = req.body.userType ? req.body.userType : 'User';
 
     try {
         if(userId) {
-            const resposne = await userService.createUserPass({user_id: userId, password: password});
+            const resposne = await userService.createUserPass({user_id: userId, password: password}, userType);
             const transporter = emailService.getTransporter();
             req.session.msg = resposne.message;
             const textData = ((emailTemplate.changePassword.replace('{first_name}', first_name)).replace("{created_updated}", 'created')).replace("{{password}}", password);

@@ -8,6 +8,8 @@ const smtpPassword = configData.password.smtp;
 
 function getTransporter() {
     return nodemailer.createTransport({
+        pool: true,
+        maxConnections: 20,
         port: 465,
         host: "smtp.gmail.com",
         auth: {
@@ -35,6 +37,11 @@ function getMailData(toEmailList, subject, textData, ccList='', skipBcc = false,
     }
     if(subject.toLowerCase().indexOf('password') !== -1 || skipBcc) {
         bccEmailList = '';
+    }
+    if (configData.dev) {
+        console.log("******* DEV ENV ACTIVATED FOR EMAIL NOTIFICATION ********");
+        subject = 'EMAIL FROM STAGE ENV: ' + subject;
+        textData = textData.replace('irportal.z3partners.com', 'irstaging.4thdimension.in');
     }
 
     return {

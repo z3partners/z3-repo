@@ -12,6 +12,9 @@
         <% if(roles.role_id === 3 ) { %>
         <h5 class=" text-primary"><%= users.cname%></h5><br>
         <% } %>
+        <% if(roles.role_id === 6 ) { %>
+        <h5 class=" text-primary"><%= users.parentUserDetails.company_legal_name%></h5><br>
+        <% } %>
         <ul class="navbar-nav flex-row align-items-center ms-auto">
             <!-- User -->
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -35,7 +38,11 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <span class="fw-semibold d-block"><%= users.fName %> <%= users.lName %></span>
+                                    <% if(roles.role_id === 6 ) { %>
+                                        <small class="text-muted"><%= users.parentUserDetails.company_legal_name %> - Sub User</small>
+                                    <% } else { %>
                                     <small class="text-muted"><%= roles.role_name ? roles.role_name[0].toUpperCase() + roles.role_name.substring(1) : 'Readonly' %></small>
+                                    <% } %>
                                 </div>
                             </div>
                         </a>

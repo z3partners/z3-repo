@@ -1,0 +1,191 @@
+<%- include("../common/head.ejs"); %>
+<%- [1, 4, 5].includes(roles.role_id) ? include("../common/aside.ejs") : include("../common/inv-aside.ejs"); %>
+<div class="layout-page">
+    <%- include("../common/top-nav.ejs"); %>
+<script>
+    const data = <%- allCategory %>
+    const invSearchFields = <%- invSearchFields %>
+</script>
+
+    <!-- Content wrapper -->
+    <div class="content-wrapper">
+        <!-- Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="row">
+                <div class="col-lg-12 mb-4 order-0">
+                    <div class="card">
+                        <div class="d-flex align-items-end row">
+                            <div class="col-sm-7">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary">Sub User Management</h5>
+                                    <p class="mb-4">
+                                        You can add a new sub user by clicking the button below
+                                    </p>
+                                    <a href="./new-sub-user" class="btn btn-lg btn-outline-primary">Add Sub User</a>
+                                    <p class="form-label" style="margin: 10px;">
+                                        <% if (message) { %>
+                                        <span class="danger"><%= message %></span>
+                                        <% } %>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 text-center text-sm-left">
+                                <div class="card-body pb-0 px-0 px-md-4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 mb-4 order-0">
+                    <h4 class="fw-bold py-3 mb-4">Sub Users</h4>
+                    <!-- Search -->
+                    <div class=" align-items-center">
+                        <div class=" d-flex align-items-center">
+                            <input
+                                    type="text"
+                                    class="form-control border-1 shadow-none"
+                                    placeholder="Type here to search"
+                                    aria-label="Type here to search"
+                                    id="searchField"
+                                    />
+                        </div>
+                        <br />
+                    </div>
+                    <!-- /Search -->
+                    <!-- Basic Bootstrap Table -->
+                    <div class="card">
+                        <div class="table-responsive text-nowrap">
+                                <% if (Array.isArray(userList) && userList.length) { %>
+                            <div class="table-sortable" id="table-sortable">
+                                Table will be rendered here
+                            </div>
+                                <% }  else { %>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Contact</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-0">
+                                <tr>
+                                    <td colspan="3"><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong class="success">Sub user list is empty</strong></td>
+                                </tr>
+                                </table>
+                                <% } %>
+                        </div>
+                    </div>
+                    <!--/ Basic Bootstrap Table -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+
+                    <div class="demo-inline-spacing">
+                        <!-- Basic Pagination -->
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination" id="investorPagination"></ul>
+                        </nav>
+                        <!--/ Basic Pagination -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <!-- / Content -->
+
+    <%- include("../common/footer-content.ejs");%>
+
+    <div class="content-backdrop fade"></div>
+</div>
+<!-- Content wrapper -->
+</div>
+<!-- / Layout page -->
+</div>
+
+<!-- Overlay -->
+<div class="layout-overlay layout-menu-toggle"></div>
+</div>
+<!-- / Layout wrapper -->
+</div>
+<%- include("../common/footer-imports.ejs"); %>
+
+<script>
+    var columns = {
+        'company_legal_name': 'Investor Name',
+        'first_name': 'Contact Name',
+        'username': 'Email',
+        'phone_number': 'Contact Number',
+        'role_id': 'User Role',
+        'status': 'Status',
+        'action': 'Action'
+    };
+const userRoleMap = {
+    1: "Super Admin",
+    4: "Domestic Admin",
+    5: "International Admin",
+    6: "Sub User",
+}
+    const userList = <%- JSON.stringify(userList) %>
+    if (Array.isArray(userList) && userList.length) {
+    userList.forEach(user => {
+        const actionHTML  = `<div class='dropdown'>
+            <button type='button' class='btn p-0 dropdown-toggle hide-arrow'
+    data-bs-toggle='dropdown'>
+            <i class='bx bx-dots-vertical-rounded'></i>
+            </button>
+            <div class='dropdown-menu'>
+            <a class='dropdown-item edit-link' data-category="subuser" href='javascript:void(0)' data-subuser='${JSON.stringify(user)}'><i class='bx bx-edit-alt me-1'></i> Edit</a>
+    <a class='dropdown-item create-investor-pass edit-link' href='javascript:void(0)' data-category="subuserpass" data-subuserpass='${JSON.stringify(user)}'><i class='bx bx-lock-alt me-1'></i> Create Password</a>
+    <a class='dropdown-item del-sub-user-btn' href='javascript:void(0);' data-user='${JSON.stringify(user)}'><i class='bx bx-trash me-1'></i> Delete</a>
+    </div>
+    </div>`;
+        const userRole = userRoleMap[user.role_id];
+        user.action = actionHTML;
+        user.role_id = userRole;
+    });
+
+    var table = $('#table-sortable').tableSortable({
+        data: userList,
+        columns: columns,
+        rowsPerPage: 50,
+        sorting:false,
+        pagination: true,
+        paginationContainer: '#investorPagination',
+        searchField: '#searchField',
+        nextText: '<i class="tf-icon bx bx-chevron-right"></i>',
+        prevText: '<i class="tf-icon bx bx-chevron-left"></i>',
+        formatCell: function(row, key) {
+            if (key === 'company_legal_name') {
+                return $('<strong></strong>').text(row[key]);
+            }
+            else if (key === 'status') {
+                if(row[key]) {
+                    return $('<span class="badge bg-label-success me-1"></span>').text("ACTIVE");
+                } else {
+                    return $('<span class="badge bg-label-warning me-1"></span>').text("PENDING");
+                }
+
+            }
+            return row[key];
+        },
+        tableDidUpdate: function() {
+            $(".edit-link").click(function (e) {
+                editLink(e);
+            });
+            $(".del-sub-user-btn").click(function (e) {
+                delUserBtnClick(e, '.del-sub-user-btn', 'sub-users');
+            });
+        }
+    });
+    }
+</script>
