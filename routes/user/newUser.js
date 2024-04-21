@@ -4,12 +4,15 @@ const user = require('../../services/user');
 const emailService = require('../../services/email');
 const categoryService = require('../../services/category');
 const emailTemplate = require('../../email-template/user/account-activated');
+const admin_roles = [1, 4, 5];
 
 /* get login page. */
 router.get('/', async function(req, res) {
 
     if(!req.session.loggedin) {
         res.redirect('./login');
+    } else if(!admin_roles.includes(req.session.roleDetails.role_id)) {
+        res.redirect('./inv-home');
     }
 
     try {
