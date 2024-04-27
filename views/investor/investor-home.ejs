@@ -46,7 +46,13 @@
                             <div class="col-sm-7">
                                 <div class="card-body">
                                     <h5 class="card-title text-primary">Welcome to Investor Portal</h5>
-                                    <h5 style="color:#ffab00 !important" class="card-title text-primary">What's New</h5> <p style="width: max-content">You can now add a sub user under you. Check it out under User Management in the side navigation.</p>
+                                    <%
+                                    if([3].includes(roles.role_id) && (users.alt_email_1 || users.alt_email_2)) {
+                                    %>
+                                    <h6 style="color: #84b8d3 !important;" class="card-title text-primary">Latest Updates</h6> <p style="width: max-content">You can now add a sub user under you. Check it out under User Management in the side navigation.</p>
+                                    <%
+                                        }
+                                    %>
                                     <!--<div class="alert alert-info alert-dismissible" role="alert">-->
                                     <!--You have 2 documents to view.-->
                                     <!--<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
